@@ -1,11 +1,19 @@
-import './App.css'
-import Header from './components/Header'
+import AllRoutes from './routes/Routes'
+import { AuthProvider, ThemeProvider } from './context'
+import { Toaster } from 'sonner'
+import '@/assets/scss/app.scss'
+import '@/assets/scss/icons.scss'
 
 function App() {
 
   return (
     <>
-      <Header/>
+    <ThemeProvider>
+      <AuthProvider>
+        <AllRoutes />
+        <Toaster richColors/>
+      </AuthProvider>
+    </ThemeProvider>
     </>
   )
 }
