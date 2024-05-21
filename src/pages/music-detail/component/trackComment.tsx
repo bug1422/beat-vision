@@ -44,22 +44,24 @@ const CommentInput = ({ onSubmitComment }: CommentInputProps) => {
   const [inputText, setInputText] = useState("");
   return (
     <>
-      <textarea
-        placeholder="comments here"
-        className="border border-secondary p-3 m-2 mb-0 mt-0 "
-        value={inputText}
-        onChange={(event) => setInputText(event.target.value)}
-      ></textarea>
-      <Button
-        className="align-self-start ms-2 mb-3 mt-2 "
-        onClick={() => {
-          onSubmitComment({ text: inputText, comments: [], id: "", author: "a" });
-          setInputText("");
-        }}
-      >
-        comment
-      </Button>
-      {/* onClick={(event) => onSubmitComment()} */}
+      <div className="align-self-start d-flex  flex-column ">
+        <textarea
+          placeholder="comments here"
+          className="border border-secondary p-3 m-2 mb-0 mt-0 w-75  "
+          value={inputText}
+          onChange={(event) => setInputText(event.target.value)}
+        ></textarea>
+        <Button
+          className="align-self-start ms-2 mb-3 mt-2 align-self-start  "
+          onClick={() => {
+            onSubmitComment({ text: inputText, comments: [], id: "", author: "a" });
+            setInputText("");
+          }}
+        >
+          comment
+        </Button>
+        {/* onClick={(event) => onSubmitComment()} */}
+      </div>
     </>
   );
 };
@@ -71,7 +73,7 @@ const CommentSection: React.FC = () => {
   };
   return (
     <>
-      <div className="d-flex flex-column flex-wrap  gap-3 overflow-scroll ">
+      <div className="d-flex flex-column flex-wrap  gap-3 ">
         <span>nested comment</span>
         <div className="">
           <CommentInput onSubmitComment={onSubmitComment} />
@@ -120,9 +122,7 @@ const CommentItem = ({ comment }: CommentItemProps) => {
           <Button onClick={(event) => setIsShowComments(!isShowComments)}>show comment</Button>
           {isReplying && (
             <>
-              <div className="align-self-start d-flex  flex-column ">
-                <CommentInput onSubmitComment={onComment} />
-              </div>
+              <CommentInput onSubmitComment={onComment} />
             </>
           )}
         </div>
