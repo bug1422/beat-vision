@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import SimpleBar from "simplebar-react";
-import AppMenu from "./Menu";
+// import AppMenu from "./Menu";
 import { getMenuItems } from "@/common";
 
 import logoSM from "@/assets/images/logo-sm.png";
@@ -23,7 +23,7 @@ const LeftSidebar = () => {
       </div>
 
       <SimpleBar className="menu-content h-100">
-        <AppMenu menuItems={getMenuItems()} />
+        {/* <AppMenu menuItems={getMenuItems()} /> */}
 
         <div className="update-msg text-center">
           <Link
@@ -46,4 +46,4 @@ const LeftSidebar = () => {
   );
 };
 
-export default LeftSidebar;
+export const MyLeftSidebar = LeftSidebar;

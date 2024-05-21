@@ -1,3 +1,4 @@
+import ProducerPage from "@/pages/producer-page";
 import { lazy } from "react";
 import { Navigate, RouteProps } from "react-router";
 //Authentication
@@ -32,6 +33,11 @@ const appsRoutes: RoutesProps[] = [
     path: "/music-detail/detail",
     name: "Music Detail Page",
     element: <MusicDetail />,
+  },
+  {
+    path: "/user/id/producer-page",
+    name: "Producer manager page",
+    element: <ProducerPage />,
   },
 ];
 
