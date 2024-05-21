@@ -1,5 +1,5 @@
 import { Navigate, Route, RouteProps, Routes } from 'react-router-dom'
-import { allAdminRoutes, allBlankRoutes } from './index'
+import { allAdminRoutes, allBlankRoutes,allCustomerRoutes } from './index'
 import Layout from '@/layout/Layout'
 import { useAuthContext } from '@/context'
 import DefaultLayout from '@/layout/DefaultLayout'
@@ -35,6 +35,16 @@ const AllRoutes = (props: RouteProps) => {
 							)
 						}
 						key={idx}
+					/>
+				))}
+			</Route>
+
+			<Route>
+				{allCustomerRoutes.map((route, idx) => (
+					<Route
+						key={idx}
+						path={route.path}
+						element={<DefaultLayout {...props}>{route.element}</DefaultLayout>}
 					/>
 				))}
 			</Route>

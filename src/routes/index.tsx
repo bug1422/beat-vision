@@ -1,71 +1,72 @@
-import { lazy } from "react"
-import { Navigate, RouteProps } from "react-router"
-
+import { lazy } from "react";
+import { Navigate, RouteProps } from "react-router";
 //Authentication
-const Login = lazy(() => import('@/pages/authentication/Login'))
-const Register = lazy(() => import('@/pages/authentication/Register'))
-const RecoverPW = lazy(() => import('@/pages/authentication/RecoverPW'))
-const Error404 = lazy(() => import('@/pages/authentication/Error404'))
-const Error500 = lazy(() => import('@/pages/authentication/Error500'))
-
+const Login = lazy(() => import("@/pages/authentication/Login"));
+const Register = lazy(() => import("@/pages/authentication/Register"));
+const RecoverPW = lazy(() => import("@/pages/authentication/RecoverPW"));
+const Error404 = lazy(() => import("@/pages/authentication/Error404"));
+const Error500 = lazy(() => import("@/pages/authentication/Error500"));
+//Applicatoin create page
+const MusicDetail = lazy(() => import("@/pages/music-detail"));
 export type RoutesProps = {
-    path: RouteProps['path']
-    name: string
-    element: RouteProps['element']
-}
+  path: RouteProps["path"];
+  name: string;
+  element: RouteProps["element"];
+};
 
 const dashboardRoutes: RoutesProps[] = [
-    {
-        path: '/',
-        name: 'Home Page',
-        element: <Navigate to="/dashboards/analytics" />
-    },
-]
+  //   {
+  //     path: "/",
+  //     name: "Home Page",
+  //     element: <Navigate to="/dashboards/analytics" />,
+  //   },
+];
 
 const appsRoutes: RoutesProps[] = [
-    {
-        path: '/',
-        name: 'Home Page',
-        element: <Navigate to="/home" />
-    }
-]
+  {
+    path: "/",
+    name: "Home Page",
+    element: <Navigate to="/home" />,
+  },
+  {
+    path: "/music-detail/detail",
+    name: "Music Detail Page",
+    element: <MusicDetail />,
+  },
+];
 
 const authRoutes: RoutesProps[] = [
-    {
-        path: '/auth/login',
-        name: 'Login',
-        element: <Login />,
-    },
-    {
-        path: '/auth/register',
-        name: 'Register',
-        element: <Register />,
-    },
-    {
-        path: '/auth/recover-pw',
-        name: 'Recover Password',
-        element: <RecoverPW />,
-    },
-    {
-        path: '/auth/auth-404',
-        name: '404 Error',
-        element: <Error404 />,
-    },
-    {
-        path: '/auth/auth-500',
-        name: '500 Error',
-        element: <Error500 />,
-    }
-]
+  {
+    path: "/auth/login",
+    name: "Login",
+    element: <Login />,
+  },
+  {
+    path: "/auth/register",
+    name: "Register",
+    element: <Register />,
+  },
+  {
+    path: "/auth/recover-pw",
+    name: "Recover Password",
+    element: <RecoverPW />,
+  },
+  {
+    path: "/auth/auth-404",
+    name: "404 Error",
+    element: <Error404 />,
+  },
+  {
+    path: "/auth/auth-500",
+    name: "500 Error",
+    element: <Error500 />,
+  },
+];
 
-const allCustomerRoutes = [
-    ...appsRoutes,
-]
+const allCustomerRoutes = [...appsRoutes];
 
-const allAdminRoutes = [
-    ...dashboardRoutes,
-]
+const allAdminRoutes = [...dashboardRoutes];
 
-const allBlankRoutes = [...authRoutes]
+const allBlankRoutes = [...authRoutes];
 
-export { allAdminRoutes, allBlankRoutes}
+export { allAdminRoutes, allBlankRoutes, allCustomerRoutes };
