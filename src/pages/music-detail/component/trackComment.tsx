@@ -44,13 +44,14 @@ const CommentInput = ({ onSubmitComment }: CommentInputProps) => {
   const [inputText, setInputText] = useState("");
   return (
     <>
-      <input
+      <textarea
         placeholder="comments here"
-        className="border border-secondary w-75 p-3 m-3  "
+        className="border border-secondary p-3 m-2 mb-0 mt-0 "
         value={inputText}
         onChange={(event) => setInputText(event.target.value)}
-      ></input>
+      ></textarea>
       <Button
+        className="align-self-start ms-2 mb-3 mt-2 "
         onClick={() => {
           onSubmitComment({ text: inputText, comments: [], id: "", author: "a" });
           setInputText("");
@@ -92,35 +93,47 @@ export const TrackComments = CommentSection;
 
 const CommentItem = ({ comment }: CommentItemProps) => {
   const [isReplying, setIsReplying] = useState(false);
+  const [isShowComments, setIsShowComments] = useState(false);
   const [comments, setComments] = useState(comment.comments);
   const onComment = (newComment: Comment) => {
     setComments((prev) => [newComment, ...prev]);
     setIsReplying(false);
+    setIsShowComments(true);
   };
   return (
     <>
       <div
-        className="border border-secondary d-flex flex-column flex-wrap   p-3 "
-        style={{ maxWidth: "1000px" }}
+        className=" d-flex flex-column p-3 ms-3 "
+        style={{ maxWidth: "1000px", minWidth: "800px" }}
       >
-        <p>{comment.author}</p>
-        <div className="ms-2 me-2 text-break border border-primary ">{comment.text}</div>
-        <Button
-          className="ms-2 me-2 align-self-start m-1 "
-          onClick={(event) => {
-            setIsReplying(!isReplying);
-          }}
-        >
-          reply
-        </Button>
-        {isReplying && (
-          <>
-            <CommentInput onSubmitComment={onComment} />
-          </>
-        )}
+        <div className="border border-secondary ">
+          <p>{comment.author}</p>
+          <div className="ms-2 me-2 text-break border border-primary ">{comment.text}</div>
+          <Button
+            className="ms-2 me-2 align-self-start m-2 "
+            onClick={(event) => {
+              setIsReplying(!isReplying);
+            }}
+          >
+            reply
+          </Button>
+          <Button onClick={(event) => setIsShowComments(!isShowComments)}>show comment</Button>
+          {isReplying && (
+            <>
+              <div className="align-self-start d-flex  flex-column ">
+                <CommentInput onSubmitComment={onComment} />
+              </div>
+            </>
+          )}
+        </div>
         {comments.map((comment) => (
-          <CommentItem comment={comment} />
+          <div className={isShowComments ? "d-none " : ""}>
+            <CommentItem comment={comment} />
+          </div>
         ))}
+        {/* {comments.map((comment) => (
+          <CommentItem comment={comment} />
+        ))} */}
       </div>
     </>
   );
