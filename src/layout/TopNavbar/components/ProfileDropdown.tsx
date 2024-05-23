@@ -10,6 +10,7 @@ import user5 from '@/assets/images/users/user-5.jpg'
 import { FiPower, FiSettings, FiUser } from 'react-icons/fi'
 import { useAuthContext } from '@/context'
 import { useNavigate } from 'react-router-dom'
+import { fetchAvt } from '@/testing/FetchFakeData'
 
 const ProfileDropdown = () => {
 	const { removeSession } = useAuthContext()
@@ -21,16 +22,15 @@ const ProfileDropdown = () => {
 	}
 
 	return (
-		<Dropdown as="li">
+		<Dropdown as="li" className='align-self-center'>
 			<DropdownToggle
 				as="a"
-				className="nav-link waves-effect waves-light nav-user"
+				className="nav-link arrow-none waves-effect waves-light nav-user"
 			>
-				<span className="ms-1 nav-user-name hidden-sm">Nick</span>
 				<Image
-					src={user5}
+					src={fetchAvt}
 					alt="profile-user"
-					className="rounded-circle thumb-xs "
+					className="rounded-circle thumb-xs"
 				/>
 			</DropdownToggle>
 			<DropdownMenu className="dropdown-menu-end">

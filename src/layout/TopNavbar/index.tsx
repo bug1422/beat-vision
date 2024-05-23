@@ -1,50 +1,88 @@
-import { FiMenu } from 'react-icons/fi'
-import { Button, NavLink } from 'react-bootstrap'
-import { useThemeContext } from '@/context'
-import { Notifications, ProfileDropdown, SearchBar } from './components'
-import { notifications } from './data'
+import { Button, Collapse, NavLink } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import logoDark from '@/assets/images/logo-dark.png'
 import logoSM from '@/assets/images/logo-sm.png'
 import logoImg from '@/assets/images/logo.png'
+import { useToggle } from '@/hooks'
+import { fetchAvt } from '@/testing/FetchFakeData'
+import { Notifications, ProfileDropdown, SearchBar } from './components'
+import { notifications } from './data'
 
-const TopNavbar = () => {
-	const { settings, updateSideNavMode } = useThemeContext()
-
-	const handleLeftMenuCallBack = () => {
-		if (settings.sideNavMode == 'default') {
-			updateSideNavMode('sm')
-		} else {
-			updateSideNavMode('default')
-		}
-	}
-
+const TopNavBar = () => {
+	const { isOpen, toggle } = useToggle()
 	return (
 		<>
-			<div className="topbar">
-				<nav className="navbar-custom">
-					<ul className="list-unstyled topbar-nav float-end mb-0">
-						<SearchBar />
-						<Notifications notifications={notifications} />
-						<ProfileDropdown />
-					</ul>
-					<ul className="list-unstyled topbar-nav mb-0 ms-2">
-						<li>
-							<div className="brand">
-								<Link to="/" className="logo">
-								<div className="d-flex gap-1 justify-content-center">
-									<span>
-										<img src={logoSM} alt="logo-large" className="logo-sm" />
-									</span>
+		<nav className="navbar py-0 navbar-expand-lg navbar-light bg-light">
+				<div className="px-4 container-fluid">
+					<Link className="navbar-brand" to="#">
+						<img src={logoSM} height={52} className="mr-1" />
+					</Link>
+					<button
+						onClick={toggle}
+						className="navbar-toggler"
+						type="button"
+						data-bs-toggle="collapse"
+						data-bs-target="#navbarSupportedContent2"
+						aria-controls="navbarSupportedContent"
+						aria-expanded="false"
+						aria-label="Toggle navigation"
+					>
+						<span className="navbar-toggler-icon" />
+					</button>
+					<Collapse in={isOpen} className="navbar-collapse">
+						<div>
+						<form className="me-auto d-flex app-search-topbar">
+								<div className="input-group">
+									<input
+										type="text"
+										className="form-control"
+										placeholder="Search"
+										aria-label="Recipient's username"
+										aria-describedby="basic-addon2"
+									/>
+									<Button
+										variant="soft-primary"
+										type="button"
+										id="button-addon2"
+									>
+										<i className="fas fa-search" />
+									</Button>
 								</div>
-								</Link>
-							</div>
-						</li>
-					</ul>
-				</nav>
-			</div>
+							</form>
+							<ul className="navbar-nav mb-2 mb-lg-0">
+								<li className="mx-2 my-2 nav-item">
+									<Link className="nav-link active" aria-current="page" to="#">
+										Home
+									</Link>
+								</li>
+								<li className="mx-2 my-2 nav-item">
+									<Link className="nav-link active" aria-current="page" to="#">
+										Beats
+									</Link>
+								</li>
+								<li className="mx-2 my-2 nav-item">
+									<Link className="nav-link active" to="#">
+										Products
+									</Link>
+								</li>
+								<li className="mx-2 my-2 nav-item">
+									<Link className="nav-link active" to="#">
+										Support
+									</Link>
+								</li>
+								<Notifications notifications={notifications} />
+								<ProfileDropdown/>
+								{/* <Link className="user-avatar" to="">
+										<img src={fetchAvt()} alt="user" className="thumb-md rounded-circle" />
+									</Link> */}
+							</ul>
+						</div>
+					</Collapse>
+				</div>
+			</nav>
 		</>
 	)
 }
 
-export default TopNavbar
+export default TopNavBar
+export { default as AdminTopNavBar } from './AdminTopNavBar'

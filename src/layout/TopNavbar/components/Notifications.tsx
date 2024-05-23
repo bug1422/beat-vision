@@ -63,7 +63,7 @@ const Notifications = ({
 				as="a"
 				className="nav-link arrow-none waves-light waves-effect"
 			>
-				<FiBell className="align-self-center topbar-icon" />
+				<FiBell className="bell align-self-center topbar-icon" />
 				<span className="badge bg-danger rounded-pill noti-icon-badge">2</span>
 			</DropdownToggle>
 			<DropdownMenu className="dropdown-menu-end dropdown-lg pt-0">

@@ -3,7 +3,9 @@ Template Name: Dastone - Admin & Dashboard Template
 Author: Mannatthemes
 File: Topbar
 */
-
+.dropdown-toggle::after{
+    display: none !important;
+}
 
 
 .topbar {
@@ -40,22 +42,6 @@ File: Topbar
           content: initial;
       }
   }
-  .topbar-nav {
-    height: $header-height;
-      li {
-          float: left;
-          &.show {
-              .nav-link {
-                  background-color: lighten($header-light-bg, 3%);
-                  color: $body-color;
-              }
-          }
-         .topbar-icon{
-           height: 20px;
-           width: 20px;
-         }
-      }
-  }
 }
 
 .button-menu-mobile {
@@ -66,15 +52,15 @@ File: Topbar
   cursor: pointer;
 }
 
-.nav-user {
-  .nav-user-name {
-      vertical-align: middle;
-  }
+.navbar-nav li{
+    align-items: center;
 }
 
 /* Notification */
 
 .notification-list {
+    width: 38px;
+    align-self: center;
   .notification-menu{
     max-height: 220px;
     margin-left: 0;
@@ -82,12 +68,16 @@ File: Topbar
   .noti-icon-badge {
       display: inline-block;
       position: absolute;
-      top: 9px;
-      right: 8px;
+      top: 5px;
+      right: 2px;
       border: 2px solid rgba($card-bg, 0.6);
       border-radius: 50%;
       padding: 1px 4px 1px;
       font-size: 8px !important;
+  }
+  .bell{
+    width: 100%;
+    height: 100%;
   }
 }
 
@@ -103,7 +93,7 @@ File: Topbar
       position: absolute;
       width: 30px;
       height: 30px;
-      left: 12px;
+      left: 0px;
       top: 50%;
       transform: translateY(-50%);
       border: none;
@@ -119,12 +109,10 @@ File: Topbar
   }
   input {
       width: 100%;
-      height: 56px;
+      height: 100%;
       border: none;
       font-size: 12px;
       border-radius: 4px;
-      padding-left: 54px;
-      padding-right: 15px;
       background-color: $dropdown-bg;
       color: $body-color;
       &:focus {
