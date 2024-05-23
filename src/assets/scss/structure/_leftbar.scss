@@ -47,6 +47,19 @@ File: Leftbar
     flex: 1;
     padding: 0;
     display: block;
+    .page-content {
+        width: 100%;
+        position: relative;
+        min-height: calc(100vh - #{$header-height} - 2px);
+        padding: 0 8px 52px 8px;
+        display: inline-block;
+    }
+}
+
+.admin .page-wrapper {
+    flex: 1;
+    padding: 0;
+    display: block;
     margin-left: $sidebar-width;
     .page-content {
         width: 100%;

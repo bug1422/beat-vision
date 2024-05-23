@@ -16,15 +16,25 @@ File: Topbar
   min-height: $header-height;
   position: relative;
   border-bottom: 1px solid $border;
-  .nav-link {
-      padding: 0 0.75rem;
-      color: $header-item-color;
-      line-height: $header-height;
-      max-height: $header-height;
-      .nav-icon {
-          font-size: 18px;
-      }
-  }
+  
+  .brand {
+    text-align: center;
+    height: $header-height;
+    .logo {
+        .logo-sm {
+            height: 52px;
+        }
+        .logo-lg {
+            height: 52px;
+            margin-left: 2px;
+            display: $logo-dark;
+            &.logo-light{
+              display: $logo-light;
+          }
+        }
+    }
+}
+
   .dropdown-toggle {
       &:after {
           content: initial;

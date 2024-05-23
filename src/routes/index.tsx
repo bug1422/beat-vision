@@ -6,6 +6,10 @@ const Register = lazy(() => import("@/pages/authentication/Register"));
 const RecoverPW = lazy(() => import("@/pages/authentication/RecoverPW"));
 const Error404 = lazy(() => import("@/pages/authentication/Error404"));
 const Error500 = lazy(() => import("@/pages/authentication/Error500"));
+
+// Pages
+const HomePage = lazy(()=> import("@/pages/pages/Home"))
+
 //Applicatoin create page
 const MusicDetail = lazy(() => import("@/pages/music-detail"));
 export type RoutesProps = {
@@ -26,7 +30,7 @@ const appsRoutes: RoutesProps[] = [
   {
     path: "/",
     name: "Home Page",
-    element: <Navigate to="/home" />,
+    element: <HomePage/>,
   },
   {
     path: "/music-detail/detail",

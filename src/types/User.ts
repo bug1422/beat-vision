@@ -10,7 +10,7 @@ export type User = {
 }
 
 export type AuthContextType = {
-    user: User | undefined
+    user: User | undefined,
     isAuthenticated: boolean
     saveSession: (session: User) => void
     removeSession: () => void

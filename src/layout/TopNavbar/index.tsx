@@ -3,6 +3,10 @@ import { Button, NavLink } from 'react-bootstrap'
 import { useThemeContext } from '@/context'
 import { Notifications, ProfileDropdown, SearchBar } from './components'
 import { notifications } from './data'
+import { Link } from 'react-router-dom'
+import logoDark from '@/assets/images/logo-dark.png'
+import logoSM from '@/assets/images/logo-sm.png'
+import logoImg from '@/assets/images/logo.png'
 
 const TopNavbar = () => {
 	const { settings, updateSideNavMode } = useThemeContext()
@@ -24,21 +28,17 @@ const TopNavbar = () => {
 						<Notifications notifications={notifications} />
 						<ProfileDropdown />
 					</ul>
-					<ul className="list-unstyled topbar-nav mb-0">
+					<ul className="list-unstyled topbar-nav mb-0 ms-2">
 						<li>
-							<button
-								className="nav-link button-menu-mobile"
-								onClick={handleLeftMenuCallBack}
-							>
-								<FiMenu className="align-self-center topbar-icon" />
-							</button>
-						</li>
-						<li className="creat-btn">
-							<NavLink>
-								<Button variant="soft-primary" size="sm" role="button">
-									<i className="fas fa-plus me-2"></i>New Task
-								</Button>
-							</NavLink>
+							<div className="brand">
+								<Link to="/" className="logo">
+								<div className="d-flex gap-1 justify-content-center">
+									<span>
+										<img src={logoSM} alt="logo-large" className="logo-sm" />
+									</span>
+								</div>
+								</Link>
+							</div>
 						</li>
 					</ul>
 				</nav>

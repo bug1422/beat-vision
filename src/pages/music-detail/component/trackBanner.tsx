@@ -1,5 +1,4 @@
 import {
-  Badge,
   Button,
   Card,
   CardBody,
@@ -17,11 +16,12 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 export default function TrackBanner() {
   const [tags, setTag] = useState(["contry", "pop", "hiphop", "fonk"]);
-  const tagList = tags.map((item, index) => (
+  const tagList = tags.map((item, _index) => (
     <>
       <Button className="d-inline m-1 bg-secondary "># {item}</Button>
     </>
   ));
+  setTag(tags);
   return (
     <>
       <div>

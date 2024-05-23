@@ -3,7 +3,6 @@ import { Preloader } from "@/components";
 import { useThemeContext } from "@/context";
 import { useViewPort } from "@/hooks";
 import MyTopNavbar from "./MyTopNavbar";
-const TopNavbar = lazy(() => import("./TopNavbar"));
 const Footer = lazy(() => import("./Footer"));
 // const LeftSideBar = lazy(() => import("./LeftSidebar"));
 
