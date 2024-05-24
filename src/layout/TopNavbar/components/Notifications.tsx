@@ -58,7 +58,7 @@ const Notifications = ({
 	notifications: NotificationType[]
 }) => {
 	return (
-		<Dropdown as="li" className="notification-list">
+		<Dropdown as="div">
 			<DropdownToggle
 				as="a"
 				className="nav-link arrow-none waves-light waves-effect"

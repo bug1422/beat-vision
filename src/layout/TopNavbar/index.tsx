@@ -17,19 +17,7 @@ const TopNavBar = () => {
 					<Link className="navbar-brand" to="#">
 						<img src={logoSM} height={52} className="mr-1" />
 					</Link>
-					<button
-						onClick={toggle}
-						className="navbar-toggler"
-						type="button"
-						data-bs-toggle="collapse"
-						data-bs-target="#navbarSupportedContent2"
-						aria-controls="navbarSupportedContent"
-						aria-expanded="false"
-						aria-label="Toggle navigation"
-					>
-						<span className="navbar-toggler-icon" />
-					</button>
-					<Collapse in={isOpen} className="navbar-collapse">
+					<Collapse in={isOpen} className="navbar-collapse ">
 						<div>
 						<form className="me-auto d-flex app-search-topbar">
 								<div className="input-group">
@@ -70,14 +58,23 @@ const TopNavBar = () => {
 										Support
 									</Link>
 								</li>
-								<Notifications notifications={notifications} />
-								<ProfileDropdown/>
-								{/* <Link className="user-avatar" to="">
-										<img src={fetchAvt()} alt="user" className="thumb-md rounded-circle" />
-									</Link> */}
 							</ul>
 						</div>
 					</Collapse>
+					<Notifications notifications={notifications}/>
+					<ProfileDropdown/>
+					<button
+						onClick={toggle}
+						className="navbar-toggler"
+						type="button"
+						data-bs-toggle="collapse"
+						data-bs-target="#navbarSupportedContent2"
+						aria-controls="navbarSupportedContent"
+						aria-expanded="false"
+						aria-label="Toggle navigation"
+					>
+						<span className="navbar-toggler-icon" />
+					</button>
 				</div>
 			</nav>
 		</>

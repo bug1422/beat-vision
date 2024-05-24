@@ -22,7 +22,7 @@ const ProfileDropdown = () => {
 	}
 
 	return (
-		<Dropdown as="li" className='align-self-center'>
+		<Dropdown as="div" className='align-self-center'>
 			<DropdownToggle
 				as="a"
 				className="nav-link arrow-none waves-effect waves-light nav-user"
@@ -30,7 +30,7 @@ const ProfileDropdown = () => {
 				<Image
 					src={fetchAvt}
 					alt="profile-user"
-					className="rounded-circle thumb-xs"
+					className="rounded-circle thumb-md"
 				/>
 			</DropdownToggle>
 			<DropdownMenu className="dropdown-menu-end">
