@@ -1,4 +1,4 @@
-import { Badge, Card, CardHeader, Carousel, CarouselItem, Col, FormControl, Pagination, Row } from "react-bootstrap"
+import { Badge, Card, CardBody, CardHeader, Carousel, CarouselCaption, CarouselItem, Col, FormControl, Pagination, Row } from "react-bootstrap"
 import demoBeat from '@/assets/images/products/01.png'
 import img1 from '@/assets/images/homepage/img1.jpg'
 import img2 from '@/assets/images/homepage/img2.jpg'
@@ -51,7 +51,7 @@ const Section1 = () => {
 }
 
 const Section2 = () => {
-    const [list, _setList] = useState(beats)
+    const [list, setList] = useState(beats)
     const [currentPage, setCurrentPage] = useState(1)
     const itemsPerPage = 4;
     const lastPage = Math.floor(list.length / itemsPerPage) + 1;
@@ -60,7 +60,7 @@ const Section2 = () => {
     const currentItems = list.slice(startIndex, endIndex);
 
     const handlePageChange = (pageNumber: number) => {
-        if (pageNumber > 0 && pageNumber < lastPage + 1) {
+        if(pageNumber > 0 && pageNumber < lastPage + 1){
             setCurrentPage(pageNumber);
         }
     }
@@ -72,7 +72,7 @@ const Section2 = () => {
             </div>
             <div className="content">
                 <Row className="justify-content-center">
-                    {currentItems.map((beat, _idx) => (
+                    {currentItems.map((beat, idx) => (
                         <Col xs={2}>
                             <Card>
                                 <img src={demoBeat} className="card-img-top img-fluid bg-light-alt" />
@@ -118,18 +118,4 @@ const Section2 = () => {
     )
 }
 
-const Section3 = () => {
-    return (<>
-        <div className="section3 pt-2">
-
-        </div>
-    </>)
-}
-
-const Section4 = () => {
-    return (<>
-        <div className="section4 pt-2">
-        </div>
-    </>)
-}
-export { Section1, Section2, Section3, Section4 }
+export { Section1, Section2 }

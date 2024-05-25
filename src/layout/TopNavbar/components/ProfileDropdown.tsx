@@ -6,6 +6,7 @@ import {
 	Image,
 } from 'react-bootstrap'
 
+import user5 from '@/assets/images/users/user-5.jpg'
 import { FiPower, FiSettings, FiUser } from 'react-icons/fi'
 import { useAuthContext } from '@/context'
 import { useNavigate } from 'react-router-dom'
