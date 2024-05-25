@@ -1,16 +1,5 @@
 import user from '@/assets/images/avatar.jpg'
 
-type User = {
-	id: number
-	email?: string
-	username: string
-	password: string
-	firstName: string
-	lastName: string
-	role: string
-	token: string
-}
-
 type Beat = {
     title: string
     author: string,

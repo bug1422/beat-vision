@@ -1,4 +1,4 @@
-import { CardGroup, Card, Row, Button, CardBody, Col } from "react-bootstrap";
+import { Card, Row, Button, CardBody, Col } from "react-bootstrap";
 import appLogo from "../../../assets/images/logo-sm-dark.png";
 import { useState } from "react";
 
@@ -35,8 +35,8 @@ const licensesFake: Array<License> = [
   },
 ];
 export default function TrackDetail() {
-  const [isPaid, setIsPaid] = useState(false);
-  const [licenses, setLicenses] = useState<Array<License>>(licensesFake);
+  const [isPaid, _setIsPaid] = useState(false);
+  const [licenses, _setLicenses] = useState<Array<License>>(licensesFake);
   return (
     <>
       <Row>
@@ -69,7 +69,7 @@ export default function TrackDetail() {
         <hr></hr>
         <div>
           <Row>
-            {licenses.map((licence, inx) => {
+            {licenses.map((licence, _inx) => {
               return (
                 <>
                   <Col xs={4}>

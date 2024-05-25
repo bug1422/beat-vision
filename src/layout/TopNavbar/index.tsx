@@ -1,11 +1,10 @@
-import { Button, Collapse, NavLink } from 'react-bootstrap'
+import { Button, Collapse } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import logoDark from '@/assets/images/logo-dark.png'
+// import logoDark from '@/assets/images/logo-dark.png'
 import logoSM from '@/assets/images/logo-sm.png'
-import logoImg from '@/assets/images/logo.png'
+// import logoImg from '@/assets/images/logo.png'
 import { useToggle } from '@/hooks'
-import { fetchAvt } from '@/testing/FetchFakeData'
-import { Notifications, ProfileDropdown, SearchBar } from './components'
+import { Notifications, ProfileDropdown } from './components'
 import { notifications } from './data'
 
 const TopNavBar = () => {

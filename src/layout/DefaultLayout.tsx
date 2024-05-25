@@ -1,5 +1,5 @@
 import { type ReactNode, Suspense, lazy } from 'react'
-const LeftSideBar = lazy(() => import('./LeftSidebar'))
+// const LeftSideBar = lazy(() => import('./LeftSidebar'))
 const TopNavbar = lazy(() => import('./TopNavbar'))
 const loading = () => <div />
 
