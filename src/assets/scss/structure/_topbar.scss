@@ -12,6 +12,10 @@ File: Topbar
  width: 100%;
  z-index: 1001;
 }
+.header{
+    padding-left: 20%; 
+    padding-right: 10% 
+}
 
 .navbar-custom {
   background: $header-light-bg;
@@ -128,7 +132,7 @@ File: Topbar
     }
     .page-wrapper {
         .page-content{
-            margin-top: $header-height;
+            margin-top: 6px;
         }
     }
 }

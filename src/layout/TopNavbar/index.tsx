@@ -13,7 +13,7 @@ const TopNavBar = () => {
 	return (
 		<>
 		<nav className="navbar py-0 navbar-expand-lg navbar-light bg-light">
-				<div className="px-4 container-fluid">
+				<div className="px-5 container-fluid">
 					<Link className="navbar-brand" to="#">
 						<img src={logoSM} height={52} className="mr-1" />
 					</Link>

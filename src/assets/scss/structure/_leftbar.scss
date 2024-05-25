@@ -51,7 +51,7 @@ File: Leftbar
         width: 100%;
         position: relative;
         min-height: calc(100vh - #{$header-height} - 2px);
-        padding: 0 8px 52px 8px;
+        padding-bottom: 52px;
         display: inline-block;
     }
 }
