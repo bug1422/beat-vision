@@ -43,3 +43,23 @@ $title-color: #ffaa1d;
 .section2{
     height: $section2-height;
 }
+
+@media (max-width: 1316.98px) {
+    .section1{
+        height: $section1-height - 200px;
+        .title{
+            .text{
+                font-size: $title-size/2;
+            }
+        }
+    }
+}
+
+@media (max-width: 1024px) {
+}
+
+@media (max-width: 768px) and (max-width: 1023.98px){
+}
+
+@media (max-width: 375px){
+}
