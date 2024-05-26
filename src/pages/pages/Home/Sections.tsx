@@ -11,7 +11,7 @@ const Section1 = () => {
     const Title = (title: string) => {
         return (
             <div className="overlay title">
-                <div className="text text-center">{title}</div>
+                <div className="home-text text-center">{title}</div>
             </div>
         )
     };
@@ -51,7 +51,7 @@ const Section1 = () => {
 }
 
 const Section2 = () => {
-    const [list, _ ] = useState(beats)
+    const [list, _] = useState(beats)
     const [currentPage, setCurrentPage] = useState(1)
     const itemsPerPage = 4;
     const lastPage = Math.floor(list.length / itemsPerPage) + 1;
@@ -66,8 +66,8 @@ const Section2 = () => {
     }
 
     return (
-        <div className="section2 pt-2">
-            <div className="title ps-4 my-3">
+        <div className="section2 pt-2 pb-4">
+            <div className="home-text ps-4 my-3">
                 Popular Beats
             </div>
             <div className="content">
@@ -118,9 +118,80 @@ const Section2 = () => {
     )
 }
 const Section3 = () => {
-    return(<></>)
+    return (<>
+        <Row className="section3 pt-2">
+            <Col xl={5} className="left-col d-flex justify-content-end pe-2 align-items-center">
+                <div className="home-text">
+                    Brough to you by
+                </div>
+            </Col>
+            <Col xl={6} className="right-col ps-3 d-flex justify-content-around align-items-center">
+                <div className="sponsor">
+                    <img src={demoBeat} className="img-fluid"/>
+                </div>
+                <div className="sponsor">
+                    <img src={demoBeat} className="img-fluid"/>
+                </div>
+                <div className="sponsor">
+                    <img src={demoBeat} className="img-fluid"/>
+                </div>
+                <div className="sponsor">
+                    <img src={demoBeat} className="img-fluid"/>
+                </div>
+            </Col>
+        </Row>
+    </>)
 }
 const Section4 = () => {
-    return(<></>)
+    return (<>
+        <div className="section4 pt-2">
+            <Row>
+                <Col xl={4} className="left-col py-3 my-3">
+                    <div className="home-text">
+                        Why choose beat vision
+                    </div>
+                </Col>
+                <Col />
+                <Col xl={6} className="right-col d-flex flex-column ">
+                    <div className="reason my-3">
+                        <div className="home-text">Reason A</div>
+                    </div>
+                    <div className="reason my-3">
+                        <div className="home-text">Reason B</div>
+                    </div>
+                    <div className="reason my-3">
+                        <div className="home-text">Reason C</div>
+                    </div>
+                </Col>
+            </Row>
+        </div>
+    </>)
 }
-export { Section1, Section2, Section3, Section4 }
+const Section5 = () => {
+    return (<>
+        <div className="section5 pt-2">
+
+        </div>
+    </>)
+}
+const Section6 = () => {
+    return (<>
+        <div className="section6 py-2 d-flex justify-content-center">
+            <Card>
+                <Row className="text-center">
+                    <Col>Left</Col>
+                    <Col>Right</Col>
+                </Row>
+            </Card>
+        </div>
+    </>)
+}
+const SectionList =[
+    Section1,
+    Section2,
+    Section3,
+    Section4,
+    Section5,
+    Section6
+]
+export { SectionList }

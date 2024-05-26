@@ -11,7 +11,7 @@ const TopNavBar = () => {
 	const { isOpen, toggle } = useToggle()
 	return (
 		<>
-		<nav className="navbar py-0 navbar-expand-lg navbar-light bg-light">
+		<nav className="navbar py-0 navbar-expand-lg navbar-light header">
 				<div className="px-5 container-fluid">
 					<Link className="navbar-brand" to="#">
 						<img src={logoSM} height={52} className="mr-1" />
@@ -38,22 +38,22 @@ const TopNavBar = () => {
 							</form>
 							<ul className="navbar-nav mb-2 mb-lg-0">
 								<li className="mx-2 my-2 nav-item">
-									<Link className="nav-link active" aria-current="page" to="#">
+									<Link className="nav-link active header-text" aria-current="page" to="#">
 										Home
 									</Link>
 								</li>
 								<li className="mx-2 my-2 nav-item">
-									<Link className="nav-link active" aria-current="page" to="#">
+									<Link className="nav-link active header-text" aria-current="page" to="#">
 										Beats
 									</Link>
 								</li>
 								<li className="mx-2 my-2 nav-item">
-									<Link className="nav-link active" to="#">
+									<Link className="nav-link active header-text" to="#">
 										Products
 									</Link>
 								</li>
 								<li className="mx-2 my-2 nav-item">
-									<Link className="nav-link active" to="#">
+									<Link className="nav-link active header-text" to="#">
 										Support
 									</Link>
 								</li>
