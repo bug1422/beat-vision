@@ -11,7 +11,11 @@ import {
 import "bootstrap/dist/css/bootstrap.min.css";
 import defautAudioImage from "../../../../public/default-image/defaultSoundwave.jpg";
 import "../index.css";
+<<<<<<< Updated upstream
 import someRandomHeart from "@/assets/images/heart_1077035.png";
+=======
+import someRandomHeart from "#/heart_1077035.png";
+>>>>>>> Stashed changes
 import { useState } from "react";
 import { Link } from "react-router-dom";
 export default function TrackBanner() {

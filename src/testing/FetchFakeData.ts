@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 import user from '@/assets/images/avatar.jpg'
 
 type User = {
@@ -10,6 +11,9 @@ type User = {
 	role: string
 	token: string
 }
+=======
+import user from '#/avatar.jpg'
+>>>>>>> Stashed changes
 
 type Beat = {
     title: string

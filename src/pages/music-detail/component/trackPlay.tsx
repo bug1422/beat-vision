@@ -4,8 +4,13 @@ import "../index.css";
 import { MutableRefObject, useEffect, useRef, useState } from "react";
 import sampleAudio1 from "../../../assets/audio/defaultAudio.mp3";
 import sampleAudio2 from "../../../assets/audio/defaultAudio2.mp3";
+<<<<<<< Updated upstream
 import someRandomHeart from "@/assets/images/heart_1077035.png";
 import AudioPlayer from "react-h5-audio-player";
+=======
+import someRandomHeart from "#/heart_1077035.png";
+import _AudioPlayer from "react-h5-audio-player";
+>>>>>>> Stashed changes
 import "react-h5-audio-player/lib/styles.css";
 
 import WaveSurfer from "wavesurfer.js";

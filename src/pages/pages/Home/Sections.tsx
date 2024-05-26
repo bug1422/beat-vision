@@ -1,8 +1,16 @@
+<<<<<<< Updated upstream
 import { Badge, Card, CardBody, CardHeader, Carousel, CarouselCaption, CarouselItem, Col, FormControl, Pagination, Row } from "react-bootstrap"
 import demoBeat from '@/assets/images/products/01.png'
 import img1 from '@/assets/images/homepage/img1.jpg'
 import img2 from '@/assets/images/homepage/img2.jpg'
 import img3 from '@/assets/images/homepage/img3.jpg'
+=======
+import { Badge, Card, CardHeader, Carousel, CarouselItem, Col, FormControl, Pagination, Row } from "react-bootstrap"
+import demoBeat from '/images/products/01.png'
+import img1 from '/images/homepage/img1.jpg'
+import img2 from '/images/homepage/img2.jpg'
+import img3 from '/images/homepage/img3.jpg'
+>>>>>>> Stashed changes
 import { beats } from "@/testing/FetchFakeData"
 import { useState } from "react"
 
@@ -60,7 +68,7 @@ const Section2 = () => {
     const currentItems = list.slice(startIndex, endIndex);
 
     const handlePageChange = (pageNumber: number) => {
-        if(pageNumber > 0 && pageNumber < lastPage + 1){
+        if (pageNumber > 0 && pageNumber < lastPage + 1) {
             setCurrentPage(pageNumber);
         }
     }
@@ -117,5 +125,10 @@ const Section2 = () => {
         </div>
     )
 }
-
-export { Section1, Section2 }
+const Section3 = () => {
+    return(<></>)
+}
+const Section4 = () => {
+    return(<></>)
+}
+export { Section1, Section2, Section3, Section4 }

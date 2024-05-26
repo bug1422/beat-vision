@@ -1,7 +1,12 @@
 import { Card, CardBody, Image } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
+<<<<<<< Updated upstream
 import logoDark from '@/assets/images/logo-sm-dark.png'
 import error from '@/assets/images/error.svg'
+=======
+import logoDark from '#/logo-sm-dark.png'
+import error from '#/error.svg'
+>>>>>>> Stashed changes
 import { PageMetaData } from '@/components'
 import AuthLayout from '../AuthLayout'
 

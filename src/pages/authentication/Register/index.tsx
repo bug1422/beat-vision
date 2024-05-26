@@ -14,7 +14,11 @@ import {
 	TabPane,
 } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
+<<<<<<< Updated upstream
 import logoDark from '@/assets/images/logo-sm-dark.png'
+=======
+import logoDark from '#/logo-sm-dark.png'
+>>>>>>> Stashed changes
 import { PageMetaData } from '@/components'
 import AuthLayout from '../AuthLayout'
 import RegisterForm from './RegisterForm'

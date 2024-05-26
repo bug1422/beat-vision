@@ -31,6 +31,7 @@
     "chart.js": "^4.4.2",
     "clsx": "^2.1.0",
     "cookies-next": "^4.1.1",
+    "dotenv": "^16.4.5",
     "filepond": "^4.30.6",
     "filepond-plugin-file-encode": "^2.1.14",
     "filepond-plugin-image-exif-orientation": "^1.0.11",
@@ -72,7 +73,12 @@
   },
   "devDependencies": {
     "@types/react": "^18.2.66",
+<<<<<<< Updated upstream
     "@types/react-dom": "^18.2.22",
+=======
+    "@types/react-dom": "^18.0.0",
+    "@types/react-helmet": "^6.1.11",
+>>>>>>> Stashed changes
     "@typescript-eslint/eslint-plugin": "^7.2.0",
     "@typescript-eslint/parser": "^7.2.0",
     "@vitejs/plugin-react": "^4.2.1",

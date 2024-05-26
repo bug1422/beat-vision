@@ -1,5 +1,10 @@
+<<<<<<< Updated upstream
 import { CardGroup, Card, Row, Button, CardBody, Col } from "react-bootstrap";
 import appLogo from "../../../assets/images/logo-sm-dark.png";
+=======
+import { Card, Row, Button, CardBody, Col } from "react-bootstrap";
+import appLogo from "#/logo-sm-dark.png";
+>>>>>>> Stashed changes
 import { useState } from "react";
 
 type License = {
