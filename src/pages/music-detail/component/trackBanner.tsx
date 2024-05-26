@@ -1,13 +1,4 @@
-import {
-  Button,
-  Card,
-  CardBody,
-  CardHeader,
-  CardTitle,
-  Col,
-  Image,
-  Row,
-} from "react-bootstrap";
+import { Button, Card, CardBody, CardHeader, CardTitle, Col, Image, Row } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import defautAudioImage from "../../../../public/default-image/defaultSoundwave.jpg";
 import "../index.css";
@@ -21,7 +12,7 @@ export default function TrackBanner() {
       <Button className="d-inline m-1 bg-secondary "># {item}</Button>
     </>
   ));
-  setTag(tags);
+  //setTag(tags);
   return (
     <>
       <div>

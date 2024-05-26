@@ -3,7 +3,7 @@ import { Preloader } from "@/components";
 import { useThemeContext } from "@/context";
 import { useViewPort } from "@/hooks";
 import MyTopNavbar from "./MyTopNavbar";
-const Footer = lazy(() => import("./Footer"));
+const Footer = lazy(() => import("../Footer"));
 // const LeftSideBar = lazy(() => import("./LeftSidebar"));
 
 const Layout_NoSidebar = ({ children }: { children: ReactNode }) => {
@@ -33,9 +33,9 @@ const Layout_NoSidebar = ({ children }: { children: ReactNode }) => {
   return (
     <Suspense fallback={<div />}>
       <div className="page-wrapper">
-        <Suspense fallback={<div />}>
+        {/* <Suspense fallback={<div />}>
           <MyTopNavbar />
-        </Suspense>
+        </Suspense> */}
         <div className="page-content">
           <div className="container-fluid">
             <Suspense fallback={<Preloader />}>{children}</Suspense>

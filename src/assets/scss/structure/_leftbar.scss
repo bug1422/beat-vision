@@ -9,6 +9,7 @@ File: Leftbar
     min-width: $sidebar-width;
     max-width: $sidebar-width;
     background-color: $sidebar-light-bg;
+    margin-top: $header-height ;
     min-height: 100vh;
     transition: .3s;
     position: fixed;
@@ -56,7 +57,7 @@ File: Leftbar
     }
 }
 
-.admin .page-wrapper {
+.page-wrapper-admin {
     flex: 1;
     padding: 0;
     display: block;

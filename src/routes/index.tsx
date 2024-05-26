@@ -1,3 +1,6 @@
+import ProducerPage from "@/pages/producer-page";
+import ProducerPublish from "@/pages/producer-page/producer-publish";
+import ProducerSale from "@/pages/producer-page/producer-sales";
 import { lazy } from "react";
 import { RouteProps } from "react-router";
 //Authentication
@@ -12,6 +15,9 @@ const HomePage = lazy(()=> import("@/pages/pages/Home"))
 
 //Applicatoin create page
 const MusicDetail = lazy(() => import("@/pages/music-detail"));
+
+// Producer page
+const ProducerMusics = lazy(() => import("@/pages/producer-page/producer-music/index"));
 export type RoutesProps = {
   path: RouteProps["path"];
   name: string;
@@ -26,6 +32,28 @@ const dashboardRoutes: RoutesProps[] = [
   //   },
 ];
 
+const producerRoute: RoutesProps[] = [
+  {
+    path: "/user/id/producer-page",
+    name: "Producer manager page",
+    element: <ProducerPage />,
+  },
+  {
+    path: "/user/id/producer-page/my-music",
+    name: "producer music management",
+    element: <ProducerMusics />,
+  },
+  {
+    path: "/user/id/producer-page/my-publish",
+    name: "producer publish management",
+    element: <ProducerPublish />,
+  },
+  {
+    path: "/user/id/producer-page/my-sale",
+    name: "producer page",
+    element: <ProducerSale />,
+  },
+];
 const appsRoutes: RoutesProps[] = [
   {
     path: "/",
@@ -73,4 +101,5 @@ const allAdminRoutes = [...dashboardRoutes];
 
 const allBlankRoutes = [...authRoutes];
 
-export { allAdminRoutes, allBlankRoutes, allCustomerRoutes };
+const allProducerRoutes = [...producerRoute];
+export { allAdminRoutes, allBlankRoutes, allCustomerRoutes, allProducerRoutes };

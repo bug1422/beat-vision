@@ -28,7 +28,9 @@ export default function TrackPlay() {
   const [isPlay, setIsPlay] = useState(false);
   const audioContainer = useRef<HTMLElement>(null);
   const waveSurferRef = useRef<WaveSurfer | null>(null);
-  const [currentlySelectAudio, _setCurrentlySelectAudio] = useState<TrackType>(DefaultAudioArray[0]);
+  const [currentlySelectAudio, _setCurrentlySelectAudio] = useState<TrackType>(
+    DefaultAudioArray[0]
+  );
   const [volume, SetVolume] = useState("100");
   useEffect(() => {
     if (audioContainer.current) {

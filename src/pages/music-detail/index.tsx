@@ -5,7 +5,7 @@ import TrackPlay from "./component/trackPlay";
 import TrackDetail from "./component/trackDetails";
 import { TrackComments } from "./component/trackComment";
 import TrackRelated from "./component/trackRelated";
-import Layout_NoSidebar from "@/layout/Layout_NoSidebar";
+import Layout_NoSidebar from "@/layout/MyCustomLayout/Layout_NoSidebar";
 // import { TrackCommentSection } from "./component/trackComment";
 
 export default function MusicDetail() {
