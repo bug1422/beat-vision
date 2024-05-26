@@ -5,6 +5,9 @@ type Beat = {
     author: string,
     tag: string[]
 }
+type Artist = {
+    author: string,
+}
 const fetchAvt = user
 const beats: Beat[] = [
     {
@@ -53,5 +56,36 @@ const beats: Beat[] = [
         tag: ["Pop","Blue","Sad"]
     }
 ]
-
-export {fetchAvt, beats}
+const artists: Artist[] = [
+    {
+        author: "PhantomXXX"
+    },
+    {
+        author: "Ronny J"
+    },
+    {
+        author: "10 Grands"
+    },
+    {
+        author: "Wonder Beats"
+    },
+    {
+        author: "Mac Park"
+    },
+    {
+        author: "ABC"
+    },
+    {
+        author: "Col"
+    },
+    {
+        author: "Bas"
+    },
+    {
+        author: "Tizzy"
+    },
+    {
+        author: "Pam"
+    },
+]
+export {fetchAvt, beats, artists}

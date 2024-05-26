@@ -1,13 +1,13 @@
-$section1-height: 800px;
+$section1-height: 670px;
 $section2-height: 360px;
 $section3-height: 100px;
 $section4-height: 260px;
-$section5-height: 750px;
-$section6-height: 400px;
+$section5-height: 360px;
+$section6-height: 450px;
 
 $title-size: 120px;
 $title-color: #ffaa1d;
-
+$artist-thumb-size: 200px;
 .home-text {
     font: $font-family-sans-serif;
     font-size: 60px;
@@ -56,7 +56,9 @@ $title-color: #ffaa1d;
 }
 
 .section2 {
-    background: linear-gradient(to bottom, rgb(50, 50, 50), rgb(0, 0, 0));;
+    background: linear-gradient(to bottom, rgb(50, 50, 50), rgb(0, 0, 0));
+    ;
+
     .home-text {
         font-family: $font-secondary;
         font-size: 52px;
@@ -92,39 +94,44 @@ $title-color: #ffaa1d;
         background-color: white;
     }
 }
+
 .section3 {
     height: $section3-height;
     background-color: black;
-    .left-col{
+
+    .left-col {
         height: 100%;
-        .home-text{
+
+        .home-text {
             font-size: 25px;
             color: white;
         }
     }
-    .right-col{
-        .sponsor{
-            img{
+
+    .right-col {
+        .sponsor {
+            img {
                 width: 70px;
             }
         }
     }
 }
+
 .section4 {
     background-color: rgb(66, 66, 66);
     height: $section4-height;
     $skew-deg: 30deg;
     padding: 20px 0px;
-    
+
     .left-col {
         position: relative;
         height: 100%;
         background-color: #ffaa1d;
         transform: skew($skew-deg);
-        left: -20px;
 
         .home-text {
-            margin-left: 10%;
+            color: white;
+            margin-left: 7%;
             width: 100%;
             transform: skew(-$skew-deg);
         }
@@ -132,23 +139,28 @@ $title-color: #ffaa1d;
 
     .right-col {
         height: fit-content;
+
         .reason {
             position: relative;
             transform: skew($skew-deg);
             background-color: whitesmoke;
+
             .home-text {
                 font-size: 30px;
                 transform: skew(-$skew-deg);
                 margin-left: 10%;
             }
         }
-        .reason:nth-child(1){
+
+        .reason:nth-child(1) {
             right: -20px;
         }
-        .reason:nth-child(2){
+
+        .reason:nth-child(2) {
             right: -60px;
         }
-        .reason:nth-child(3){
+
+        .reason:nth-child(3) {
             right: -100px;
         }
     }
@@ -156,16 +168,76 @@ $title-color: #ffaa1d;
 
 .section5 {
     background-image: url("/public/images/homepage/dj-background.jpg");
-    height: $section5-height;
+    .home-text {
+        font-family: $font-secondary;
+        font-size: 52px;
+        font-weight: bold;
+        color: rgb(238, 255, 0);
+        // background-color: rgb(253, 154, 61);
+        // box-shadow: 0px 15px 0px linear-gradient(,rgb(75, 75, 75));
+    }
+    .img{
+        width: 60px;
+    }
+    .content {
+        height: $section5-height;
+        padding: 0px 40px;
+        .home-text {
+            font-size: 23px;
+            font-weight: bold;
+            color: rgb(0, 0, 0);
+            // background-color: rgb(253, 154, 61);
+            // box-shadow: 0px 15px 0px linear-gradient(,rgb(75, 75, 75));
+        }
+        .row{
+            height: 100%;
+        }
+    }
+    .artist{
+        height: 100%;
+        .img{
+            position: relative;
+            width: $artist-thumb-size;
+            height: $artist-thumb-size;
+        }
+    }
 }
 
 .section6 {
+    $padding-y: 20px;
+
     height: $section6-height;
     background-color: black;
-    .card{
-        width: 80%;
+    padding: $padding-y 0px;
+
+    .content {
+        background-color: #FED45C;
         height: 100%;
-        background-color: #993d00;
+
+
+        .left-card {}
+
+        .right-card {
+            width: 90%;
+
+            .title {
+                color: #FED45C;
+            }
+
+            .description {
+                font-size: large;
+                font-weight: bold;
+            }
+
+            .submit {
+                background-color: #ffb338;
+                border: none;
+            }
+
+            .submit:hover {
+                background-color: #ff9d00;
+            }
+        }
     }
 }
 

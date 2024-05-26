@@ -1,9 +1,9 @@
-import { Badge, Card, CardHeader, Carousel, CarouselItem, Col, FormControl, Pagination, Row } from "react-bootstrap"
+import { Badge, Button, Card, CardBody, CardHeader, Carousel, CarouselItem, Col, Form, FormControl, Pagination, Row } from "react-bootstrap"
 import demoBeat from '/images/products/01.png'
 import img1 from '/images/homepage/img1.jpg'
 import img2 from '/images/homepage/img2.jpg'
 import img3 from '/images/homepage/img3.jpg'
-import { beats } from "@/testing/FetchFakeData"
+import { beats, artists } from "@/testing/FetchFakeData"
 import { useState } from "react"
 
 const Section1 = () => {
@@ -73,7 +73,7 @@ const Section2 = () => {
             <div className="content">
                 <Row className="justify-content-center">
                     {currentItems.map((beat, _idx) => (
-                        <Col xs={2}>
+                        <Col xs={2} sm={1}>
                             <Card>
                                 <img src={demoBeat} className="card-img-top img-fluid bg-light-alt" />
                                 <CardHeader>
@@ -127,16 +127,16 @@ const Section3 = () => {
             </Col>
             <Col xl={6} className="right-col ps-3 d-flex justify-content-around align-items-center">
                 <div className="sponsor">
-                    <img src={demoBeat} className="img-fluid"/>
+                    <img src={demoBeat} className="img-fluid" />
                 </div>
                 <div className="sponsor">
-                    <img src={demoBeat} className="img-fluid"/>
+                    <img src={demoBeat} className="img-fluid" />
                 </div>
                 <div className="sponsor">
-                    <img src={demoBeat} className="img-fluid"/>
+                    <img src={demoBeat} className="img-fluid" />
                 </div>
                 <div className="sponsor">
-                    <img src={demoBeat} className="img-fluid"/>
+                    <img src={demoBeat} className="img-fluid" />
                 </div>
             </Col>
         </Row>
@@ -168,25 +168,61 @@ const Section4 = () => {
     </>)
 }
 const Section5 = () => {
-    return (<>
-        <div className="section5 pt-2">
-
+    return (
+        <div className="section5 pt-2 pb-4">
+            <div className="home-text ps-4 my-3">
+                Popular Artist
+            </div>
+            <div className="content pt-5">
+                <Row className="d-flex justify-content-center">
+                    {artists.slice(0,5).map((artist, _idx) => (
+                        <Col className="artist">
+							<img src={demoBeat} alt="user" className="img rounded-circle thumb-xl" />
+                            <div className="home-text text-end mt-2 me-5">{artist.author}</div>
+                        </Col>
+                    ))}
+                </Row>
+            </div>
         </div>
-    </>)
+    )
 }
 const Section6 = () => {
     return (<>
-        <div className="section6 py-2 d-flex justify-content-center">
-            <Card>
-                <Row className="text-center">
-                    <Col>Left</Col>
-                    <Col>Right</Col>
-                </Row>
-            </Card>
+        <div className="section6">
+            <Row className="content align-items-center">
+                <Col xl={6}>
+                    <Card className="left-card">
+                        <CardBody>
+                            <div className="home-text">FAQ</div>
+                        </CardBody>
+                    </Card>
+                </Col>
+                <Col xl={6}>
+                    <Card className="right-card">
+                        <CardBody>
+                            <div className="pb-2">
+                                <div className="home-text title ">Don't miss a Beat!</div>
+                                <div className="description">Want to learn more about BeatVision? Enter your name and email address below.</div>
+                            </div>
+                            <Form>
+                                <Form.Group className="my-3">
+                                    <Form.Control type="text" placeholder="First Name" />
+                                </Form.Group>
+                                <Form.Group className="my-3">
+                                    <Form.Control type="text" placeholder="Email" />
+                                </Form.Group>
+                                <Button type="submit" className="me-1 submit">
+                                    Subscribe
+                                </Button>
+                            </Form>
+                        </CardBody>
+                    </Card>
+                </Col>
+            </Row>
         </div>
     </>)
 }
-const SectionList =[
+const SectionList = [
     Section1,
     Section2,
     Section3,
