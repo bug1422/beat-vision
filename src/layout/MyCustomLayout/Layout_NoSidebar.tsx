@@ -3,7 +3,7 @@ import { Preloader } from "@/components";
 import { useThemeContext } from "@/context";
 import { useViewPort } from "@/hooks";
 import MyTopNavbar from "./MyTopNavbar";
-const Footer = lazy(() => import("./Footer"));
+const Footer = lazy(() => import("../Footer"));
 // const LeftSideBar = lazy(() => import("./LeftSidebar"));
 
 const Layout_NoSidebar = ({ children }: { children: ReactNode }) => {

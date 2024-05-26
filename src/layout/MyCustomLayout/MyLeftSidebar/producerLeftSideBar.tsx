@@ -26,7 +26,7 @@ const leftMenuItems: MenuItemType[] = [
     label: "my sale",
     isTitle: false,
     icon: FiMusic,
-    url: "#",
+    url: "/user/id/producer-page/my-sale",
   },
 ];
 

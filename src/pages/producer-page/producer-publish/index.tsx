@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ButtonAllert, ButtonAllert2 } from "../../../my-component/index";
+import { ButtonAllert, ButtonAllert2 } from "../../../my-component/ButtonAllert";
 import {
   Badge,
   Button,

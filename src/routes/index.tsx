@@ -1,5 +1,6 @@
 import ProducerPage from "@/pages/producer-page";
 import ProducerPublish from "@/pages/producer-page/producer-publish";
+import ProducerSale from "@/pages/producer-page/producer-sales";
 import { lazy } from "react";
 import { RouteProps } from "react-router";
 //Authentication
@@ -46,6 +47,11 @@ const producerRoute: RoutesProps[] = [
     path: "/user/id/producer-page/my-publish",
     name: "producer publish management",
     element: <ProducerPublish />,
+  },
+  {
+    path: "/user/id/producer-page/my-sale",
+    name: "producer page",
+    element: <ProducerSale />,
   },
 ];
 const appsRoutes: RoutesProps[] = [
