@@ -2,8 +2,9 @@ import { Suspense, lazy, type ReactNode, useEffect } from "react";
 import { Preloader } from "@/components";
 import { useThemeContext } from "@/context";
 import { useViewPort } from "@/hooks";
-import { MyLeftSidebar } from "./MyLeftSidebar";
-import MyTopNavbar from "./MyTopNavbar";
+import { MyLeftSidebar } from "./MyLeftSidebar/producerLeftSideBar";
+import ProducerTopNavBar from "./MyTopNavbar/producerTopNavbar";
+
 const Footer = lazy(() => import("../Footer"));
 
 const Layout = ({ children }: { children: ReactNode }) => {
@@ -33,9 +34,9 @@ const Layout = ({ children }: { children: ReactNode }) => {
         <MyLeftSidebar />
       </Suspense>
       <div className="page-wrapper">
-        {/* <Suspense fallback={<div />}>
-          <MyTopNavbar />
-        </Suspense> */}
+        <Suspense fallback={<div />}>
+          <ProducerTopNavBar />
+        </Suspense>
         <div className="page-content">
           <div className="container-fluid">
             <Suspense fallback={<Preloader />}>{children}</Suspense>
