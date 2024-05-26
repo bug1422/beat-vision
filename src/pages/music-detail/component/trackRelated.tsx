@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Card, CardHeader, Row, Col, CardTitle, CardBody, Badge } from "react-bootstrap";
+import { Card, CardHeader, Row, Col, CardBody, Badge } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import defautAudioImage from "../../../../public/default-image/defaultSoundwave.jpg";
 
@@ -42,6 +42,7 @@ const MockRelatedTrack: TrackMetaData[] = [
 ];
 export default function TrackRelated() {
   const [trackListRelated, setTrackListRelated] = useState(MockRelatedTrack);
+  setTrackListRelated(MockRelatedTrack);
   return (
     <>
       <h4>Related track</h4>

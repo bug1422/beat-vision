@@ -59,6 +59,8 @@ File: App Css
 
 
 // Pages
+@import "pages/home";
+
 @import "pages/avatar";
 @import "pages/general";
 @import "pages/background-color";
@@ -80,5 +82,4 @@ File: App Css
 @import "pages/print";
 
 @import "nouislider/distribute/nouislider.css";
-@import "litepicker/dist/css/style.css";
 @import "leaflet/dist/leaflet.css";

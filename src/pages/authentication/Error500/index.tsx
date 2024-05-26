@@ -1,7 +1,7 @@
 import { Card, CardBody, Image } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import logoDark from '@/assets/images/logo-sm-dark.png'
-import error from '@/assets/images/error.svg'
+import logoDark from '/logo-sm-dark.png'
+import error from '/error.svg'
 import { PageMetaData } from '@/components'
 import AuthLayout from '../AuthLayout'
 

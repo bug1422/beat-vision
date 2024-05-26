@@ -13,7 +13,7 @@ import {
 	TabPane,
 } from 'react-bootstrap'
 import { Link, Navigate } from 'react-router-dom'
-import logoDark from '@/assets/images/logo-sm-dark.png'
+import logoDark from '/logo-sm-dark.png'
 import { FormInputPassword, FormTextInput, PageMetaData } from '@/components'
 import RegisterForm from '../Register/RegisterForm'
 import useLogin from './useLogin'

@@ -1,6 +1,6 @@
 {
   "name": "beat-vision",
-  "private": true,
+  "homepage": ".",
   "version": "1.0.0",
   "type": "module",
   "scripts": {
@@ -31,12 +31,12 @@
     "chart.js": "^4.4.2",
     "clsx": "^2.1.0",
     "cookies-next": "^4.1.1",
+    "dotenv": "^16.4.5",
     "filepond": "^4.30.6",
     "filepond-plugin-file-encode": "^2.1.14",
     "filepond-plugin-image-exif-orientation": "^1.0.11",
     "filepond-plugin-image-preview": "^4.6.12",
     "glightbox": "^3.2.0",
-    "google-maps-react": "^2.0.6",
     "jsvectormap": "^1.5.3",
     "leaflet": "^1.9.4",
     "nouislider-react": "^3.4.2",
@@ -54,7 +54,6 @@
     "react-hook-form": "^7.49.3",
     "react-icons": "^5.0.1",
     "react-leaflet": "^4.2.1",
-    "react-litepicker": "^0.0.7",
     "react-magic": "^0.2.4",
     "react-nestable": "^3.0.2",
     "react-router-dom": "^6.22.1",
@@ -75,6 +74,7 @@
   "devDependencies": {
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
+    "@types/react-helmet": "^6.1.11",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
     "@typescript-eslint/parser": "^7.2.0",
     "@vitejs/plugin-react": "^4.2.1",

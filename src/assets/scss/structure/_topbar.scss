@@ -3,12 +3,18 @@ Template Name: Dastone - Admin & Dashboard Template
 Author: Mannatthemes
 File: Topbar
 */
-
+.dropdown-toggle::after{
+    display: none !important;
+}
 
 
 .topbar {
  width: 100%;
  z-index: 1001;
+}
+.header{
+    padding-left: 20%; 
+    padding-right: 10% 
 }
 
 .navbar-custom {
@@ -16,34 +22,28 @@ File: Topbar
   min-height: $header-height;
   position: relative;
   border-bottom: 1px solid $border;
-  .nav-link {
-      padding: 0 0.75rem;
-      color: $header-item-color;
-      line-height: $header-height;
-      max-height: $header-height;
-      .nav-icon {
-          font-size: 18px;
-      }
-  }
+  
+  .brand {
+    text-align: center;
+    height: $header-height;
+    .logo {
+        .logo-sm {
+            height: 52px;
+        }
+        .logo-lg {
+            height: 52px;
+            margin-left: 2px;
+            display: $logo-dark;
+            &.logo-light{
+              display: $logo-light;
+          }
+        }
+    }
+}
+
   .dropdown-toggle {
       &:after {
           content: initial;
-      }
-  }
-  .topbar-nav {
-    height: $header-height;
-      li {
-          float: left;
-          &.show {
-              .nav-link {
-                  background-color: lighten($header-light-bg, 3%);
-                  color: $body-color;
-              }
-          }
-         .topbar-icon{
-           height: 20px;
-           width: 20px;
-         }
       }
   }
 }
@@ -56,15 +56,15 @@ File: Topbar
   cursor: pointer;
 }
 
-.nav-user {
-  .nav-user-name {
-      vertical-align: middle;
-  }
+.navbar-nav li{
+    align-items: center;
 }
 
 /* Notification */
 
 .notification-list {
+    width: 38px;
+    align-self: center;
   .notification-menu{
     max-height: 220px;
     margin-left: 0;
@@ -72,12 +72,16 @@ File: Topbar
   .noti-icon-badge {
       display: inline-block;
       position: absolute;
-      top: 9px;
-      right: 8px;
+      top: 5px;
+      right: 2px;
       border: 2px solid rgba($card-bg, 0.6);
       border-radius: 50%;
       padding: 1px 4px 1px;
       font-size: 8px !important;
+  }
+  .bell{
+    width: 100%;
+    height: 100%;
   }
 }
 
@@ -93,7 +97,7 @@ File: Topbar
       position: absolute;
       width: 30px;
       height: 30px;
-      left: 12px;
+      left: 0px;
       top: 50%;
       transform: translateY(-50%);
       border: none;
@@ -109,12 +113,10 @@ File: Topbar
   }
   input {
       width: 100%;
-      height: 56px;
+      height: 100%;
       border: none;
       font-size: 12px;
       border-radius: 4px;
-      padding-left: 54px;
-      padding-right: 15px;
       background-color: $dropdown-bg;
       color: $body-color;
       &:focus {
@@ -130,7 +132,7 @@ File: Topbar
     }
     .page-wrapper {
         .page-content{
-            margin-top: $header-height;
+            margin-top: 6px;
         }
     }
 }

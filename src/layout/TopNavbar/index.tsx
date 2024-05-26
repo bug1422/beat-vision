@@ -1,50 +1,84 @@
-import { FiMenu } from 'react-icons/fi'
-import { Button, NavLink } from 'react-bootstrap'
-import { useThemeContext } from '@/context'
-import { Notifications, ProfileDropdown, SearchBar } from './components'
+import { Button, Collapse } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
+// import logoDark from '/logo-dark.png'
+// import logoImg from '/logo.png'
+import logoSM from '/logo-sm.png'
+import { useToggle } from '@/hooks'
+import { Notifications, ProfileDropdown } from './components'
 import { notifications } from './data'
 
-const TopNavbar = () => {
-	const { settings, updateSideNavMode } = useThemeContext()
-
-	const handleLeftMenuCallBack = () => {
-		if (settings.sideNavMode == 'default') {
-			updateSideNavMode('sm')
-		} else {
-			updateSideNavMode('default')
-		}
-	}
-
+const TopNavBar = () => {
+	const { isOpen, toggle } = useToggle()
 	return (
 		<>
-			<div className="topbar">
-				<nav className="navbar-custom">
-					<ul className="list-unstyled topbar-nav float-end mb-0">
-						<SearchBar />
-						<Notifications notifications={notifications} />
-						<ProfileDropdown />
-					</ul>
-					<ul className="list-unstyled topbar-nav mb-0">
-						<li>
-							<button
-								className="nav-link button-menu-mobile"
-								onClick={handleLeftMenuCallBack}
-							>
-								<FiMenu className="align-self-center topbar-icon" />
-							</button>
-						</li>
-						<li className="creat-btn">
-							<NavLink>
-								<Button variant="soft-primary" size="sm" role="button">
-									<i className="fas fa-plus me-2"></i>New Task
-								</Button>
-							</NavLink>
-						</li>
-					</ul>
-				</nav>
-			</div>
+		<nav className="navbar py-0 navbar-expand-lg navbar-light bg-light">
+				<div className="px-5 container-fluid">
+					<Link className="navbar-brand" to="#">
+						<img src={logoSM} height={52} className="mr-1" />
+					</Link>
+					<Collapse in={isOpen} className="navbar-collapse ">
+						<div>
+						<form className="me-auto d-flex app-search-topbar">
+								<div className="input-group">
+									<input
+										type="text"
+										className="form-control"
+										placeholder="Search"
+										aria-label="Recipient's username"
+										aria-describedby="basic-addon2"
+									/>
+									<Button
+										variant="soft-primary"
+										type="button"
+										id="button-addon2"
+									>
+										<i className="fas fa-search" />
+									</Button>
+								</div>
+							</form>
+							<ul className="navbar-nav mb-2 mb-lg-0">
+								<li className="mx-2 my-2 nav-item">
+									<Link className="nav-link active" aria-current="page" to="#">
+										Home
+									</Link>
+								</li>
+								<li className="mx-2 my-2 nav-item">
+									<Link className="nav-link active" aria-current="page" to="#">
+										Beats
+									</Link>
+								</li>
+								<li className="mx-2 my-2 nav-item">
+									<Link className="nav-link active" to="#">
+										Products
+									</Link>
+								</li>
+								<li className="mx-2 my-2 nav-item">
+									<Link className="nav-link active" to="#">
+										Support
+									</Link>
+								</li>
+							</ul>
+						</div>
+					</Collapse>
+					<Notifications notifications={notifications}/>
+					<ProfileDropdown/>
+					<button
+						onClick={toggle}
+						className="navbar-toggler"
+						type="button"
+						data-bs-toggle="collapse"
+						data-bs-target="#navbarSupportedContent2"
+						aria-controls="navbarSupportedContent"
+						aria-expanded="false"
+						aria-label="Toggle navigation"
+					>
+						<span className="navbar-toggler-icon" />
+					</button>
+				</div>
+			</nav>
 		</>
 	)
 }
 
-export default TopNavbar
+export default TopNavBar
+export { default as AdminTopNavBar } from './AdminTopNavBar'

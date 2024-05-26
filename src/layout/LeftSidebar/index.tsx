@@ -3,8 +3,9 @@ import SimpleBar from "simplebar-react";
 import AppMenu from "./Menu";
 import { getMenuItems } from "@/common";
 
-import logoSM from "@/assets/images/logo-sm.png";
-import logoImg from "@/assets/images/logo-sm.png";
+import logoDark from "/logo-dark.png";
+import logoSM from "/logo-sm.png";
+import logoImg from "/logo.png";
 
 const LeftSidebar = () => {
   return (
