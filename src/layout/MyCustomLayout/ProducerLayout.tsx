@@ -33,7 +33,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
       <Suspense>
         <MyLeftSidebar />
       </Suspense>
-      <div className="page-wrapper">
+      <div className="page-wrapper-admin" style={{}}>
         <Suspense fallback={<div />}>
           <ProducerTopNavBar />
         </Suspense>

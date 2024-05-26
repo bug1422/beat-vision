@@ -33,9 +33,9 @@ const Layout_NoSidebar = ({ children }: { children: ReactNode }) => {
   return (
     <Suspense fallback={<div />}>
       <div className="page-wrapper">
-        <Suspense fallback={<div />}>
+        {/* <Suspense fallback={<div />}>
           <MyTopNavbar />
-        </Suspense>
+        </Suspense> */}
         <div className="page-content">
           <div className="container-fluid">
             <Suspense fallback={<Preloader />}>{children}</Suspense>

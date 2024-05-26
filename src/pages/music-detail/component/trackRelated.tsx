@@ -42,7 +42,7 @@ const MockRelatedTrack: TrackMetaData[] = [
 ];
 export default function TrackRelated() {
   const [trackListRelated, setTrackListRelated] = useState(MockRelatedTrack);
-  setTrackListRelated(MockRelatedTrack);
+  //setTrackListRelated(MockRelatedTrack);
   return (
     <>
       <h4>Related track</h4>
