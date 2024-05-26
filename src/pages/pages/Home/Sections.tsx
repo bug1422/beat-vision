@@ -1,16 +1,8 @@
-<<<<<<< Updated upstream
-import { Badge, Card, CardBody, CardHeader, Carousel, CarouselCaption, CarouselItem, Col, FormControl, Pagination, Row } from "react-bootstrap"
-import demoBeat from '@/assets/images/products/01.png'
-import img1 from '@/assets/images/homepage/img1.jpg'
-import img2 from '@/assets/images/homepage/img2.jpg'
-import img3 from '@/assets/images/homepage/img3.jpg'
-=======
 import { Badge, Card, CardHeader, Carousel, CarouselItem, Col, FormControl, Pagination, Row } from "react-bootstrap"
 import demoBeat from '/images/products/01.png'
 import img1 from '/images/homepage/img1.jpg'
 import img2 from '/images/homepage/img2.jpg'
 import img3 from '/images/homepage/img3.jpg'
->>>>>>> Stashed changes
 import { beats } from "@/testing/FetchFakeData"
 import { useState } from "react"
 
@@ -59,7 +51,7 @@ const Section1 = () => {
 }
 
 const Section2 = () => {
-    const [list, setList] = useState(beats)
+    const [list, _ ] = useState(beats)
     const [currentPage, setCurrentPage] = useState(1)
     const itemsPerPage = 4;
     const lastPage = Math.floor(list.length / itemsPerPage) + 1;
@@ -80,7 +72,7 @@ const Section2 = () => {
             </div>
             <div className="content">
                 <Row className="justify-content-center">
-                    {currentItems.map((beat, idx) => (
+                    {currentItems.map((beat, _idx) => (
                         <Col xs={2}>
                             <Card>
                                 <img src={demoBeat} className="card-img-top img-fluid bg-light-alt" />

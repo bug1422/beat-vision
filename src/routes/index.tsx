@@ -1,5 +1,5 @@
 import { lazy } from "react";
-import { Navigate, RouteProps } from "react-router";
+import { RouteProps } from "react-router";
 //Authentication
 const Login = lazy(() => import("@/pages/authentication/Login"));
 const Register = lazy(() => import("@/pages/authentication/Register"));

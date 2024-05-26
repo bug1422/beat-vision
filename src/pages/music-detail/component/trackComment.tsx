@@ -79,7 +79,7 @@ const CommentSection: React.FC = () => {
           <CommentInput onSubmitComment={onSubmitComment} />
         </div>
         <div className="d-flex flex-column gap-3 ">
-          {comments.map((comment, index) => {
+          {comments.map((comment, _index) => {
             return (
               <>
                 <CommentItem comment={comment}></CommentItem>
@@ -113,13 +113,13 @@ const CommentItem = ({ comment }: CommentItemProps) => {
           <div className="ms-2 me-2 text-break border border-primary ">{comment.text}</div>
           <Button
             className="ms-2 me-2 align-self-start m-2 "
-            onClick={(event) => {
+            onClick={(_event) => {
               setIsReplying(!isReplying);
             }}
           >
             reply
           </Button>
-          <Button onClick={(event) => setIsShowComments(!isShowComments)}>show comment</Button>
+          <Button onClick={(_event) => setIsShowComments(!isShowComments)}>show comment</Button>
           {isReplying && (
             <>
               <CommentInput onSubmitComment={onComment} />

@@ -1,10 +1,6 @@
 import { Button, Card, CardBody, Col, Form, Image, Row } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-<<<<<<< Updated upstream
-import logoDark from '@/assets/images/logo-sm-dark.png'
-=======
-import logoDark from '#/logo-sm-dark.png'
->>>>>>> Stashed changes
+import logoDark from '/logo-sm-dark.png'
 import { FormInputPassword, PageMetaData } from '@/components'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'

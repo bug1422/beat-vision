@@ -1,16 +1,11 @@
-import { Button, Card, CardHeader, Row } from "react-bootstrap";
+import { Button, Row } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../index.css";
 import { MutableRefObject, useEffect, useRef, useState } from "react";
 import sampleAudio1 from "../../../assets/audio/defaultAudio.mp3";
 import sampleAudio2 from "../../../assets/audio/defaultAudio2.mp3";
-<<<<<<< Updated upstream
-import someRandomHeart from "@/assets/images/heart_1077035.png";
-import AudioPlayer from "react-h5-audio-player";
-=======
-import someRandomHeart from "#/heart_1077035.png";
+import someRandomHeart from "/heart_1077035.png";
 import _AudioPlayer from "react-h5-audio-player";
->>>>>>> Stashed changes
 import "react-h5-audio-player/lib/styles.css";
 
 import WaveSurfer from "wavesurfer.js";
@@ -29,11 +24,11 @@ const DefaultAudioArray = [
   },
 ];
 export default function TrackPlay() {
-  const [audioList, setAudioList] = useState<Array<TrackType>>(DefaultAudioArray);
+  // const [audioList, setAudioList] = useState<Array<TrackType>>(DefaultAudioArray);
   const [isPlay, setIsPlay] = useState(false);
   const audioContainer = useRef<HTMLElement>(null);
   const waveSurferRef = useRef<WaveSurfer | null>(null);
-  const [currentlySelectAudio, setCurrentlySelectAudio] = useState<TrackType>(DefaultAudioArray[0]);
+  const [currentlySelectAudio, _setCurrentlySelectAudio] = useState<TrackType>(DefaultAudioArray[0]);
   const [volume, SetVolume] = useState("100");
   useEffect(() => {
     if (audioContainer.current) {
@@ -104,7 +99,7 @@ export default function TrackPlay() {
             <div className="d-flex justify-content-center p-1 ">
               <Button
                 className="me-1"
-                onClick={(event) => {
+                onClick={(_event) => {
                   let timeNow = waveSurferRef.current?.getCurrentTime() as number;
                   let totalTime = waveSurferRef.current?.getDuration() as number;
                   waveSurferRef.current?.seekTo((timeNow + 5) / totalTime);
@@ -115,7 +110,7 @@ export default function TrackPlay() {
               </Button>
               <Button
                 className="me-1"
-                onClick={(event) => {
+                onClick={(_event) => {
                   waveSurferRef.current?.playPause();
                 }}
               >
@@ -123,7 +118,7 @@ export default function TrackPlay() {
               </Button>
               <Button
                 className="me-1"
-                onClick={(event) => {
+                onClick={(_event) => {
                   let timeNow = waveSurferRef.current?.getCurrentTime() as number;
                   let totalTime = waveSurferRef.current?.getDuration() as number;
                   waveSurferRef.current?.seekTo((timeNow + 5) / totalTime);

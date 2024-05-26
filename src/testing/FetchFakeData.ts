@@ -1,19 +1,4 @@
-<<<<<<< Updated upstream
-import user from '@/assets/images/avatar.jpg'
-
-type User = {
-	id: number
-	email?: string
-	username: string
-	password: string
-	firstName: string
-	lastName: string
-	role: string
-	token: string
-}
-=======
-import user from '#/avatar.jpg'
->>>>>>> Stashed changes
+import user from '/avatar.jpg'
 
 type Beat = {
     title: string

@@ -1,17 +1,10 @@
-import { Button, Collapse, NavLink } from 'react-bootstrap'
+import { Button, Collapse } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-<<<<<<< Updated upstream
-import logoDark from '@/assets/images/logo-dark.png'
-import logoSM from '@/assets/images/logo-sm.png'
-import logoImg from '@/assets/images/logo.png'
-=======
-// import logoDark from '#/logo-dark.png'
-// import logoImg from '#/logo.png'
+// import logoDark from '/logo-dark.png'
+// import logoImg from '/logo.png'
 import logoSM from '/logo-sm.png'
->>>>>>> Stashed changes
 import { useToggle } from '@/hooks'
-import { fetchAvt } from '@/testing/FetchFakeData'
-import { Notifications, ProfileDropdown, SearchBar } from './components'
+import { Notifications, ProfileDropdown } from './components'
 import { notifications } from './data'
 
 const TopNavBar = () => {

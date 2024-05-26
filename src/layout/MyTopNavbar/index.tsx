@@ -10,11 +10,7 @@ import {
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-<<<<<<< Updated upstream
-import AppLogo from "../../assets/images/logo-sm.png";
-=======
-import AppLogo from "#/logo-sm.png";
->>>>>>> Stashed changes
+import AppLogo from "/logo-sm.png";
 import useToggle from "@/hooks/useToggle";
 export default function MyTopNavbar() {
   const { isOpen, toggle } = useToggle();
