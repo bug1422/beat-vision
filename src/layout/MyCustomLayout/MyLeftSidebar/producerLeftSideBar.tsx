@@ -28,6 +28,26 @@ const leftMenuItems: MenuItemType[] = [
     icon: FiMusic,
     url: "/user/id/producer-page/my-sale",
   },
+  {
+    key: "5",
+    label: "my tag",
+    isTitle: false,
+    icon: FiMusic,
+    url: "/user/id/producer-page/my-tag",
+  },
+  {
+    key: "6",
+    label: "my user",
+    icon: FiMusic,
+    url: "/user/id/producer-page/my-app-user",
+  },
+  {
+    key: "7",
+    label: "my licences",
+    isTitle: false,
+    icon: FiMusic,
+    url: "/user/id/producer-page/my-license",
+  },
 ];
 
 const LeftSidebar = () => {

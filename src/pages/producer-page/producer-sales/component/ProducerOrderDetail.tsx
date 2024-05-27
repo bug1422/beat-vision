@@ -1,4 +1,4 @@
-import { TrackDto } from "@/types/ApplicationType";
+import { TrackDto } from "@/types/ApplicationTypes/TrackType";
 
 export type OrderDetailType = {
   OrderId: number;

@@ -1,6 +1,9 @@
 import ProducerPage from "@/pages/producer-page";
+import ProducerAppUser from "@/pages/producer-page/producer-app-user";
+import ProducerLicenses from "@/pages/producer-page/producer-licenses";
 import ProducerPublish from "@/pages/producer-page/producer-publish";
 import ProducerSale from "@/pages/producer-page/producer-sales";
+import ProducerTags from "@/pages/producer-page/producer-tags";
 import { lazy } from "react";
 import { RouteProps } from "react-router";
 //Authentication
@@ -11,7 +14,7 @@ const Error404 = lazy(() => import("@/pages/authentication/Error404"));
 const Error500 = lazy(() => import("@/pages/authentication/Error500"));
 
 // Pages
-const HomePage = lazy(()=> import("@/pages/pages/Home"))
+const HomePage = lazy(() => import("@/pages/pages/Home"));
 
 //Applicatoin create page
 const MusicDetail = lazy(() => import("@/pages/music-detail"));
@@ -33,11 +36,11 @@ const dashboardRoutes: RoutesProps[] = [
 ];
 
 const producerRoute: RoutesProps[] = [
-  {
-    path: "/user/id/producer-page",
-    name: "Producer manager page",
-    element: <ProducerPage />,
-  },
+  // {
+  //   path: "/user/id/producer-page",
+  //   name: "Producer manager page",
+  //   element: <ProducerPage />,
+  // },
   {
     path: "/user/id/producer-page/my-music",
     name: "producer music management",
@@ -53,12 +56,27 @@ const producerRoute: RoutesProps[] = [
     name: "producer page",
     element: <ProducerSale />,
   },
+  {
+    path: "/user/id/producer-page/my-tag",
+    name: "producer tags",
+    element: <ProducerTags />,
+  },
+  {
+    path: "/user/id/producer-page/my-app-user",
+    name: "app user",
+    element: <ProducerAppUser />,
+  },
+  {
+    path: "/user/id/producer-page/my-license",
+    name: "license",
+    element: <ProducerLicenses />,
+  },
 ];
 const appsRoutes: RoutesProps[] = [
   {
     path: "/",
     name: "Home Page",
-    element: <HomePage/>,
+    element: <HomePage />,
   },
   {
     path: "/music-detail/detail",
