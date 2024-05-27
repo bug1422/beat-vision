@@ -18,6 +18,7 @@ import { FormInputPassword, FormTextInput, PageMetaData } from '@/components'
 import RegisterForm from '../Register/RegisterForm'
 import useLogin from './useLogin'
 import AuthLayout from '../AuthLayout'
+import { FiChrome, FiFacebook } from 'react-icons/fi'
 
 const Login = () => {
 	const { loading, control, login, redirectUrl, isAuthenticated } = useLogin()
@@ -39,10 +40,10 @@ const Login = () => {
 								/>
 							</Link>
 							<h4 className="mt-3 mb-1 fw-semibold text-white font-18">
-								Let's Get Started Dastone
+								Let's Get Started
 							</h4>
 							<p className="text-muted  mb-0">
-								Sign in to continue to Dastone.
+								Sign in to continue to Beat Vision.
 							</p>
 						</div>
 					</CardBody>
@@ -50,13 +51,12 @@ const Login = () => {
 						<TabContainer defaultActiveKey="1">
 							<Nav className="nav-border nav-pills" role="tablist">
 								<NavItem>
-									<NavLink eventKey="1">Log In</NavLink>
+									<div className='nav-link active'>Log In</div>
 								</NavItem>
 								<NavItem>
-									<NavLink eventKey="2">Register</NavLink>
+									<Link to="/auth/register" className='nav-link'>Register</Link>
 								</NavItem>
 							</Nav>
-
 							<TabContent>
 								<TabPane
 									eventKey="1"
@@ -132,13 +132,10 @@ const Login = () => {
 									</div>
 									<div className="btn-group w-100">
 										<Button variant="outline-secondary" size="sm">
-											Facebook
+											<FiFacebook /> Facebook
 										</Button>
 										<Button variant="outline-secondary" size="sm">
-											Twitter
-										</Button>
-										<Button variant="outline-secondary" size="sm">
-											Google
+											<FiChrome /> Google
 										</Button>
 									</div>
 								</TabPane>
@@ -159,11 +156,6 @@ const Login = () => {
 								</TabPane>
 							</TabContent>
 						</TabContainer>
-					</CardBody>
-					<CardBody className="bg-light-alt text-center">
-						<span className="text-muted d-none d-sm-inline-block">
-							Mannatthemes © <script>{new Date().getFullYear()}</script>
-						</span>
 					</CardBody>
 				</Card>
 			</AuthLayout>

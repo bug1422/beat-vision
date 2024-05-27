@@ -51,13 +51,11 @@ const AllRoutes = (props: RouteProps) => {
       </Route>
       <Route>
         {allProducerRoutes.map((route, index) => (
-          <>
             <Route
               key={index}
               path={route.path}
               element={<ProducerLayout {...props}>{route.element}</ProducerLayout>}
             />
-          </>
         ))}
       </Route>
     </Routes>

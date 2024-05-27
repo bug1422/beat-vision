@@ -9,6 +9,7 @@ interface DefaultLayoutProps {
 }
 
 const DefaultLayout = ({ children }: DefaultLayoutProps) => {
+    
     return (
         <Suspense fallback={<div />}>
             <div className="page-wrapper">

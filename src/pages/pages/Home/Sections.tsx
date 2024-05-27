@@ -72,16 +72,16 @@ const Section2 = () => {
             </div>
             <div className="content">
                 <Row className="justify-content-center">
-                    {currentItems.map((beat, _idx) => (
-                        <Col xs={2} sm={1}>
+                    {currentItems.map((beat, idx) => (
+                        <Col xs={4} sm={2   } key={idx}>
                             <Card>
                                 <img src={demoBeat} className="card-img-top img-fluid bg-light-alt" />
                                 <CardHeader>
                                     <div>{beat.title}</div>
                                     <div>{beat.author}</div>
                                     <div>
-                                        {beat.tag.slice(0, 3).map((tag) => (
-                                            <Badge bg="secondary" className="mx-1">{tag}</Badge>
+                                        {beat.tag.slice(0, 3).map((tag, ix) => (
+                                            <Badge bg="secondary" key={ix} className="mx-1">{tag}</Badge>
                                         ))}
                                         {beat.tag.length > 3 ?
                                             <Badge bg="secondary" className="mx-1">{beat.tag.length - 3}+...</Badge> : <></>
@@ -175,8 +175,8 @@ const Section5 = () => {
             </div>
             <div className="content pt-5">
                 <Row className="d-flex justify-content-center">
-                    {artists.slice(0,5).map((artist, _idx) => (
-                        <Col className="artist">
+                    {artists.slice(0,5).map((artist, idx) => (
+                        <Col className="artist" key={idx}>
 							<img src={demoBeat} alt="user" className="img rounded-circle thumb-xl" />
                             <div className="home-text text-end mt-2 me-5">{artist.author}</div>
                         </Col>

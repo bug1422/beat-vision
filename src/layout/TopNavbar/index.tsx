@@ -6,19 +6,21 @@ import logoSM from '/logo-sm.png'
 import { useToggle } from '@/hooks'
 import { Notifications, ProfileDropdown } from './components'
 import { notifications } from './data'
+import { useAuthContext } from '@/context'
 
 const TopNavBar = () => {
+	const { isAuthenticated } = useAuthContext();
 	const { isOpen, toggle } = useToggle()
 	return (
 		<>
-		<nav className="navbar py-0 navbar-expand-lg navbar-light header">
+			<nav className="navbar py-0 navbar-expand-lg navbar-light header">
 				<div className="px-5 container-fluid">
-					<Link className="navbar-brand" to="#">
+					<Link className="navbar-brand" to="/">
 						<img src={logoSM} height={52} className="mr-1" />
 					</Link>
 					<Collapse in={isOpen} className="navbar-collapse ">
 						<div>
-						<form className="me-auto d-flex app-search-topbar">
+							<form className="me-auto d-flex app-search-topbar">
 								<div className="input-group">
 									<input
 										type="text"
@@ -38,7 +40,7 @@ const TopNavBar = () => {
 							</form>
 							<ul className="navbar-nav mb-2 mb-lg-0">
 								<li className="mx-2 my-2 nav-item">
-									<Link className="nav-link active header-text" aria-current="page" to="#">
+									<Link className="nav-link active header-text" aria-current="page" to="/">
 										Home
 									</Link>
 								</li>
@@ -57,11 +59,27 @@ const TopNavBar = () => {
 										Support
 									</Link>
 								</li>
+								{!isAuthenticated ?
+									<>
+										<li className="mx-2 my-2 nav-item">
+											<Link className='nav-link active header-text' to="/auth/register">Sign Up</Link>
+										</li>
+										<li className="mx-2 my-2 nav-item">
+											<Link className='nav-link active header-text' to="/auth/login">Log In</Link>
+										</li>
+									</> : null}
 							</ul>
 						</div>
 					</Collapse>
-					<Notifications notifications={notifications}/>
-					<ProfileDropdown/>
+					{
+						isAuthenticated ?
+							<>
+								<Notifications notifications={notifications} />
+								<ProfileDropdown />
+							</> :
+							null
+					}
+
 					<button
 						onClick={toggle}
 						className="navbar-toggler"
