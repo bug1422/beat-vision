@@ -1,6 +1,5 @@
 import { HttpClient } from '@/common'
 import { useAuthContext } from '@/context'
-import type { User } from '@/types'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { type AxiosResponse } from 'axios'
 import { useState } from 'react'
@@ -8,6 +7,10 @@ import { useForm } from 'react-hook-form'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { toast } from 'sonner'
 import * as yup from 'yup'
+import { jwtDecode } from 'jwt-decode'
+import type { User } from '@/types'
+import { AuthReturnType, UserDecoded } from '@/types/AuthTypes'
+
 
 export default function useLogin() {
 	const [loading, setLoading] = useState(false)
@@ -20,42 +23,54 @@ export default function useLogin() {
 		email: yup
 			.string()
 			.email('Please enter a valid email')
-			.required('Please enter Username'),
+			.required('Please enter Email'),
 		password: yup.string().required('Please enter Password'),
 	})
 
 	const { control, handleSubmit } = useForm({
 		resolver: yupResolver(schemaResolver),
-		defaultValues: {
-			email: 'admin@mannatthemes.com',
-			password: 'password',
-		},
+		// defaultValues: {
+		// 	email: 'admin@mannatthemes.com',
+		// 	password: 'password',
+		// },
 	})
 
 	type LoginFormFields = yup.InferType<typeof schemaResolver>
 
 	// const redirectUrl = useMemo(() => (location.state?.from.pathname, location.pathname ?? "/"), [location.state]);
-	const redirectUrl = searchParams.get('next') ?? '/dashboards/analytics'
+	const redirectUrl = searchParams.get('next') ?? '/'
 
 	const login = handleSubmit(async function (values: LoginFormFields) {
 		setLoading(true)
 		try {
-			const res: AxiosResponse<User> = await HttpClient.post('/login', values)
-			if (res.data.token) {
+			const res: AxiosResponse<AuthReturnType> = await HttpClient.post('/api/ManageIdentity/login', values)
+			if (res.data?.accessToken) {
+				const decoded = jwtDecode<UserDecoded>(res.data?.accessToken);
+				let user: User = {
+					id: parseInt(decoded.userid),
+					email: decoded.email,
+					role: decoded.role,
+					exp: decoded.exp,
+					accessToken: res.data?.accessToken,
+					refreshToken: res.data?.refreshToken,
+				};
+
 				saveSession({
-					...(res.data ?? {}),
-					token: res.data.token,
+					...(user ?? {}),
 				})
 				toast.success('Successfully logged in. Redirecting....', {
-					position: 'top-right',
+					position: 'bottom-right',
 					duration: 2000,
 				})
 				navigate(redirectUrl)
 			}
 		} catch (e: any) {
-			if (e.response?.data?.error) {
-				toast.error(e.response?.data?.error, {
-					position: 'top-right',
+
+			console.log(e)
+			if (e.response?.status == 400) {
+				const mess = "Wrong email or password!"
+				toast.error(mess, {
+					position: 'bottom-right',
 					duration: 2000,
 				})
 			}

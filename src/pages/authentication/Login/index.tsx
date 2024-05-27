@@ -15,7 +15,6 @@ import {
 import { Link, Navigate } from 'react-router-dom'
 import logoDark from '/logo-sm-dark.png'
 import { FormInputPassword, FormTextInput, PageMetaData } from '@/components'
-import RegisterForm from '../Register/RegisterForm'
 import useLogin from './useLogin'
 import AuthLayout from '../AuthLayout'
 import { FiChrome, FiFacebook } from 'react-icons/fi'
@@ -119,15 +118,7 @@ const Login = () => {
 											</Col>
 										</div>
 									</form>
-									<div className="m-3 text-center text-muted">
-										<p className="mb-0">
-											Don't have an account ?{' '}
-											<Link to="/auth-register" className="text-primary ms-2">
-												Free Resister
-											</Link>
-										</p>
-									</div>
-									<div className="account-social">
+									<div className="mt-4 account-social">
 										<h6 className="mb-3">Or Login With</h6>
 									</div>
 									<div className="btn-group w-100">
@@ -138,21 +129,6 @@ const Login = () => {
 											<FiChrome /> Google
 										</Button>
 									</div>
-								</TabPane>
-
-								<TabPane
-									eventKey="2"
-									className="px-3 pt-3"
-									id="Register_Tab"
-									role="tabpanel"
-								>
-									<RegisterForm />
-									<p className="my-3 text-muted">
-										Already have an account ?
-										<Link to="/auth-login" className="text-primary ms-2">
-											Log in
-										</Link>
-									</p>
 								</TabPane>
 							</TabContent>
 						</TabContainer>

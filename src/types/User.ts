@@ -2,11 +2,12 @@ export type User = {
     id: number
     email?: string
     username?: string
-    password: string
     firstName?: string
     lastName?: string
-    role?: string
-    token?: string
+    role: string
+    exp: number
+    accessToken: string
+    refreshToken: string
 }
 
 export type AuthContextType = {

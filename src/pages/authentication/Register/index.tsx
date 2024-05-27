@@ -13,17 +13,19 @@ import {
 	TabContent,
 	TabPane,
 } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 import logoDark from '/logo-sm-dark.png'
 import { PageMetaData } from '@/components'
 import AuthLayout from '../AuthLayout'
-import RegisterForm from './RegisterForm'
+import useRegister from './RegisterForm'
 import { FiChrome, FiFacebook } from 'react-icons/fi'
 
 const Register = () => {
+	const {RegisterForm, isAuthenticated, redirectUrl} = useRegister()
 	return (
 		<AuthLayout>
 			<PageMetaData title="Register" />
+			{isAuthenticated && <Navigate to={redirectUrl} replace />}
 			<Card className='pb-3'>
 				<CardBody className="p-0 auth-header-box">
 					<div className="text-center p-3">
