@@ -41,9 +41,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
           <div className="container-fluid">
             <Suspense fallback={<Preloader />}>{children}</Suspense>
           </div>
-          <Suspense fallback={<div />}>
-            <Footer />
-          </Suspense>
+          <Suspense fallback={<div />}></Suspense>
         </div>
       </div>
     </Suspense>
