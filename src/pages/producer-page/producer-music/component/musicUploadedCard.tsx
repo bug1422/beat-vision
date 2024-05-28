@@ -3,46 +3,70 @@ import { Link } from "react-router-dom";
 import { withSwal } from "react-sweetalert2";
 import SweetAlerts from "@/components/advanced-ui/SweetAlerts";
 import "../../../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
-export interface ProducerMusicCardType {
-  id: number;
-  imageUrl: string;
-  name: string;
-  Status: "PUBLISHED" | "REMOVED" | "WAIT_FOR_PUBLISH" | "NOT_FOR_PUBLISH";
-  isPublished: boolean;
-  isAudioPrivate: boolean;
-  PlayCount: number;
-  price: number;
-  tags: string[];
-  IsAudioForSale: boolean;
-}
+import { TrackDto } from "@/types/ApplicationTypes/TrackType";
+import defautAudioImage from "../../../../../public/default-image/defaultSoundwave.jpg";
 
-const ProducerMusicCard = ({ producerMusic }: { producerMusic: ProducerMusicCardType }) => {
+// export interface ProducerMusicCardType {
+//   id: number;
+//   imageUrl: string;
+//   name: string;
+//   Status: "PUBLISHED" | "REMOVED" | "WAIT_FOR_PUBLISH" | "NOT_FOR_PUBLISH";
+//   isPublished: boolean;
+//   isAudioPrivate: boolean;
+//   PlayCount: number;
+//   price: number;
+//   tags: string[];
+//   IsAudioForSale: boolean;
+// }
+
+const ProducerMusicCard = ({ producerMusic }: { producerMusic: TrackDto }) => {
   const {
-    imageUrl,
-    name,
-    Status,
-    isPublished,
-    isAudioPrivate,
-    PlayCount,
-    price,
-    tags,
+    Id,
+    AudioBitPerSample,
+    AudioChannels,
+    AudioLenghtSeconds,
+    AudioSampleRate,
+    Comments,
     IsAudioForSale,
-    id,
+    IsAudioPrivate,
+    IsAudioRemoved,
+    IsPublished,
+    Licenses,
+    PlayCount,
+    Price,
+    PublishDateTime,
+    Status,
+    Tags,
+    TrackName,
+    ProfileBlobUrl,
   } = producerMusic;
   return (
     <Card>
       <CardBody>
         <div className="blog-card">
-          <img src={imageUrl} className="img-fluid rounded" />
-          {tags.map((tag, index) => (
+          <div className="d-flex justify-content-center">
+            <img
+              src={ProfileBlobUrl as string}
+              className="img-fluid rounded"
+              alt="image"
+              onError={(e) => {
+                e.currentTarget.src = defautAudioImage;
+              }}
+              style={{
+                maxHeight: "200px",
+              }}
+            />
+          </div>
+
+          {Tags.map((tag, index) => (
             <>
               <span className="badge badge-purple px-3 py-2 bg-soft-primary fw-semibold mt-3 me-1">
-                {tag}
+                {tag.Name}
               </span>
             </>
           ))}
 
-          <h4 className="my-3">{name}</h4>
+          <h4 className="my-3">{TrackName}</h4>
           <ButtonAllert />
           {/* <Button
             variant="outline-danger btn-small mb-1"
@@ -54,17 +78,17 @@ const ProducerMusicCard = ({ producerMusic }: { producerMusic: ProducerMusicCard
             <p className="m-0 ">
               status : <Badge>{Status}</Badge>{" "}
             </p>
-            <p className="m-0">publish : {isPublished}</p>
-            <p className="m-0">private : {isAudioPrivate}</p>
+            <p className="m-0">publish : {IsPublished}</p>
+            <p className="m-0">private : {IsAudioPrivate}</p>
             <p className="m-0">total play : {PlayCount}</p>
-            <p className="m-0">price: {price}</p>
+            <p className="m-0">price: {Price}</p>
             <p className="m-0">is for sale: {IsAudioForSale}</p>
           </div>
           <hr className="hr-dashed" />
           <div className="d-flex justify-content-between">
             <div className="align-self-center">
               <Link to="/music-detail/detail" className="text-dark">
-                detail of music id: {id} <i className="fas fa-long-arrow-alt-right" />
+                detail of music id: {Id} <i className="fas fa-long-arrow-alt-right" />
               </Link>
             </div>
           </div>
