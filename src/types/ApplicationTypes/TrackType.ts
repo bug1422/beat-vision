@@ -16,6 +16,7 @@ export type TrackDto = {
   AudioBitPerSample: number;
   IsPublished: boolean;
   PublishDateTime: string | null;
+  ProfileBlobUrl?: string | null;
   Price: number | null;
   Comments: TrackCommentDto[];
   Tags: TagDto[];
