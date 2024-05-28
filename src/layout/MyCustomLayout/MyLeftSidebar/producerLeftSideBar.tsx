@@ -52,7 +52,7 @@ const leftMenuItems: MenuItemType[] = [
 
 const LeftSidebar = () => {
   return (
-    <div className="left-sidenav">
+    <div className="left-sidenav-admin">
       <div className="brand">
         <Link to="/" className="logo">
           <div className="d-flex gap-1 justify-content-center">

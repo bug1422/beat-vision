@@ -44,6 +44,45 @@ File: Leftbar
         padding-bottom: 70px;
     }
 }
+.left-sidenav-admin {
+    min-width: $sidebar-width;
+    max-width: $sidebar-width;
+    background-color: $sidebar-light-bg;
+    margin-top: $header-height ;
+    min-height: 100vh;
+    transition: .3s;
+    position: fixed;
+    bottom: 0;
+    top: 0;
+    border-right: 1px solid $border;
+    z-index: 1001;
+    .brand {
+        text-align: center;
+        height: $header-height;
+        .logo {
+            line-height: $header-height;
+            .logo-sm {
+                height: 22px;
+            }
+            .logo-lg {
+                height: 14px;
+                margin-left: 2px;
+                display: $logo-dark;
+                &.logo-light{
+                  display: $logo-light;
+              }
+            }
+        }
+    }
+    hr.hr-dashed.hr-menu{
+        border-color: $sidebar-hr;
+    }
+
+    .menu-content{
+        height: 100%;
+        padding-bottom: 70px;
+    }
+}
 .page-wrapper {
     flex: 1;
     padding: 0;
@@ -277,6 +316,63 @@ File: Leftbar
         padding: 0 0 50px 0;
     }
 }
+//my scss admin page
+//my scss admin page
+//my scss admin page
+//my scss admin page
+@media (max-width: 1316.98px) {
+    .left-sidenav-admin{
+        margin-top: $header-height;
+        .brand{
+            display: none;
+        }
+    }
+    .page-wrapper-admin{
+        margin: 0;
+    }
+}
+
+@media (max-width: 1024px) {
+    body{
+        display: block !important;
+    }
+    .left-sidenav-admin {
+        overflow-y: auto;
+        z-index: 10;
+        bottom: 0;
+        top: $header-height;
+        margin-top: 0;
+        .brand {
+            display: none;
+            width: $sidebar-width-collapsed;
+            .logo-lg {
+                display: none !important;
+            }
+        }
+    }
+    .page-wrapper-admin{
+        margin: 0;
+    }
+    .page-content {
+        min-height: 100vh;
+        padding: 0 0 50px 0;
+    }
+}
+.enlarge-menu {
+    .left-sidenav-admin{
+        display: none;
+        .brand {
+            background-color: $sidebar-light-bg;
+        }
+    }
+    .page-wrapper-admin{
+        margin: 0;
+    }
+}
+//my scss admin page
+//my scss admin page
+//my scss admin page
+//my scss admin page
 
 // Enlarge menu
 .enlarge-menu {

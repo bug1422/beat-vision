@@ -77,6 +77,7 @@ export default function ProducerMusics() {
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPage, setTotalPage] = useState(0);
   const [pageSize, setPageSize] = useState(4);
+  const [cache, setCache] = useState<{ [key: number]: TrackDto[] }>({});
   const navigate = useNavigate();
   const renderPaging = () => {
     const pages = [];
@@ -110,9 +111,14 @@ export default function ProducerMusics() {
     return pages;
   };
   const fetchData = async () => {
+    let cacheKey = Number(currentPage.toString() + pageSize.toString());
+    if (cache[cacheKey]) {
+      setProducerMusic(cache[cacheKey]);
+      return;
+    }
     try {
       const res: AxiosResponse<PagingResponseDto<TrackDto[]>> = await HttpClient.get(
-        BACKEND_URL + `/api/ManageTrack/get-range?currentPage=${currentPage}&amount=${pageSize}`
+        `/api/ManageTrack/get-range?currentPage=${currentPage}&amount=${pageSize}`
       );
       if (!res.data) {
         throw new Error("fail to fetch data");
@@ -124,6 +130,7 @@ export default function ProducerMusics() {
       console.log(totalTracks);
       setProducerMusic(totalTracks);
       setTotalPage(Math.ceil(totalItemCount / pageSize));
+      setCache((prevCache) => ({ ...prevCache, [cacheKey]: totalTracks }));
     } catch (error: any) {
       console.log(error);
       if (axios.isAxiosError(error)) {
@@ -155,7 +162,12 @@ export default function ProducerMusics() {
           onSubmit={() => {}}
         />
         <Button onClick={() => setIsShowForm(!isShowForm)}>upload</Button>
-        <Form.Select onChange={(e) => setPageSize(Number(e.target.value))}>
+        <Form.Select
+          onChange={(e) => {
+            setPageSize(Number(e.target.value));
+            setCache({});
+          }}
+        >
           <option value={3}>3</option>
           <option value={6}>6</option>
         </Form.Select>
