@@ -1,6 +1,9 @@
 import { HttpClient } from "@/common";
 import default_profile from "/default-image/defaultprofile.png"
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+
 
 export function FetchableImg(url: string | null | undefined) {
     const [path, setPath] = useState(default_profile)
@@ -32,3 +35,4 @@ export function CompareDate(date1: number, date2: number) {
         return `${Math.floor(diffInMinutes / (24 * 60))} days`;
     }
 }
+

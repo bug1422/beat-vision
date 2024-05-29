@@ -16,6 +16,7 @@ const Error500 = lazy(() => import("@/pages/authentication/Error500"));
 // Pages
 const HomePage = lazy(() => import("@/pages/pages/Home"));
 const Profile = lazy(() => import("@/pages/pages/Profile"));
+const Search = lazy(() => import("@/pages/pages/Search"));
 
 //Applicatoin create page
 const MusicDetail = lazy(() => import("@/pages/music-detail"));
@@ -89,6 +90,16 @@ const appsRoutes: RoutesProps[] = [
     name: "Profile",
     element: <Profile />
   },
+  {
+    path: "/beats/:keyword",
+    name: "Search",
+    element: <Search />
+  },
+  {
+    path: "/beats",
+    name: "Search",
+    element: <Search />
+  }
 ];
 
 const authRoutes: RoutesProps[] = [

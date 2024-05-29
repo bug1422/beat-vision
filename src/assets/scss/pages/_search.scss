@@ -1,0 +1,93 @@
+$card-height: 70px;
+.search {
+    // background-color: rgb(15, 15, 15);
+}
+
+.left-col {
+    padding-top: 10% !important;
+
+    .tags {
+        font-size: 32px;
+    }
+}
+
+.right-col {
+
+    .search-title {
+        font-size: 52px;
+    }
+
+    .search-result-title {
+        font-size: 32px;
+    }
+
+    .search-section {
+        width: 30%;
+
+        .search-bar {
+            width: 100%;
+        }
+
+        .search-icon {
+            font-size: 28px;
+        }
+    }
+
+    .search-empty {
+        .title {
+            font-size: 52px;
+            font-weight: bold;
+        }
+    }
+
+    .search-container {
+        border: 1px solid rgb(88, 88, 88);
+        border-radius: 10px;
+    }
+
+    .search-body>* {
+        margin-left: 0px;
+    }
+
+    .search-body {
+
+
+        min-height: $card-height * 15;
+
+        .track {
+            width: 100%;
+            height: $card-height;
+            margin-bottom: 30px;
+            font-size: 18px;
+            .play{
+                display: none;
+            }
+            .rank {
+                pointer-events: none;
+                margin-right: 30px;
+            }
+
+            .icon {
+                height: 100%;
+                margin-right: 20px;
+            }
+
+            .desc1 {
+                .name {
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+}
+
+.track:hover {
+    background-color: rgba(128, 128, 128, 0.137);
+    
+    .rank{
+        display: none;
+    }
+    .play{
+        display: block !important;
+    }
+}
