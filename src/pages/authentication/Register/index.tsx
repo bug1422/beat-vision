@@ -14,7 +14,7 @@ import {
 	TabPane,
 } from 'react-bootstrap'
 import { Link, Navigate } from 'react-router-dom'
-import logoDark from '/logo-sm-dark.png'
+import logo from '/logo-sm-2.png'
 import { PageMetaData } from '@/components'
 import AuthLayout from '../AuthLayout'
 import useRegister from './RegisterForm'
@@ -31,7 +31,7 @@ const Register = () => {
 					<div className="text-center p-3">
 						<Link to="/" className="logo logo-admin">
 							<Image
-								src={logoDark}
+								src={logo}
 								height="50"
 								alt="logo"
 								className="auth-logo"

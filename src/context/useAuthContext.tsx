@@ -23,8 +23,8 @@ export function AuthProvider({ children } : { children: ReactNode }){
     }
 
     const removeSession = () => {
-        deleteCookie(authSessionKey)
         setUser(undefined)
+        deleteCookie(authSessionKey)
     }
 
     return (

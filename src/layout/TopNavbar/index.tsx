@@ -62,10 +62,10 @@ const TopNavBar = () => {
 								{!isAuthenticated ?
 									<>
 										<li className="mx-2 my-2 nav-item">
-											<Link className='nav-link active header-text' to="/auth/register">Sign Up</Link>
+											<Link className='nav-link active header-text' to="/auth/login">Log In</Link>
 										</li>
 										<li className="mx-2 my-2 nav-item">
-											<Link className='nav-link active header-text' to="/auth/login">Log In</Link>
+											<Link className='nav-link active header-text' to="/auth/register">Sign Up</Link>
 										</li>
 									</> : null}
 							</ul>

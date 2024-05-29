@@ -11,8 +11,7 @@ import Layout_NoSidebar from "@/layout/MyCustomLayout/Layout_NoSidebar";
 export default function MusicDetail() {
   return (
     <>
-      <Layout_NoSidebar>
-        <Container>
+      <Container className="my-1">
           <Row className="border border-primary mt4 justify-content-center  ">
             <Col lg="3" className="border border-secondary p-2 m-2 ">
               <TrackBanner></TrackBanner>
@@ -33,7 +32,6 @@ export default function MusicDetail() {
             </Col>
           </Row>
         </Container>
-      </Layout_NoSidebar>
     </>
   );
 }

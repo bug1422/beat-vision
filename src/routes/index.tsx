@@ -15,6 +15,7 @@ const Error500 = lazy(() => import("@/pages/authentication/Error500"));
 
 // Pages
 const HomePage = lazy(() => import("@/pages/pages/Home"));
+const Profile = lazy(() => import("@/pages/pages/Profile"));
 
 //Applicatoin create page
 const MusicDetail = lazy(() => import("@/pages/music-detail"));
@@ -79,9 +80,14 @@ const appsRoutes: RoutesProps[] = [
     element: <HomePage />,
   },
   {
-    path: "/music-detail/detail",
+    path: "/music-detail/detail/:trackId",
     name: "Music Detail Page",
     element: <MusicDetail />,
+  },
+  {
+    path: "/profile/:userId",
+    name: "Profile",
+    element: <Profile />
   },
 ];
 

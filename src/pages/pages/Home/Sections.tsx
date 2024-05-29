@@ -3,6 +3,7 @@ import demoBeat from '/images/products/01.png'
 import img1 from '/images/homepage/img1.jpg'
 import img2 from '/images/homepage/img2.jpg'
 import img3 from '/images/homepage/img3.jpg'
+import fpt_logo from '/images/brand-logo/fpt.png'
 import { beats, artists } from "@/testing/FetchFakeData"
 import { useState } from "react"
 
@@ -127,16 +128,16 @@ const Section3 = () => {
             </Col>
             <Col xl={6} className="right-col ps-3 d-flex justify-content-around align-items-center">
                 <div className="sponsor">
-                    <img src={demoBeat} className="img-fluid" />
+                    <img src={fpt_logo} className="img-fluid" />
                 </div>
                 <div className="sponsor">
-                    <img src={demoBeat} className="img-fluid" />
+                    <img src={fpt_logo} className="img-fluid" />
                 </div>
                 <div className="sponsor">
-                    <img src={demoBeat} className="img-fluid" />
+                    <img src={fpt_logo} className="img-fluid" />
                 </div>
                 <div className="sponsor">
-                    <img src={demoBeat} className="img-fluid" />
+                    <img src={fpt_logo} className="img-fluid" />
                 </div>
             </Col>
         </Row>

@@ -13,7 +13,7 @@ import {
 	TabPane,
 } from 'react-bootstrap'
 import { Link, Navigate } from 'react-router-dom'
-import logoDark from '/logo-sm-dark.png'
+import logo from '/logo-sm-2.png'
 import { FormInputPassword, FormTextInput, PageMetaData } from '@/components'
 import useLogin from './useLogin'
 import AuthLayout from '../AuthLayout'
@@ -32,7 +32,7 @@ const Login = () => {
 						<div className="text-center p-3">
 							<Link to="/" className="logo logo-admin">
 								<Image
-									src={logoDark}
+									src={logo}
 									height="50"
 									alt="logo"
 									className="auth-logo"

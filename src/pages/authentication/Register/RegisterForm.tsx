@@ -12,7 +12,7 @@ import { useAuthContext } from '@/context'
 import { toast } from 'sonner'
 import { jwtDecode } from 'jwt-decode'
 import { User } from '@/types'
-import { AuthReturnType, UserDecoded } from '@/types/AuthTypes'
+import { AuthReturnType } from '@/types/AuthTypes'
 
 export default function useRegister() {
 	const { isAuthenticated, saveSession } = useAuthContext()
@@ -52,19 +52,12 @@ export default function useRegister() {
 				}
 				const res: AxiosResponse<AuthReturnType> = await HttpClient.post('/api/ManageIdentity/register', request)
 				console.log(res)
-				if (res.data?.accessToken) {
-					const decoded = jwtDecode<UserDecoded>(res.data?.accessToken);
-					let user: User = {
-						id: parseInt(decoded.userid),
-						email: decoded.email,
-						role: decoded.role,
-						exp: decoded.exp,
-						accessToken: res.data?.accessToken,
-						refreshToken: res.data?.refreshToken,
-					};
+				if (res.data) {
+					const decoded = jwtDecode<User>(res.data?.AccessToken)
+					console.log(decoded)
 
 					saveSession({
-						...(user ?? {}),
+						...(decoded ?? {}),
 					})
 					toast.success('Successfully registered in. Redirecting....', {
 						position: 'bottom-right',
@@ -74,19 +67,22 @@ export default function useRegister() {
 				}
 			} catch (e: any) {
 				console.log(e)
-				if(e.response?.status == 400){
-					let mess = '';
+				let mess = 'Unknown error';
+				if (e.response?.status == 400) {
 					if (e.response?.data?.errorMessage == "user already exist") {
 						mess = "Email already existed!"
 					}
-					else{
+					else {
 						mess = "Unexpected error happens!"
 					}
-					toast.error(mess, {
-						position: 'bottom-right',
-						duration: 2000,
-					})
 				}
+				if (e.response?.status == 500) {
+					mess = "Internal error!"
+				}
+				toast.error(mess, {
+					position: 'bottom-right',
+					duration: 2000,
+				})
 			} finally {
 				setLoading(false)
 			}

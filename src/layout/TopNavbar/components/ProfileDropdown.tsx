@@ -12,12 +12,14 @@ import { useNavigate } from 'react-router-dom'
 import { fetchAvt } from '@/testing/FetchFakeData'
 
 const ProfileDropdown = () => {
-	const { removeSession } = useAuthContext()
+	const { removeSession, user } = useAuthContext()
 	const navigate = useNavigate()
 
 	const logout = () => {
 		removeSession()
-		navigate('/auth/login')
+        setTimeout(()=>{
+			navigate('/auth/login')
+		},500)
 	}
 
 	return (
@@ -33,7 +35,7 @@ const ProfileDropdown = () => {
 				/>
 			</DropdownToggle>
 			<DropdownMenu className="dropdown-menu-end">
-				<DropdownItem>
+				<DropdownItem onClick={() => navigate("/profile/" + user?.userid)}>
 					<FiUser className="align-self-center icon-xs icon-dual me-1" />{' '}
 					Profile
 				</DropdownItem>

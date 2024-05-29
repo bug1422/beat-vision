@@ -9,7 +9,7 @@ import { toast } from 'sonner'
 import * as yup from 'yup'
 import { jwtDecode } from 'jwt-decode'
 import type { User } from '@/types'
-import { AuthReturnType, UserDecoded } from '@/types/AuthTypes'
+import { AuthReturnType } from '@/types/AuthTypes'
 
 
 export default function useLogin() {
@@ -44,19 +44,12 @@ export default function useLogin() {
 		setLoading(true)
 		try {
 			const res: AxiosResponse<AuthReturnType> = await HttpClient.post('/api/ManageIdentity/login', values)
-			if (res.data?.accessToken) {
-				const decoded = jwtDecode<UserDecoded>(res.data?.accessToken);
-				let user: User = {
-					id: parseInt(decoded.userid),
-					email: decoded.email,
-					role: decoded.role,
-					exp: decoded.exp,
-					accessToken: res.data?.accessToken,
-					refreshToken: res.data?.refreshToken,
-				};
-
+			console.log(res)
+			if (res.data) {
+				const decoded = jwtDecode<User>(res.data?.AccessToken)
+				console.log(decoded)
 				saveSession({
-					...(user ?? {}),
+					...(decoded ?? {}),
 				})
 				toast.success('Successfully logged in. Redirecting....', {
 					position: 'bottom-right',
@@ -67,13 +60,18 @@ export default function useLogin() {
 		} catch (e: any) {
 
 			console.log(e)
+			let mess = "Unknown error"
 			if (e.response?.status == 400) {
-				const mess = "Wrong email or password!"
-				toast.error(mess, {
-					position: 'bottom-right',
-					duration: 2000,
-				})
+				mess = "Wrong email or password!"
+				
 			}
+			if (e.response?.status == 500){
+				mess = "Internal error!"
+			}
+			toast.error(mess, {
+				position: 'bottom-right',
+				duration: 2000,
+			})
 		} finally {
 			setLoading(false)
 		}
