@@ -22,3 +22,9 @@ export type TrackDto = {
   Tags: TagDto[];
   Licenses: TrackLicenseDto[];
 };
+export enum TRACK_STATUS {
+  PUBLISH = "PUBLISH",
+  REMOVED = "REMOVED",
+  WAIT_FOR_PUBLISH = "WAIT_FOR_PUBLISH",
+  NOT_FOR_PUBLISH = "NOT_FOR_PUBLISH",
+}

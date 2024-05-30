@@ -22,13 +22,6 @@ const leftMenuItems: MenuItemType[] = [
     url: "/user/id/producer-page/my-publish",
   },
   {
-    key: "4",
-    label: "my sale",
-    isTitle: false,
-    icon: FiMusic,
-    url: "/user/id/producer-page/my-sale",
-  },
-  {
     key: "5",
     label: "my tag",
     isTitle: false,
@@ -36,17 +29,25 @@ const leftMenuItems: MenuItemType[] = [
     url: "/user/id/producer-page/my-tag",
   },
   {
-    key: "6",
-    label: "my user",
-    icon: FiMusic,
-    url: "/user/id/producer-page/my-app-user",
-  },
-  {
     key: "7",
     label: "my licences",
     isTitle: false,
     icon: FiMusic,
     url: "/user/id/producer-page/my-license",
+  },
+  {
+    key: "4",
+    label: "my sale",
+    isTitle: false,
+    icon: FiMusic,
+    url: "/user/id/producer-page/my-sale",
+  },
+
+  {
+    key: "6",
+    label: "my user",
+    icon: FiMusic,
+    url: "/user/id/producer-page/my-app-user",
   },
 ];
 
