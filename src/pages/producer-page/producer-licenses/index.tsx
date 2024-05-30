@@ -1,7 +1,7 @@
 import { Row, Col, TabContent, TabPane, TabContainer, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { FiFolder, FiLock } from "react-icons/fi";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { TrackLicenseDto } from "@/types/ApplicationTypes/TrackLicenseType";
 import { boolean, number } from "yup";
 import axios, { AxiosResponse } from "axios";
@@ -50,7 +50,7 @@ export default function ProducerLicenses() {
   const [totalPage, setTotalPage] = useState(0);
   const [pageSize, setPageSize] = useState(100);
   const navigate = useNavigate();
-
+  const downloadRef = useRef<HTMLAnchorElement | null>(null);
   const fetchData = async () => {
     try {
       const res: AxiosResponse<PagingResponseDto<TrackLicenseDto[]>> = await HttpClient.get(
@@ -83,8 +83,28 @@ export default function ProducerLicenses() {
     } finally {
     }
   };
-  const downloadLicense = (fileToDownload: TrackLicenseDto) => {
-    window.alert("download file ?");
+  const downloadLicense = async (fileToDownload: TrackLicenseDto) => {
+    let confirm = window.confirm("download file ?");
+    if (confirm) {
+      try {
+        let result: AxiosResponse = await HttpClient.get(
+          `/api/ManageTrack/download-track-license?licenseId=${fileToDownload.Id}`,
+          {
+            responseType: "blob",
+          }
+        );
+        let url = URL.createObjectURL(new Blob([result.data]));
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = fileToDownload.LicenceName + ".pdf";
+        a.style.display = "none";
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+      } catch (err: any) {
+        console.log(err);
+      }
+    }
   };
   const deleteLicence = async (licenseId: number): Promise<boolean> => {
     try {
@@ -149,6 +169,7 @@ export default function ProducerLicenses() {
                           <div className=" ">
                             <Link
                               to="#"
+                              //download={`/api/ManageTrack/download-track-license?licenseId=${projects.Id}`}
                               className="download-icon-link"
                               onClick={(event) => {
                                 downloadLicense(projects);
