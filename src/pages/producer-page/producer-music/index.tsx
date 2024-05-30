@@ -2,75 +2,12 @@ import defautAudioImage from "../../../../public/default-image/defaultSoundwave.
 import { useEffect, useState } from "react";
 import { Button, Col, Form, Pagination, Row } from "react-bootstrap";
 import MusicUploadForm from "./component/musicUploadForm";
-
-// const MockProducerMusicItem: ProducerMusicCardType[] = [
-//   {
-//     id: 1,
-//     imageUrl: defautAudioImage,
-//     isAudioPrivate: true,
-//     isPublished: false,
-//     name: "my first ",
-//     PlayCount: 25,
-//     price: 0,
-//     Status: "NOT_FOR_PUBLISH",
-//     IsAudioForSale: false,
-//     tags: ["country", "hardrock", "blues", "indie"],
-//   },
-//   {
-//     id: 2,
-//     imageUrl: defautAudioImage,
-//     isAudioPrivate: true,
-//     isPublished: false,
-//     name: "my first ",
-//     PlayCount: 25,
-//     price: 50000,
-//     IsAudioForSale: true,
-//     Status: "PUBLISHED",
-//     tags: ["country", "hardrock", "blues", "indie"],
-//   },
-//   {
-//     id: 3,
-//     imageUrl: defautAudioImage,
-//     isAudioPrivate: true,
-//     isPublished: false,
-//     name: "my first ",
-//     PlayCount: 25,
-//     price: 0,
-//     IsAudioForSale: false,
-//     Status: "WAIT_FOR_PUBLISH",
-//     tags: ["country", "hardrock", "blues", "indie"],
-//   },
-//   {
-//     id: 4,
-//     imageUrl: defautAudioImage,
-//     isAudioPrivate: false,
-//     isPublished: false,
-//     name: "my first (removed)",
-//     PlayCount: 25,
-//     price: 0,
-//     IsAudioForSale: false,
-//     Status: "REMOVED",
-//     tags: ["country", "hardrock", "blues", "indie"],
-//   },
-//   {
-//     id: 5,
-//     imageUrl: defautAudioImage,
-//     isAudioPrivate: true,
-//     isPublished: false,
-//     name: "my first ",
-//     PlayCount: 25,
-//     price: 0,
-//     IsAudioForSale: false,
-//     Status: "NOT_FOR_PUBLISH",
-//     tags: ["country", "hardrock", "blues", "indie"],
-//   },
-// ];
-import { BACKEND_URL, HttpClient } from "@/common";
 import { PagingResponseDto } from "@/types/ApplicationTypes/PagingResponseType";
 import { TrackDto } from "@/types/ApplicationTypes/TrackType";
 import axios, { AxiosResponse } from "axios";
 import { useNavigate } from "react-router-dom";
 import ProducerMusicCard from "./component/musicUploadedCard";
+import { HttpClient } from "@/common";
 export default function ProducerMusics() {
   const [producerMusics, setProducerMusic] = useState<TrackDto[]>([]);
   const [isShowForm, setIsShowForm] = useState(false);
@@ -159,7 +96,8 @@ export default function ProducerMusics() {
         <MusicUploadForm
           isShow={isShowForm}
           onHide={() => setIsShowForm(false)}
-          onSubmit={() => {}}
+          onFail={() => {}}
+          onSuccess={() => {}}
         />
         <Button onClick={() => setIsShowForm(!isShowForm)}>upload</Button>
         <Form.Select
@@ -168,8 +106,8 @@ export default function ProducerMusics() {
             setCache({});
           }}
         >
-          <option value={3}>3</option>
-          <option value={6}>6</option>
+          <option value={4}>4</option>
+          <option value={8}>8</option>
         </Form.Select>
       </div>
       <div>

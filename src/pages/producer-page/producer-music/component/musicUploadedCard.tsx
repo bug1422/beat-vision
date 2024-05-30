@@ -5,7 +5,11 @@ import SweetAlerts from "@/components/advanced-ui/SweetAlerts";
 import "../../../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import { TrackDto } from "@/types/ApplicationTypes/TrackType";
 import defautAudioImage from "../../../../../public/default-image/defaultSoundwave.jpg";
-
+import { HttpClient } from "@/common";
+import { AxiosResponse } from "axios";
+import MusicPublishForm from "./musicPublishForm";
+import { useState } from "react";
+import { ButtonAllert2 } from "@/my-component/ButtonAllert";
 // export interface ProducerMusicCardType {
 //   id: number;
 //   imageUrl: string;
@@ -20,6 +24,7 @@ import defautAudioImage from "../../../../../public/default-image/defaultSoundwa
 // }
 
 const ProducerMusicCard = ({ producerMusic }: { producerMusic: TrackDto }) => {
+  const [isShowPublishForm, setIsShowPublishForm] = useState(false);
   const {
     Id,
     AudioBitPerSample,
@@ -67,22 +72,82 @@ const ProducerMusicCard = ({ producerMusic }: { producerMusic: TrackDto }) => {
           ))}
 
           <h4 className="my-3">{TrackName}</h4>
-          <ButtonAllert />
-          {/* <Button
-            variant="outline-danger btn-small mb-1"
-            size="sm"
-          >
-            Remove
-          </Button> */}
+          {/* <ButtonAllert /> */}
+          <MusicPublishForm
+            trackId={producerMusic.Id}
+            isShow={isShowPublishForm}
+            onHide={() => setIsShowPublishForm(false)}
+            onFail={() => {}}
+            onSuccess={() => {}}
+          />
+          <div className="d-flex flex-row justify-content-between">
+            {/* <Button
+              variant={"outline-warning"}
+              className={IsPublished ? "disabled mb-2" : "mb-2"}
+              size="sm"
+              onClick={() => setIsShowPublishForm(true)}
+            >
+              publish
+            </Button>
+            <ButtonAllert2
+              item={producerMusic}
+              onClickEvent={async (track: TrackDto): Promise<boolean> => {
+                console.log(track);
+                let result = await PulldownTrack(track.Id);
+                return result;
+              }}
+              text="pull down"
+              className={IsPublished ? "" : "disabled"}
+            ></ButtonAllert2> */}
+          </div>
           <div className="d-flex flex-column ">
             <p className="m-0 ">
               status : <Badge>{Status}</Badge>{" "}
             </p>
-            <p className="m-0">publish : {IsPublished}</p>
-            <p className="m-0">private : {IsAudioPrivate}</p>
+            <p className="m-0">
+              publish :
+              {IsPublished ? (
+                <Badge bg="success" className="">
+                  {" "}
+                  TRUE
+                </Badge>
+              ) : (
+                <Badge bg="warning" className="text-dark">
+                  {" "}
+                  FALSE
+                </Badge>
+              )}
+            </p>
+            <p className="m-0">
+              private :{" "}
+              {IsAudioPrivate ? (
+                <Badge bg="success" className="">
+                  {" "}
+                  TRUE
+                </Badge>
+              ) : (
+                <Badge bg="warning" className="text-dark">
+                  {" "}
+                  FALSE
+                </Badge>
+              )}
+            </p>
             <p className="m-0">total play : {PlayCount}</p>
             <p className="m-0">price: {Price}</p>
-            <p className="m-0">is for sale: {IsAudioForSale}</p>
+            <p className="m-0">
+              is for sale:{" "}
+              {IsAudioForSale ? (
+                <Badge bg="success" className="">
+                  {" "}
+                  TRUE
+                </Badge>
+              ) : (
+                <Badge bg="danger" className="">
+                  {" "}
+                  FALSE
+                </Badge>
+              )}
+            </p>
           </div>
           <hr className="hr-dashed" />
           <div className="d-flex justify-content-between">
@@ -98,36 +163,17 @@ const ProducerMusicCard = ({ producerMusic }: { producerMusic: TrackDto }) => {
   );
 };
 
-const ButtonAllert = withSwal((props: any) => {
-  const { swal } = props;
-  return (
-    <>
-      <Button
-        variant="outline-danger"
-        className="mb-2"
-        size="sm"
-        onClick={() =>
-          swal
-            .fire({
-              title: "Are you sure?",
-              text: "You won't be able to revert this!",
-              icon: "warning",
-              showCancelButton: true,
-              confirmButtonColor: "#3085d6",
-              cancelButtonColor: "#d33",
-              confirmButtonText: "Yes, delete it!",
-            })
-            .then(function (result: any) {
-              if (result.isConfirmed) {
-                swal.fire("Deleted!", "Your file has been deleted.", "success");
-              }
-            })
-        }
-      >
-        remove
-      </Button>
-    </>
-  );
-});
-
+async function PulldownTrack(trackId: number): Promise<boolean> {
+  try {
+    let createResult: AxiosResponse<string> = await HttpClient.delete(
+      `/api/ManageTrack/pulldown-track/${trackId}`,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+  } catch (err: any) {}
+  return false;
+}
 export default ProducerMusicCard;

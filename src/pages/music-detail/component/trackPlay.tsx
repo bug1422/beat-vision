@@ -25,6 +25,7 @@ const DefaultAudioArray = [
 ];
 export default function TrackPlay() {
   // const [audioList, setAudioList] = useState<Array<TrackType>>(DefaultAudioArray);
+  const [percentage, setPercentage] = useState<number>(0);
   const [isPlay, setIsPlay] = useState(false);
   const audioContainer = useRef<HTMLElement>(null);
   const waveSurferRef = useRef<WaveSurfer | null>(null);
@@ -48,6 +49,18 @@ export default function TrackPlay() {
         height: 50,
         url: currentlySelectAudio.url,
       });
+      waveSurferRef.current.on("timeupdate", (time) => {
+        let totaltime = waveSurferRef.current?.getDuration() as number;
+        let percentage = time / totaltime;
+        if (percentage < 0) {
+          percentage = 0;
+        }
+        if (percentage > 100) {
+          percentage = 100;
+        }
+        setPercentage(percentage);
+      });
+      // waveSurferRef.current.on('')
       return () => {
         if (waveSurferRef.current) {
           waveSurferRef.current.destroy();
@@ -56,6 +69,9 @@ export default function TrackPlay() {
       };
     }
   }, []);
+  useEffect(() => {
+    console.log(percentage);
+  }, [percentage]);
   return (
     <>
       <div className="border">
@@ -104,7 +120,7 @@ export default function TrackPlay() {
                 onClick={(_event) => {
                   let timeNow = waveSurferRef.current?.getCurrentTime() as number;
                   let totalTime = waveSurferRef.current?.getDuration() as number;
-                  waveSurferRef.current?.seekTo((timeNow + 5) / totalTime);
+                  waveSurferRef.current?.seekTo((timeNow - 5) / totalTime);
                 }}
               >
                 {" "}

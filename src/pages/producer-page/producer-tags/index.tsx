@@ -4,26 +4,33 @@ import { Button, Col, ListGroup, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import CreateTagForm from "./component/CreateTagForm";
-import { ButtonAllert2 } from "@/my-component/ButtonAllert";
-const MockTagsList: TagDto[] = [
-  {
-    Id: 1,
-    Name: "Hard Base",
-  },
-  {
-    Id: 2,
-    Name: "Rock",
-  },
-  {
-    Id: 3,
-    Name: "blues",
-  },
-];
+import { ButtonAllert2, SimpleAllertTopRight } from "@/my-component/ButtonAllert";
+import { HttpClient } from "@/common";
+import { AxiosResponse } from "axios";
 export default function ProducerTags() {
   const [tags, setTags] = useState<TagDto[]>([]);
   const [isShowCreateForm, setIsShowCreateForm] = useState(false);
+  const { onResult } = SimpleAllertTopRight();
+  const deleteTag = async (tagId: number) => {
+    try {
+      let deletResult: AxiosResponse = await HttpClient.delete(`/api/ManageTag/${tagId}`, {});
+      console.log(deletResult);
+      onResult(true);
+      window.location.reload();
+    } catch (err: any) {
+      onResult(false);
+    } finally {
+    }
+  };
+  const getTags = async () => {
+    try {
+      let getResult: AxiosResponse<TagDto[]> = await HttpClient.get(`/api/ManageTag`, {});
+      let tags = getResult.data;
+      setTags(tags);
+    } catch (err: any) {}
+  };
   useEffect(() => {
-    setTags(MockTagsList);
+    getTags();
   }, []);
   return (
     <>
@@ -63,8 +70,10 @@ export default function ProducerTags() {
                     <ButtonAllert2
                       item={tag}
                       text="Delete"
-                      onClickEvent={(item: TagDto) => {
+                      onClickEvent={async (item: TagDto) => {
                         console.log("delete the tag with id: " + item.Id);
+                        await deleteTag(tag.Id);
+                        return true;
                       }}
                     />
                   </Link>

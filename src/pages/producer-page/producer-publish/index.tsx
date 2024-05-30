@@ -1,5 +1,9 @@
-import { useState } from "react";
-import { ButtonAllert, ButtonAllert2 } from "../../../my-component/ButtonAllert";
+import { useEffect, useState } from "react";
+import {
+  ButtonAllert3,
+  ReturnDataOnClickEvent,
+  SimpleAllertTopRight,
+} from "../../../my-component/ButtonAllert";
 import {
   Badge,
   Button,
@@ -11,89 +15,107 @@ import {
   DropdownItem,
   DropdownMenu,
   DropdownToggle,
+  Pagination,
   Row,
 } from "react-bootstrap";
-import PublishUpdateForm from "./component/publishUpdateForm";
-const MockProducerMusicItem: PublishDetailRowProps[] = [
-  {
-    Id: 1,
-    IsAudioPrivate: true,
-    IsPublished: false,
-    TrackName: "my first ",
-    Price: 0,
-    Status: "NOT_FOR_PUBLISH",
-    PublishDateTime: "14/04/2004 23:23:23",
-    IsAudioForSale: false,
-  },
-  {
-    Id: 2,
-    IsAudioPrivate: true,
-    IsPublished: false,
-    TrackName: "my first ",
-    Price: 50000,
-    IsAudioForSale: true,
-    PublishDateTime: "14/04/2004 23:23:23",
-
-    Status: "PUBLISH",
-  },
-  {
-    Id: 3,
-    IsAudioPrivate: true,
-    IsPublished: false,
-    TrackName: "my first ",
-    Price: 0,
-    IsAudioForSale: false,
-    PublishDateTime: "14/04/2004 23:23:23",
-
-    Status: "WAIT_FOR_PUBLISH",
-  },
-  {
-    Id: 4,
-    IsAudioPrivate: false,
-    IsPublished: false,
-    TrackName: "my first (removed)",
-    PublishDateTime: "14/04/2004 23:23:23",
-
-    Price: 0,
-    IsAudioForSale: false,
-    Status: "REMOVED",
-  },
-  {
-    Id: 5,
-    PublishDateTime: "14/04/2004 23:23:23",
-
-    IsAudioPrivate: true,
-    IsPublished: false,
-    TrackName: "my first ",
-    Price: 0,
-    IsAudioForSale: false,
-    Status: "NOT_FOR_PUBLISH",
-  },
-];
-
+import { TrackDto } from "@/types/ApplicationTypes/TrackType";
+import PublishForm from "./component/publishForm";
+import defaultAudioImage from "../../../assets/images/logo-dark.png";
+import { HttpClient } from "@/common";
+import axios, { AxiosResponse, isAxiosError } from "axios";
+import { PagingResponseDto } from "@/types/ApplicationTypes/PagingResponseType";
+import { useNavigate } from "react-router-dom";
+import { FetchFunctionResult } from "@/types/FetchFunctionReturnType";
+import { format } from "date-fns";
 export default function ProducerPublish() {
-  const [trackList, setTrackList] = useState(MockProducerMusicItem);
-  const [isShowUpdateForm, setIsShowUpdateForm] = useState(false);
-  const [selectedTrackId, setSelectedTrackId] = useState(0);
-  const onRowPressUpdate = (trackId: number) => {
-    setIsShowUpdateForm(!isShowUpdateForm);
-    setSelectedTrackId(selectedTrackId);
+  const [trackList, setTrackList] = useState<TrackDto[]>([]);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [totalPage, setTotalPage] = useState(0);
+  const [pageSize, setPageSize] = useState(10);
+  const [cache, setCache] = useState<{ [key: number]: TrackDto[] }>({});
+  const navigate = useNavigate();
+  const renderPaging = () => {
+    const pages = [];
+    for (let i = 0; i < totalPage; i++) {
+      if (i == 0) {
+        pages.push(
+          <>
+            <Pagination.First key={0} active={false} onClick={() => setCurrentPage(0)} />
+          </>
+        );
+      }
+      pages.push(
+        <>
+          <Pagination.Item key={i} active={currentPage === i} onClick={() => setCurrentPage(i)}>
+            {i + 1}
+          </Pagination.Item>
+        </>
+      );
+    }
+    pages.push(
+      <>
+        <Pagination.Last
+          key={totalPage - 1}
+          active={false}
+          onClick={() => {
+            setCurrentPage(totalPage - 1);
+          }}
+        />
+      </>
+    );
+    return pages;
   };
+  const fetchData = async () => {
+    let cacheKey = Number(currentPage.toString() + pageSize.toString());
+    if (cache[cacheKey]) {
+      setTrackList(cache[cacheKey]);
+      return;
+    }
+    try {
+      const res: AxiosResponse<PagingResponseDto<TrackDto[]>> = await HttpClient.get(
+        `/api/ManageTrack/get-range?currentPage=${currentPage}&amount=${pageSize}`
+      );
+      if (!res.data) {
+        throw new Error("fail to fetch data");
+      }
+      let dataBody = res.data;
+      console.log(dataBody);
+      let totalItemCount = dataBody.TotalCount;
+      let totalTracks = dataBody.Value;
+      console.log(totalTracks);
+      setTrackList(totalTracks);
+      setTotalPage(Math.ceil(totalItemCount / pageSize));
+      setCache((prevCache) => ({ ...prevCache, [cacheKey]: totalTracks }));
+    } catch (error: any) {
+      console.log(error);
+      if (axios.isAxiosError(error)) {
+        if (error.response) {
+          const { status } = error.response;
+          switch (status) {
+            case 403:
+            case 401:
+              navigate("/auth/login");
+              break;
+          }
+          console.log(error);
+        }
+      }
+    } finally {
+    }
+  };
+  useEffect(() => {
+    fetchData().then(() => {
+      console.log(trackList);
+    });
+    //console.log(new Date(trackList[trackList.length - 1].PublishDateTime as string));
+  }, [currentPage, pageSize]);
+
   return (
     <>
       <Row>
-        <PublishUpdateForm
-          isShow={isShowUpdateForm}
-          trackId={0}
-          onHide={() => setIsShowUpdateForm(false)}
-          onSubmit={() => {}}
-        />
         <Card>
           <CardHeader>
             <CardTitle>Publish music</CardTitle>
-            {/* <p className="text-muted mb-0">
-              Add <code>.table-bordered</code> for borders on all sides of the table and cells.
-            </p> */}
           </CardHeader>
           <CardBody>
             <div className="table-responsive">
@@ -112,21 +134,9 @@ export default function ProducerPublish() {
                   </tr>
                 </thead>
                 <tbody>
-                  {trackList.map((track) => (
+                  {trackList.map((track: TrackDto) => (
                     <>
-                      <PublishRow
-                        track={track}
-                        // TrackName={track.TrackName}
-                        // Id={track.Id}
-                        // IsAudioPrivate={track.IsAudioPrivate}
-                        // IsAudioForSale={track.IsAudioForSale}
-                        // IsPublished={track.IsPublished}
-                        // Price={track.Price}
-                        // Status={track.Status}
-                        // PublishDateTime={track.PublishDateTime}
-                        key={track.Id}
-                        onUpdate={onRowPressUpdate}
-                      />
+                      <PublishRow track={track} />
                     </>
                   ))}
                 </tbody>
@@ -135,27 +145,39 @@ export default function ProducerPublish() {
           </CardBody>
         </Card>
       </Row>
+      <Row className="d-flex justify-content-center align-content-center">
+        <div>
+          <Pagination className="d-flex justify-content-center">{renderPaging()}</Pagination>
+        </div>
+      </Row>
     </>
   );
 }
 
-export interface PublishDetailRowProps {
-  Id: number;
-  TrackName: string;
-  IsAudioPrivate: boolean;
-  IsPublished: boolean;
-  Status: "PUBLISH" | "REMOVED" | "WAIT_FOR_PUBLISH" | "NOT_FOR_PUBLISH";
-  PublishDateTime?: String;
-  IsAudioForSale?: boolean;
-  Price: number;
-}
 interface PublishDetailRowPropsExtra {
-  track: PublishDetailRowProps;
-  onUpdate: (trackId: number) => void;
+  track: TrackDto;
+  //onUpdate: (trackId: number) => void;
 }
-const PublishRow = ({ track, onUpdate }: PublishDetailRowPropsExtra) => {
+const PublishRow = ({ track }: PublishDetailRowPropsExtra) => {
+  const [isShowPublishForm, setIsShowPublishForm] = useState(false);
+  const { onResult } = SimpleAllertTopRight();
   return (
     <>
+      <PublishForm
+        trackId={track.Id}
+        isShow={isShowPublishForm}
+        onHide={() => {
+          setIsShowPublishForm(false);
+        }}
+        onFail={() => {
+          onResult(false, "create publish fail");
+        }}
+        onSuccess={() => {
+          onResult(true, "create publish success");
+          window.location.reload();
+        }}
+      />
+
       <tr>
         <td>{track.Id}</td>
         <td>{track.TrackName}</td>
@@ -176,8 +198,18 @@ const PublishRow = ({ track, onUpdate }: PublishDetailRowPropsExtra) => {
         <td>
           {track.IsPublished ? <Badge className="">true</Badge> : <Badge className="">false</Badge>}
         </td>
-        <td>{track.PublishDateTime}</td>
-        <td>{track.Status}</td>
+        <td>
+          {!track.PublishDateTime ? (
+            <Badge bg="danger">never publish</Badge>
+          ) : (
+            format(new Date(track.PublishDateTime as string), "yyyy-MM-dd HH:mm:ss")
+          )}
+        </td>
+        <td>
+          <Badge bg="warning" className="text-dark">
+            {track.Status}
+          </Badge>
+        </td>
         <td>{track.Price}</td>
         <td className="text-end">
           <Dropdown className="d-inline-block">
@@ -190,26 +222,28 @@ const PublishRow = ({ track, onUpdate }: PublishDetailRowPropsExtra) => {
                 <Button
                   variant={`outline-primary`}
                   type="button"
-                  style={{ fontSize: "0.9rem" }}
-                  onClick={() => onUpdate(track.Id)}
+                  className="w-100"
+                  size="sm"
+                  onClick={() => setIsShowPublishForm(true)}
                 >
-                  update
+                  publish
                 </Button>
               </DropdownItem>
               <DropdownItem href="#">
-                <ButtonAllert2<PublishDetailRowProps>
+                <ButtonAllert3
                   item={track}
-                  onClickEvent={(track: PublishDetailRowProps) => {
-                    console.log(track.TrackName);
-                    console.log(track.Id);
+                  onClickEvent={async (track: TrackDto): Promise<ReturnDataOnClickEvent> => {
+                    console.log(track);
+                    let result = await PulldownTrack(track.Id);
+                    if (result.isSuccess) {
+                      return { result: true, successMessage: "create successfully" };
+                    } else {
+                      return { result: false, failureMessage: result.error?.message };
+                    }
                   }}
                   text="pull down"
-                ></ButtonAllert2>
-              </DropdownItem>
-              <DropdownItem href="#">
-                <Button variant={`outline-success`} type="button" style={{ fontSize: "0.9rem" }}>
-                  detail
-                </Button>
+                  className={track.IsPublished ? "w-100" : " w-100"}
+                ></ButtonAllert3>
               </DropdownItem>
             </DropdownMenu>
           </Dropdown>
@@ -218,3 +252,24 @@ const PublishRow = ({ track, onUpdate }: PublishDetailRowPropsExtra) => {
     </>
   );
 };
+async function PulldownTrack(trackId: number): Promise<FetchFunctionResult> {
+  try {
+    let createResult: AxiosResponse<string> = await HttpClient.delete(
+      `/api/ManageTrack/pulldown-track/${trackId}`,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    return { isSuccess: true };
+  } catch (err: any) {
+    if (isAxiosError(err)) {
+      return {
+        isSuccess: false,
+        error: { statusCode: err.status as number, message: err.message },
+      };
+    }
+    return { isSuccess: false };
+  }
+}
