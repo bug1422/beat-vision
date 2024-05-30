@@ -1,7 +1,9 @@
 //
 // Profile
 //
-
+.bold{
+  font-weight: bolder;
+}
 .pro-map{
   clip-path: ellipse(100% 77% at 50% 23% )
 }
@@ -13,20 +15,20 @@
   left: 0;
 }
 
-.dastone-profile {
-  .dastone-profile-main {
+.user-profile {
+  .user-profile-main {
     display: flex;
     flex-direction: row;
     flex: 1;
     flex-wrap: wrap;
     align-items: center;
-    .dastone-profile-main-pic {
+    .user-profile-main-pic {
       position: relative;
       max-width: 128px;
       max-height: 128px;
       margin-right: 18px;
 
-      .dastone-profile_main-pic-change {
+      .user-profile_main-pic-change {
         cursor: pointer;
         background-color: $primary;
         border-radius: 50%;
@@ -48,14 +50,14 @@
         }
       }
     }
-    .dastone-profile_user-detail{
-      .dastone-user-name{
+    .user-profile_user-detail{
+      .user-user-name{
         font-size: 22px;
         font-weight: 700;
         color: $gray-700;
         margin-bottom: 4px;
       }
-      .dastone-user-name-post{
+      .user-user-name-post{
         color: $text-muted;
         font-size: 12px;
       }
@@ -76,7 +78,7 @@
   min-height: 400px;
 }
 
-.dastone-basic-detail{
+.user-basic-detail{
   h3{
     font-size: 34px;
     font-weight: 600;

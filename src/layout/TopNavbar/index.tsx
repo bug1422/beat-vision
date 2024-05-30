@@ -1,5 +1,5 @@
 import { Button, Collapse } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 // import logoDark from '/logo-dark.png'
 // import logoImg from '/logo.png'
 import logoSM from '/logo-sm.png'
@@ -7,10 +7,17 @@ import { useToggle } from '@/hooks'
 import { Notifications, ProfileDropdown } from './components'
 import { notifications } from './data'
 import { useAuthContext } from '@/context'
+import { useRef } from 'react'
 
 const TopNavBar = () => {
 	const { isAuthenticated } = useAuthContext();
 	const { isOpen, toggle } = useToggle()
+	const navigate = useNavigate()
+
+	const keyword = useRef<string>("")
+	const handleSearchBeat = (keyword: string) => {
+        navigate("/beats/" + keyword, { replace:true})
+	}
 	return (
 		<>
 			<nav className="navbar py-0 navbar-expand-lg navbar-light header">
@@ -20,7 +27,10 @@ const TopNavBar = () => {
 					</Link>
 					<Collapse in={isOpen} className="navbar-collapse ">
 						<div>
-							<form className="me-auto d-flex app-search-topbar">
+							<form className="me-auto d-flex app-search-topbar" onSubmit={(e) => {
+								e.preventDefault()
+								if (keyword.current.length > 0) handleSearchBeat(keyword.current)
+							}}>
 								<div className="input-group">
 									<input
 										type="text"
@@ -28,13 +38,18 @@ const TopNavBar = () => {
 										placeholder="Search"
 										aria-label="Recipient's username"
 										aria-describedby="basic-addon2"
+										onChange={(e) => {
+											keyword.current = e.target.value
+										}}
 									/>
 									<Button
 										variant="soft-primary"
 										type="button"
 										id="button-addon2"
 									>
-										<i className="fas fa-search" />
+										<i className="fas fa-search" onClick={(e) => {
+											if (keyword.current.length > 0) handleSearchBeat(keyword.current)
+										}} />
 									</Button>
 								</div>
 							</form>
@@ -45,13 +60,8 @@ const TopNavBar = () => {
 									</Link>
 								</li>
 								<li className="mx-2 my-2 nav-item">
-									<Link className="nav-link active header-text" aria-current="page" to="#">
+									<Link className="nav-link active header-text" aria-current="page" to="/beats/">
 										Beats
-									</Link>
-								</li>
-								<li className="mx-2 my-2 nav-item">
-									<Link className="nav-link active header-text" to="#">
-										Products
 									</Link>
 								</li>
 								<li className="mx-2 my-2 nav-item">
@@ -62,10 +72,10 @@ const TopNavBar = () => {
 								{!isAuthenticated ?
 									<>
 										<li className="mx-2 my-2 nav-item">
-											<Link className='nav-link active header-text' to="/auth/register">Sign Up</Link>
+											<Link className='nav-link active header-text' to="/auth/login">Log In</Link>
 										</li>
 										<li className="mx-2 my-2 nav-item">
-											<Link className='nav-link active header-text' to="/auth/login">Log In</Link>
+											<Link className='nav-link active header-text' to="/auth/register">Sign Up</Link>
 										</li>
 									</> : null}
 							</ul>

@@ -3,10 +3,17 @@ import demoBeat from '/images/products/01.png'
 import img1 from '/images/homepage/img1.jpg'
 import img2 from '/images/homepage/img2.jpg'
 import img3 from '/images/homepage/img3.jpg'
+import fpt_logo from '/images/brand-logo/fpt.png'
 import { beats, artists } from "@/testing/FetchFakeData"
-import { useState } from "react"
+import { useRef, useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 const Section1 = () => {
+    const navigate = useNavigate()
+    const keyword = useRef<string>("")
+    const handleSearchBeat = (keyword: string) => {
+        navigate("/beats/" + keyword)
+    }
 
     const Title = (title: string) => {
         return (
@@ -18,11 +25,22 @@ const Section1 = () => {
     return (
         <div className="section1">
             <div className="overlay searchbar">
-                <div className="icon dripicons-search" />
-                <FormControl
-                    type="text"
-                    placeholder="Search name, creator or genre"
-                    size="lg" />
+                <div className="icon dripicons-search" onClick={(e) => {
+                    if (keyword.current.length > 0) handleSearchBeat(keyword.current)
+                }} />
+                <form className="" onSubmit={(e) => {
+                    e.preventDefault()
+                    if (keyword.current.length > 0) handleSearchBeat(keyword.current)
+                }}>
+                    <FormControl
+                        name="search"
+                        type="text"
+                        onChange={(e) => {
+                            keyword.current = e.target.value
+                        }}
+                        placeholder="Search name, creator or genre"
+                        size="lg" />
+                </form>
             </div>
             <Carousel
                 fade
@@ -73,7 +91,7 @@ const Section2 = () => {
             <div className="content">
                 <Row className="justify-content-center">
                     {currentItems.map((beat, idx) => (
-                        <Col xs={4} sm={2   } key={idx}>
+                        <Col xs={4} sm={2} key={idx}>
                             <Card>
                                 <img src={demoBeat} className="card-img-top img-fluid bg-light-alt" />
                                 <CardHeader>
@@ -127,16 +145,16 @@ const Section3 = () => {
             </Col>
             <Col xl={6} className="right-col ps-3 d-flex justify-content-around align-items-center">
                 <div className="sponsor">
-                    <img src={demoBeat} className="img-fluid" />
+                    <img src={fpt_logo} className="img-fluid" />
                 </div>
                 <div className="sponsor">
-                    <img src={demoBeat} className="img-fluid" />
+                    <img src={fpt_logo} className="img-fluid" />
                 </div>
                 <div className="sponsor">
-                    <img src={demoBeat} className="img-fluid" />
+                    <img src={fpt_logo} className="img-fluid" />
                 </div>
                 <div className="sponsor">
-                    <img src={demoBeat} className="img-fluid" />
+                    <img src={fpt_logo} className="img-fluid" />
                 </div>
             </Col>
         </Row>
@@ -175,9 +193,9 @@ const Section5 = () => {
             </div>
             <div className="content pt-5">
                 <Row className="d-flex justify-content-center">
-                    {artists.slice(0,5).map((artist, idx) => (
+                    {artists.slice(0, 5).map((artist, idx) => (
                         <Col className="artist" key={idx}>
-							<img src={demoBeat} alt="user" className="img rounded-circle thumb-xl" />
+                            <img src={demoBeat} alt="user" className="img rounded-circle thumb-xl" />
                             <div className="home-text text-end mt-2 me-5">{artist.author}</div>
                         </Col>
                     ))}

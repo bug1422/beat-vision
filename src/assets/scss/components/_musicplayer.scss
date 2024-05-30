@@ -1,0 +1,40 @@
+.music-player {
+    bottom: 0;
+    position: fixed;
+    width: 100%;
+    height: $music-player-height;
+
+    background-color: black;
+
+    .music-player-content {
+        .icon {
+            height: $music-player-height - 10px;
+        }
+
+        .info {
+            font-weight: bold;
+            color: white;
+        }
+    }
+
+    .center {
+        font-size: 26px;
+
+        .play {
+            font-size: 30px;
+            position: relative;
+            top: -4px;
+        }
+    }
+
+    .center>*:hover, .volumne>*:hover {
+        color: white;
+    }
+
+    .volumne {
+        font-size: 26px;
+    }
+    .volumne-bar{
+        width: 40%;
+    }
+}

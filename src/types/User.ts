@@ -1,14 +1,15 @@
 export type User = {
-    id: number
+    userid: string
     email?: string
     username?: string
-    firstName?: string
-    lastName?: string
     role: string
     exp: number
-    accessToken: string
+    iss?: string
+    aud?: string
     refreshToken: string
 }
+
+
 
 export type AuthContextType = {
     user: User | undefined,

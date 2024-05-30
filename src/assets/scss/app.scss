@@ -21,6 +21,8 @@ File: App Css
 @import "structure/dark-sidenav";
 
 // Components
+@import "components/musicplayer";
+
 @import "components/reboot";
 @import "components/waves";
 @import "components/card";
@@ -60,6 +62,7 @@ File: App Css
 
 // Pages
 @import "pages/home";
+@import "pages/search";
 
 @import "pages/avatar";
 @import "pages/general";
