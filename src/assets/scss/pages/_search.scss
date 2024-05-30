@@ -48,11 +48,13 @@ $card-height: 70px;
     .search-body>* {
         margin-left: 0px;
     }
-
+    .search-body::-webkit-scrollbar{
+        display: none;
+    }
     .search-body {
-
-
-        min-height: $card-height * 15;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        height: $card-height * 15;
 
         .track {
             width: 100%;
