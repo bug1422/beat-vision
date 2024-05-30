@@ -39,7 +39,7 @@ const Search = () => {
     }
 
     return (
-        <>
+        <div className="search-page">
             <Row className="search d-flex justify-content-center">
                 <Col className="d-flex justify-content-end border-end left-col me-2" sm={3} xl={2}>
                     <div className="tags">
@@ -108,7 +108,7 @@ const Search = () => {
                 </Suspense>
                 : <></>
             }
-        </>
+        </div>
     )
 }
 export default Search

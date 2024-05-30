@@ -86,19 +86,29 @@ const MusicPlayer = (props: { trackId: number }) => {
             }
         }
     }, [trackId]);
+    useEffect(() => {
+        if(playPercent == 100){
+            setPlayPercent(0)
+            handleSkipForward()
+            console.log("next")
+        }
+    })
 
     useEffect(() => {
-        if (!isSkipping) {
-            setTimeout(() => {
+        const timeOutId: NodeJS.Timeout = setTimeout(() => {
+            if (!isSkipping) {
                 if (waveSurfer.current != undefined) {
                     const duration = waveSurfer.current.getDuration();
                     const current = waveSurfer.current.getCurrentTime()
-                    setPlayPercent(current / duration * 100)
-                    setBarValue(playPercent)
+                    if (!isPlaying || isSkipping) return clearTimeout(timeOutId)
+                    let calculate = 100 * (current / duration)
+                    setPlayPercent(calculate)
+                    setBarValue(calculate)
+                    console.log(barValue.toString() + " " + calculate.toString())
                 }
-            }, 600)
-        }
-    }, [playPercent])
+            }
+        }, 600)
+    })
 
     function SetPlaying(value: boolean) {
         if (value) {
@@ -125,6 +135,7 @@ const MusicPlayer = (props: { trackId: number }) => {
     function endSkip() {
         if (waveSurfer.current) {
             waveSurfer.current.seekTo(barValue / 100);
+            setPlayPercent(barValue / 100);
         }
         SetPlaying(true)
         setSkipping(false)

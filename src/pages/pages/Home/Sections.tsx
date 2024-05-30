@@ -164,7 +164,7 @@ const Section4 = () => {
     return (<>
         <div className="section4 pt-2">
             <Row>
-                <Col xl={4} className="left-col py-3 my-3">
+                <Col xl={4} className="left-col pt-3 mt-3">
                     <div className="home-text">
                         Why choose beat vision
                     </div>
