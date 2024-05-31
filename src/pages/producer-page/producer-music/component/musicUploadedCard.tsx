@@ -3,28 +3,17 @@ import { Link } from "react-router-dom";
 import { withSwal } from "react-sweetalert2";
 import SweetAlerts from "@/components/advanced-ui/SweetAlerts";
 import "../../../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
-import { TrackDto } from "@/types/ApplicationTypes/TrackType";
+import { TRACK_STATUS, TrackDto } from "@/types/ApplicationTypes/TrackType";
 import defautAudioImage from "../../../../../public/default-image/defaultSoundwave.jpg";
 import { HttpClient } from "@/common";
 import { AxiosResponse } from "axios";
-import MusicPublishForm from "./musicPublishForm";
+import MusicUpdateForm from "./musicUpdateForm";
 import { useState } from "react";
-import { ButtonAllert2 } from "@/my-component/ButtonAllert";
-// export interface ProducerMusicCardType {
-//   id: number;
-//   imageUrl: string;
-//   name: string;
-//   Status: "PUBLISHED" | "REMOVED" | "WAIT_FOR_PUBLISH" | "NOT_FOR_PUBLISH";
-//   isPublished: boolean;
-//   isAudioPrivate: boolean;
-//   PlayCount: number;
-//   price: number;
-//   tags: string[];
-//   IsAudioForSale: boolean;
-// }
+import { ButtonAllert2, SimpleAllertTopRight } from "@/my-component/ButtonAllert";
 
 const ProducerMusicCard = ({ producerMusic }: { producerMusic: TrackDto }) => {
-  const [isShowPublishForm, setIsShowPublishForm] = useState(false);
+  const [isShowUpdateForm, setIsShowUpdateForm] = useState(false);
+  const { onResult } = SimpleAllertTopRight();
   const {
     Id,
     AudioBitPerSample,
@@ -73,32 +62,27 @@ const ProducerMusicCard = ({ producerMusic }: { producerMusic: TrackDto }) => {
 
           <h4 className="my-3">{TrackName}</h4>
           {/* <ButtonAllert /> */}
-          <MusicPublishForm
-            trackId={producerMusic.Id}
-            isShow={isShowPublishForm}
-            onHide={() => setIsShowPublishForm(false)}
-            onFail={() => {}}
-            onSuccess={() => {}}
+          <MusicUpdateForm
+            Track={producerMusic}
+            isShow={isShowUpdateForm}
+            onHide={() => setIsShowUpdateForm(false)}
+            onFail={() => {
+              onResult(false);
+            }}
+            onSuccess={() => {
+              onResult(true);
+              window.location.reload();
+            }}
           />
           <div className="d-flex flex-row justify-content-between">
-            {/* <Button
+            <Button
               variant={"outline-warning"}
-              className={IsPublished ? "disabled mb-2" : "mb-2"}
+              className={Status != TRACK_STATUS.NOT_FOR_PUBLISH ? "disabled mb-2" : "mb-2"}
               size="sm"
-              onClick={() => setIsShowPublishForm(true)}
+              onClick={() => setIsShowUpdateForm(true)}
             >
-              publish
+              update
             </Button>
-            <ButtonAllert2
-              item={producerMusic}
-              onClickEvent={async (track: TrackDto): Promise<boolean> => {
-                console.log(track);
-                let result = await PulldownTrack(track.Id);
-                return result;
-              }}
-              text="pull down"
-              className={IsPublished ? "" : "disabled"}
-            ></ButtonAllert2> */}
           </div>
           <div className="d-flex flex-column ">
             <p className="m-0 ">
