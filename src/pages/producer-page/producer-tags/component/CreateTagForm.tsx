@@ -19,20 +19,41 @@ import FilePondPluginImagePreview from "filepond-plugin-image-preview";
 import FilePondPluginFileEncode from "filepond-plugin-file-encode";
 import "filepond/dist/filepond.min.css";
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
-
+import { HttpClient } from "@/common";
+import { PagingResponseDto } from "@/types/ApplicationTypes/PagingResponseType";
+import { TrackLicenseDto } from "@/types/ApplicationTypes/TrackLicenseType";
+import axios, { AxiosResponse } from "axios";
+import { SimpleAllertTopRight } from "@/my-component/ButtonAllert";
 interface CreateTagFormProps {
   isShow: boolean;
   onHide: () => void;
   onSubmit: () => void;
 }
+
 registerPlugin(
   FilePondPluginFileEncode,
   FilePondPluginImageExifOrientation,
   FilePondPluginImagePreview
 );
 export default function CreateTagForm({ isShow, onHide, onSubmit }: CreateTagFormProps) {
-  const [tagName, setTrackName] = useState("");
-
+  const [tagName, setTagName] = useState("");
+  const { onResult } = SimpleAllertTopRight();
+  const onClickSubmig = async () => {
+    try {
+      let formData = new FormData();
+      formData.append("Name", tagName);
+      let createResponse: AxiosResponse = await HttpClient.post(`/api/ManageTag`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      onResult(true);
+      window.location.reload();
+    } catch (err: any) {
+      onResult(false);
+      console.log(err);
+    }
+  };
   return (
     <>
       <Modal show={isShow} centered>
@@ -59,6 +80,7 @@ export default function CreateTagForm({ isShow, onHide, onSubmit }: CreateTagFor
                             className="form-control-success"
                             id="tagname"
                             placeholder="tag name"
+                            onChange={(e) => setTagName(e.currentTarget.value)}
                           />
                           <div className="form-control-feedback">choose a unique name</div>
                           <small className="form-text text-muted">required</small>
@@ -73,7 +95,7 @@ export default function CreateTagForm({ isShow, onHide, onSubmit }: CreateTagFor
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={onHide}>Close</Button>
-          <Button onClick={onSubmit}>Submit</Button>
+          <Button onClick={onClickSubmig}>Submit</Button>
         </Modal.Footer>
       </Modal>
     </>
