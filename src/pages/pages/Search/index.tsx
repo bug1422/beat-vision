@@ -1,11 +1,12 @@
 import { TrackDto } from "@/types/ApplicationTypes/TrackType"
-import { useEffect, useState } from "react"
+import { Suspense, lazy, useEffect, useState } from "react"
 import { Badge, Button, CardBody, CardHeader, Col, FormControl, Row } from "react-bootstrap"
 import { useNavigate, useParams } from "react-router-dom"
-import { FetchAllTracks } from "./getBeat"
+import { FetchAllTracks, FetchPopularTracks } from "./getBeat"
 import DefaultBeatThumbnail from "/default-image/defaultSoundwave.jpg"
 import { FiPlay, FiPlayCircle, FiShoppingBag } from "react-icons/fi"
-import { MusicPlayer } from "@/components"
+const MusicPlayer = lazy(() => import("@/components/MusicPlayer"))
+
 const Tag = (props: { className?: string, name: string }) => {
     const { className, name } = props
     return (
@@ -24,7 +25,6 @@ const Search = () => {
 
     const [tracks, setTracks] = useState<TrackDto[]>(FetchAllTracks())
     const [selected, setSelected] = useState<TrackDto>()
-
     useEffect(() => {
         setSearchValue(keyword ?? "")
     }, [keyword])
@@ -39,7 +39,7 @@ const Search = () => {
     }
 
     return (
-        <>
+        <div className="search-page">
             <Row className="search d-flex justify-content-center">
                 <Col className="d-flex justify-content-end border-end left-col me-2" sm={3} xl={2}>
                     <div className="tags">
@@ -68,7 +68,7 @@ const Search = () => {
                         {(tracks && tracks?.length > 0) ?
                             <div className="search-body pt-2 d-flex flex-column">
                                 {tracks.map((track, index) => (
-                                    <Row className="track align-items-center" key={index} onClick={() => { setSelected(track) }} >
+                                    <Row className="track align-items-center" key={index} onClick={() => { setSelected(track); }} >
                                         <Col xl={1} className="d-flex">
                                             <div className="rank">{index + 1} </div>
                                             <FiPlayCircle className="play" />
@@ -103,10 +103,12 @@ const Search = () => {
                 </Col>
             </Row>
             {selected != undefined ?
-                <MusicPlayer track={selected} />
+                <Suspense fallback={<div/>}>
+                    <MusicPlayer trackId={selected.Id} />
+                </Suspense>
                 : <></>
             }
-        </>
+        </div>
     )
 }
 export default Search

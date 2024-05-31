@@ -112,7 +112,7 @@ type Beat = {
 const beats:Beat[] =[
     {
         Id: 1,
-        Path: DefaultAudio
+        Path: DefaultAudio3
     },
     {
         Id: 2,
@@ -121,11 +121,22 @@ const beats:Beat[] =[
     {
         Id: 3,
         Path: DefaultAudio3
+    },
+    {
+        Id: 4,
+        Path: DefaultAudio3
+    },
+    {
+        Id: 5,
+        Path: DefaultAudio3
     }
 ]
 
 export function FetchAllTracks() {
-    return tracks
+    let list = [...tracks]
+    // list = [...list,...tracks]
+    // list = [...list,...tracks]
+    return list
 }
 
 export function FetchPopularTracks() {
@@ -135,4 +146,9 @@ export function FetchPopularTracks() {
 export function FetchAudio(id: number) {
     const beat = beats.find(p => p.Id == id)
     return beat
+}
+
+export function FetchTrack(id: number){
+    const track = tracks.find(p => p.Id == id)
+    return track
 }
