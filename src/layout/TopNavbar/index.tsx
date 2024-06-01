@@ -7,16 +7,22 @@ import { useToggle } from '@/hooks'
 import { Notifications, ProfileDropdown } from './components'
 import { notifications } from './data'
 import { useAuthContext } from '@/context'
-import { useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import Cart from './components/Carts'
 
 const TopNavBar = () => {
-	const { isAuthenticated } = useAuthContext();
+	const { isAuthenticated, user } = useAuthContext();
+	const [ loggedIn, setLogged ] = useState<boolean>(isAuthenticated)
 	const { isOpen, toggle } = useToggle()
 	const navigate = useNavigate()
+	useEffect(() => {
+		console.log(isAuthenticated)
+		setLogged(isAuthenticated)
+	}, [isAuthenticated])
 
 	const keyword = useRef<string>("")
 	const handleSearchBeat = (keyword: string) => {
-        navigate("/beats/" + keyword, { replace:true})
+		navigate("/beats/" + keyword, { replace: true })
 	}
 	return (
 		<>
@@ -64,12 +70,12 @@ const TopNavBar = () => {
 										Beats
 									</Link>
 								</li>
-								<li className="mx-2 my-2 nav-item">
+								{/* <li className="mx-2 my-2 nav-item">
 									<Link className="nav-link active header-text" to="#">
 										Support
 									</Link>
-								</li>
-								{!isAuthenticated ?
+								</li> */}
+								{!loggedIn ?
 									<>
 										<li className="mx-2 my-2 nav-item">
 											<Link className='nav-link active header-text' to="/auth/login">Log In</Link>
@@ -84,6 +90,7 @@ const TopNavBar = () => {
 					{
 						isAuthenticated ?
 							<>
+								<Cart userId={ user != undefined ? parseInt(user.userid) : undefined}/>
 								<Notifications notifications={notifications} />
 								<ProfileDropdown />
 							</> :

@@ -58,20 +58,20 @@ const Notifications = ({
 	notifications: NotificationType[]
 }) => {
 	return (
-		<Dropdown as="div">
+		<Dropdown as="div" className='notification-list'>
 			<DropdownToggle
 				as="a"
 				className="nav-link arrow-none waves-light waves-effect"
 			>
 				<FiBell className="bell align-self-center topbar-icon" />
-				<span className="badge bg-danger rounded-pill noti-icon-badge">2</span>
+				{/* <span className="badge bg-danger rounded-pill noti-icon-badge">2</span> */}
 			</DropdownToggle>
 			<DropdownMenu className="dropdown-menu-end dropdown-lg pt-0">
 				<h6 className="dropdown-item-text font-15 m-0 py-3 border-bottom d-flex justify-content-between align-items-center">
 					Notifications <span className="badge bg-primary rounded-pill">2</span>
 				</h6>
 				<SimpleBar className="notification-menu">
-					{notifications.map((item, idx) => {
+					{notifications && notifications.length > 0 ? (notifications.map((item, idx) => {
 						const Icon = item.icon
 						return (
 							<DropdownItem className="py-3" key={idx}>
@@ -98,7 +98,7 @@ const Notifications = ({
 								</div>
 							</DropdownItem>
 						)
-					})}
+					})) : <> </>}
 				</SimpleBar>
 
 				<Link to="#" className="dropdown-item text-center text-primary">

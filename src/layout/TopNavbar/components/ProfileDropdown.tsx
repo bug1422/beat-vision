@@ -6,7 +6,7 @@ import {
 	Image,
 } from 'react-bootstrap'
 
-import { FiPower, FiSettings, FiUser } from 'react-icons/fi'
+import { FiPower, FiSettings, FiShoppingCart, FiUser } from 'react-icons/fi'
 import { useAuthContext } from '@/context'
 import { useNavigate } from 'react-router-dom'
 import { fetchAvt } from '@/testing/FetchFakeData'
@@ -39,9 +39,9 @@ const ProfileDropdown = () => {
 					<FiUser className="align-self-center icon-xs icon-dual me-1" />{' '}
 					Profile
 				</DropdownItem>
-				<DropdownItem>
-					<FiSettings className="align-self-center icon-xs icon-dual me-1" />{' '}
-					Settings
+				<DropdownItem onClick={() => navigate("/cart/" + user?.userid)}>
+					<FiShoppingCart className="align-self-center icon-xs icon-dual me-1" />{' '}
+					Carts
 				</DropdownItem>
 				<div className="dropdown-divider mb-0"></div>
 				<DropdownItem onClick={() => logout()}>

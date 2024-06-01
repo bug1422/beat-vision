@@ -17,6 +17,8 @@ const Error500 = lazy(() => import("@/pages/authentication/Error500"));
 const HomePage = lazy(() => import("@/pages/pages/Home"));
 const Profile = lazy(() => import("@/pages/pages/Profile"));
 const Search = lazy(() => import("@/pages/pages/Search"));
+const Cart = lazy(() => import("@/pages/pages/Cart"));
+const Checkout = lazy(() => import("@/pages/pages/Checkout"));
 
 //Applicatoin create page
 const MusicDetail = lazy(() => import("@/pages/music-detail"));
@@ -84,6 +86,16 @@ const appsRoutes: RoutesProps[] = [
     path: "/music-detail/detail/:trackId",
     name: "Music Detail Page",
     element: <MusicDetail />,
+  },
+  {
+    path: "/cart/:userId",
+    name: "Cart",
+    element: <Cart />
+  },
+  {
+    path: "/checkout/:userId",
+    name: "Checkout",
+    element: <Checkout />
   },
   {
     path: "/profile/:userId",

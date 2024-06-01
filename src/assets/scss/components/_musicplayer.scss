@@ -3,9 +3,11 @@
     position: fixed;
     width: 100%;
     padding: 0px 20%;
+    z-index: 0;
     height: $music-player-height;
 
     background-color: black;
+
 
     .music-player-content {
         .icon {
@@ -15,6 +17,8 @@
         .info {
             font-weight: bold;
             color: white;
+            position: relative;
+            overflow: hidden;
         }
     }
 
@@ -28,7 +32,7 @@
         }
     }
 
-    
+
 
     .volumne {
         font-size: 26px;
@@ -46,8 +50,33 @@
 
     .center>*:hover,
     .volumne>*:hover,
-    .playlist:hover{
+    .playlist:hover {
         color: white;
+    }
+
+    .name {
+        white-space: nowrap;
+        overflow: hidden;
+        min-width: 270px;
+
+        .text {
+            overflow: hidden;
+            position: absolute;
+            animation: move linear 12.5s infinite;
+            text-decoration: none;
+            min-width: 100%;
+            z-index: -99;
+        }
+
+        @keyframes move {
+            from {
+                transform: translateX(0%);
+            }
+
+            to {
+                transform: translateX(-40%);
+            }
+        }
     }
 }
 

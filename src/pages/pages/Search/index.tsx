@@ -1,13 +1,16 @@
 import { TrackDto } from "@/types/ApplicationTypes/TrackType"
 import { Suspense, lazy, useEffect, useState } from "react"
 import { Badge, Button, CardBody, CardHeader, Col, FormControl, Row } from "react-bootstrap"
-import { useNavigate, useParams } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import { FetchAllTracks, FetchPopularTracks } from "./getBeat"
 import DefaultBeatThumbnail from "/default-image/defaultSoundwave.jpg"
 import { FiPlay, FiPlayCircle, FiShoppingBag } from "react-icons/fi"
+import { AddToCart } from "@/components/AddToCart"
+import { useAuthContext } from "@/context"
+import { PageMetaData } from "@/components"
 const MusicPlayer = lazy(() => import("@/components/MusicPlayer"))
 
-const Tag = (props: { className?: string, name: string }) => {
+export const Tag = (props: { className?: string, name: string }) => {
     const { className, name } = props
     return (
         <Badge className={className} bg="secondary" style={{ height: "fit-content" }}>
@@ -18,6 +21,7 @@ const Tag = (props: { className?: string, name: string }) => {
 
 
 const Search = () => {
+    const { user } = useAuthContext()
     const [tags, setTags] = useState()
     const navigate = useNavigate()
     const { keyword } = useParams()
@@ -40,6 +44,7 @@ const Search = () => {
 
     return (
         <div className="search-page">
+            <PageMetaData title="Search" />
             <Row className="search d-flex justify-content-center">
                 <Col className="d-flex justify-content-end border-end left-col me-2" sm={3} xl={2}>
                     <div className="tags">
@@ -78,13 +83,19 @@ const Search = () => {
                                         </Col>
                                         <Col className="d-flex justify-content-between">
                                             <div className="desc1 d-flex flex-column">
-                                                <div className="name">{track.TrackName}</div>
+                                                <Link to={"/music-detail/detail/" + track.Id} className="name">{track.TrackName}</Link>
                                                 <div className="mt-1 producer"><FiPlay />{track.PlayCount}</div>
                                             </div>
                                             <div className="desc2 d-flex justify-content-end align-items-center">
                                                 <Tag className="py-2 me-2" name="Trap" />
                                                 <Tag className="py-2 me-2" name="Hard Beat" />
-                                                <Button><FiShoppingBag className="me-2" />{track.Price?.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' })}</Button>
+                                                <Button onClick={() => {
+                                                    if (user) {
+                                                        AddToCart(parseInt(user?.userid), track)
+                                                    } else {
+                                                        navigate("/auth/login")
+                                                    }
+                                                }}><FiShoppingBag className="me-2" />{track.Price?.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' })}</Button>
                                             </div>
                                         </Col>
                                     </Row>
@@ -103,7 +114,7 @@ const Search = () => {
                 </Col>
             </Row>
             {selected != undefined ?
-                <Suspense fallback={<div/>}>
+                <Suspense fallback={<div />}>
                     <MusicPlayer trackId={selected.Id} />
                 </Suspense>
                 : <></>

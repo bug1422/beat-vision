@@ -7,8 +7,14 @@ import FormRange from "react-bootstrap/esm/FormRange"
 import { FetchAudio, FetchPopularTracks, FetchTrack } from "@/pages/pages/Search/getBeat"
 import WaveSurfer from "wavesurfer.js"
 import OffcanvasPlacement from "./OffCanvas"
+import { AddToCart } from "./AddToCart"
+import { Link, useNavigate } from "react-router-dom"
+import { useAuthContext } from "@/context"
+import { toast } from "sonner"
 
 const MusicPlayer = (props: { trackId: number }) => {
+    const { user } = useAuthContext()
+    const navigate = useNavigate()
     function useToggle(
         initialState: boolean = false
     ): [boolean, () => void, () => void, () => void] {
@@ -87,7 +93,7 @@ const MusicPlayer = (props: { trackId: number }) => {
         }
     }, [trackId]);
     useEffect(() => {
-        if(playPercent == 100){
+        if (playPercent == 100) {
             setPlayPercent(0)
             handleSkipForward()
             console.log("next")
@@ -148,6 +154,7 @@ const MusicPlayer = (props: { trackId: number }) => {
 
     function handleSkipForward() {
         if (playlist && trackId < playlist.length) setTrackId(trackId + 1)
+        else setTrackId(1)
         console.log(trackId)
     }
 
@@ -176,16 +183,25 @@ const MusicPlayer = (props: { trackId: number }) => {
                 style={{ background: 'linear-gradient(to right, #5a37e8 0%, #5a37e8 ' + barValue.toString() + '%, #454545 ' + barValue.toString() + '%, #454545 100%)' }}
             />
         </div>
-        <Row className=" align-items-center mt-2">
+        <Row className=" align-items-center my-2">
             <Col xl={5} className="music-player-content d-flex justify-content-end ">
                 <img className="img-fluid icon me-2" src={DefaultBeatThumbnail}></img>
-                <div className="info me-2">
-                    <div className="name">{track?.TrackName}</div>
+                <Link to={"/music-detail/detail/" + track?.Id} className="info me-2">
+                    <div className="name pt-1"><div className="text">{track?.TrackName}dafdsfsdf</div></div>
                     <div className="tag">{track?.Tags.map((tag, idx) => (
                         <Badge bg="secondary" key={idx}>{tag.Name}</Badge>
                     ))}</div>
+                </Link>
+                <div className="w-10 my-1">
+                    <Button className="buy d-flex align-items-center" onClick={() => {
+                        if (user) {
+                            if (track) AddToCart(parseInt(user?.userid), track)
+                            else toast.error("Can't get track", { position: "bottom-right", duration: 2000})
+                        } else {
+                            navigate("/auth/login")
+                        }
+                    }}><FiShoppingBag className="me-2" />{track?.Price?.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' })}</Button>
                 </div>
-                <Button><FiShoppingBag className="me-2" />{track?.Price?.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' })}</Button>
             </Col>
             <Col xl={2} className="center d-flex justify-content-center align-items-center">
                 {trackId > 1 ? <FiSkipBack onClick={() => { handleSkipBack() }} /> : <FiSkipBack style={{ color: "grey" }} />}

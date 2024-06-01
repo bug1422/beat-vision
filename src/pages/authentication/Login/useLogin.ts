@@ -10,6 +10,7 @@ import * as yup from 'yup'
 import { jwtDecode } from 'jwt-decode'
 import type { User } from '@/types'
 import { AuthReturnType } from '@/types/AuthTypes'
+import { FetchUser } from '@/testing/TestDummy'
 
 
 export default function useLogin() {
@@ -42,7 +43,19 @@ export default function useLogin() {
 
 	const login = handleSubmit(async function (values: LoginFormFields) {
 		setLoading(true)
+		const dummy = FetchUser()
+		if(values.email == dummy.user.email && values.password == dummy.password){
+			saveSession({
+				...(dummy.user ?? {}),
+			})
+			toast.success('Successfully logged in. Redirecting....', {
+				position: 'bottom-right',
+				duration: 2000,
+			})
+			navigate(redirectUrl)
+		}
 		try {
+
 			const res: AxiosResponse<AuthReturnType> = await HttpClient.post('/api/ManageIdentity/login', values)
 			console.log(res)
 			if (res.data) {
