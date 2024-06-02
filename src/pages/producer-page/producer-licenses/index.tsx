@@ -132,18 +132,11 @@ export default function ProducerLicenses() {
   return (
     <>
       <div>
-        <Row>
+        <div className="fs-1 border-bottom mb-3">Licenses Management</div>
+        <Row className="border-bottom p-2 mb-3">
           <LicenseUploadForm
             isShow={isShowForm}
-            onHide={() => {
-              setIsShowForm(false);
-            }}
-            onSuccess={() => {
-              fetchData().then((result) => {
-                console.log("success");
-              });
-            }}
-            onFail={() => {}}
+            setShowing={setIsShowForm}
           />
           <Col xs={10}>
             <Button
@@ -163,7 +156,7 @@ export default function ProducerLicenses() {
                 <TabPane eventKey="1" className="fade" id="files-projects">
                   <h4 className="card-title mt-0 mb-3">Licenses</h4>
                   <div className="file-box-content">
-                    {licenseFiles.map((projects, idx) => (
+                    {licenseFiles == undefined || licenseFiles.length == 0 ? <div>No License</div> : <>{licenseFiles.map((projects, idx) => (
                       <>
                         <div className="file-box" key={idx}>
                           <div className=" ">
@@ -209,7 +202,7 @@ export default function ProducerLicenses() {
                           </div>
                         </div>
                       </>
-                    ))}
+                    ))}</>}
                   </div>
                 </TabPane>
               </TabContent>

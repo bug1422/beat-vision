@@ -5,49 +5,49 @@ import { getMenuItems } from "@/common";
 import logoImg from "@/assets/images/logo-sm.png";
 import AppMenu from "@/layout/LeftSidebar/Menu";
 import { MenuItemType } from "@/common/menu";
-import { FiMusic } from "react-icons/fi";
+import { FiMusic,FiUsers,FiTag,FiShoppingCart,FiFileText    } from "react-icons/fi";
 const leftMenuItems: MenuItemType[] = [
   {
     key: "1",
-    label: "my music",
+    label: "Tracks",
     isTitle: false,
     icon: FiMusic,
-    url: "/user/id/producer-page/my-music",
+    url: "/producer-page/my-music",
   },
   {
     key: "3",
-    label: "my publish",
+    label: "Publishing",
     isTitle: false,
     icon: FiMusic,
-    url: "/user/id/producer-page/my-publish",
+    url: "/producer-page/my-publish",
   },
   {
     key: "5",
-    label: "my tag",
+    label: "Tags",
     isTitle: false,
-    icon: FiMusic,
-    url: "/user/id/producer-page/my-tag",
+    icon: FiTag,
+    url: "/producer-page/my-tag",
   },
   {
     key: "7",
-    label: "my licences",
+    label: "Licences",
     isTitle: false,
-    icon: FiMusic,
-    url: "/user/id/producer-page/my-license",
+    icon: FiFileText,
+    url: "/producer-page/my-license",
   },
   {
     key: "4",
-    label: "my sale",
+    label: "Sale",
     isTitle: false,
-    icon: FiMusic,
-    url: "/user/id/producer-page/my-sale",
+    icon: FiShoppingCart ,
+    url: "/producer-page/my-sale",
   },
 
   {
     key: "6",
-    label: "my user",
-    icon: FiMusic,
-    url: "/user/id/producer-page/my-app-user",
+    label: "Users",
+    icon: FiUsers,
+    url: "/producer-page/my-app-user",
   },
 ];
 

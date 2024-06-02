@@ -5,14 +5,11 @@ import {
   Row,
   Col,
   Card,
-  CardHeader,
-  CardTitle,
   CardBody,
   FormLabel,
   FormControl,
   Modal,
   Button,
-  Form,
 } from "react-bootstrap";
 import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orientation";
 import FilePondPluginImagePreview from "filepond-plugin-image-preview";
@@ -20,11 +17,11 @@ import FilePondPluginFileEncode from "filepond-plugin-file-encode";
 import "filepond/dist/filepond.min.css";
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 import { HttpClient } from "@/common";
-import axios, { AxiosResponse } from "axios";
 import { PagingResponseDto } from "@/types/ApplicationTypes/PagingResponseType";
 import { TrackLicenseDto } from "@/types/ApplicationTypes/TrackLicenseType";
 import { useNavigate } from "react-router-dom";
 import { SimpleAllertTopRight } from "@/my-component/ButtonAllert";
+import { AxiosResponse } from "axios";
 class CreateLicenseParam {
   constructor(name: string, file: File) {
     this.LicenceName = name;
@@ -42,9 +39,7 @@ class CreateLicenseParam {
 
 interface LicenseUploadFormProps {
   isShow: boolean;
-  onHide: () => void;
-  onSuccess?: () => void;
-  onFail?: () => void;
+  setShowing: (v: boolean) => void;
 }
 registerPlugin(
   FilePondPluginFileEncode,
@@ -53,63 +48,49 @@ registerPlugin(
 );
 export default function LicenseUploadForm({
   isShow,
-  onHide,
-  onSuccess,
-  onFail,
+  setShowing,
 }: LicenseUploadFormProps) {
   const [licenceName, setLicenceName] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const [licensePdfFile, setLicensePdfFile] = useState<File | null>(null);
-  const navigate = useNavigate();
-  const { onResult } = SimpleAllertTopRight();
   const onClickSubmit = async () => {
     try {
-      console.log(licensePdfFile);
-      if (!licenceName || !licensePdfFile) {
-        window.alert("field empty, fill in ");
-        return;
+      if (licenceName == "" || licenceName == undefined) {
+        setError('Please enter a license name')
+        return
       }
+      if (licensePdfFile == undefined) {
+        setError('Please upload a license')
+        return
+      }
+      console.log(licensePdfFile);
       console.log(licenceName);
       console.log(licensePdfFile);
       const createLicenseObject = new CreateLicenseParam(licenceName, licensePdfFile);
+
       let formParams = new FormData();
       formParams.append("LicenceName", createLicenseObject.LicenceName);
       formParams.append("LicensePdfFile", createLicenseObject.LicensePdfFile);
-      console.log(JSON.stringify(createLicenseObject));
-      let axiosResponse: AxiosResponse<PagingResponseDto<TrackLicenseDto[]>> =
+      for (var pair of formParams.entries()) {
+        console.log(pair[0] + ', ' + pair[1]);
+      }
+      const res: AxiosResponse<PagingResponseDto<TrackLicenseDto[]>> =
         await HttpClient.post(`/api/ManageTrack/add-license`, formParams, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
         });
-      if (!axiosResponse.data) {
-        throw new Error("fail to fetch data");
-      } else {
-        onResult(true);
+      console.log(res)
+      // if (res?.data) {
+      //   setShowing(false)
+      // }
+    } catch (error: any) {
+      setError("Can't add license");
+      if (error?.response?.data?.ErrorMessage) {
+        setError(error?.response?.data?.ErrorMessage);
       }
-      onHide();
-      if (!onSuccess) {
-      } else {
-        onSuccess();
-      }
-    } catch (error) {
       console.log(error);
-      if (axios.isAxiosError(error)) {
-        if (error.response) {
-          const { status } = error.response;
-          switch (status) {
-            case 403:
-            case 401:
-              navigate("/auth/login");
-              break;
-          }
-          console.log(error);
-        }
-      }
-      if (!onFail) {
-      } else {
-        onFail();
-      }
-    } finally {
     }
   };
   return (
@@ -123,9 +104,6 @@ export default function LicenseUploadForm({
             <Row>
               <Col lg="12">
                 <Card>
-                  <CardHeader>
-                    <CardTitle>Textual inputs</CardTitle>
-                  </CardHeader>
                   <CardBody>
                     <Row>
                       <Row className="mb-3 has-success">
@@ -134,10 +112,11 @@ export default function LicenseUploadForm({
                         </FormLabel>
                         <Col sm="10">
                           <FormControl
-                            type="email"
+                            type="text"
                             className="form-control-success"
                             id="trackName"
-                            placeholder="name@example.com"
+                            isInvalid={licenceName == "" || licenceName == undefined}
+                            placeholder="Enter a name"
                             onChange={(e) => {
                               setLicenceName(e.currentTarget.value);
                             }}
@@ -164,6 +143,7 @@ export default function LicenseUploadForm({
                         />
                       </Row>
                     </Row>
+                    {error != "" ? <div className="text-danger fw-bold">{error}</div> : <></>}
                   </CardBody>
                 </Card>
               </Col>
@@ -171,8 +151,11 @@ export default function LicenseUploadForm({
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={onHide}>Close</Button>
-          <Button onClick={onClickSubmit}>Submit</Button>
+          {loading ?
+            <div>Loading</div>
+            : <></>}
+          <Button disabled={loading} onClick={() => { setShowing(false) }}>Close</Button>
+          <Button disabled={loading} onClick={onClickSubmit}>Submit</Button>
         </Modal.Footer>
       </Modal>
     </>

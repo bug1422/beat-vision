@@ -46,32 +46,32 @@ const producerRoute: RoutesProps[] = [
   //   element: <ProducerPage />,
   // },
   {
-    path: "/user/id/producer-page/my-music",
+    path: "/producer-page/my-music",
     name: "producer music management",
     element: <ProducerMusics />,
   },
   {
-    path: "/user/id/producer-page/my-publish",
+    path: "/producer-page/my-publish",
     name: "producer publish management",
     element: <ProducerPublish />,
   },
   {
-    path: "/user/id/producer-page/my-sale",
+    path: "/producer-page/my-sale",
     name: "producer page",
     element: <ProducerSale />,
   },
   {
-    path: "/user/id/producer-page/my-tag",
+    path: "/producer-page/my-tag",
     name: "producer tags",
     element: <ProducerTags />,
   },
   {
-    path: "/user/id/producer-page/my-app-user",
+    path: "/producer-page/my-app-user",
     name: "app user",
     element: <ProducerAppUser />,
   },
   {
-    path: "/user/id/producer-page/my-license",
+    path: "/producer-page/my-license",
     name: "license",
     element: <ProducerLicenses />,
   },

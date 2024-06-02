@@ -121,9 +121,14 @@ export default function MusicUpdateForm({
     try {
       //let newPublish = new PublishTrackDto(trackId, new Date(dateTime), isPublishNow, isPaid);
       let formParams = new FormData();
+      let reader = new FileReader();
+      reader.onload = function (e) {
+        const value = e.target?.result?.toString();
+        if(value != undefined) formParams.append("bannderFile", value);
+      };
+      if(imgFile) reader.readAsDataURL(imgFile);
       formParams.append("TrackId", Track.Id.toString());
       formParams.append("TrackName", newName);
-      formParams.append("bannderFile", imgFile);
       tagsIds.forEach((id) => {
         formParams.append("TagsId", id.toString());
       });

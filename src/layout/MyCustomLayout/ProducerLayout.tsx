@@ -37,7 +37,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
         <Suspense fallback={<div />}>
           <ProducerTopNavBar />
         </Suspense>
-        <div className="page-content">
+        <div className="page-content pt-3">
           <div className="container-fluid">
             <Suspense fallback={<Preloader />}>{children}</Suspense>
           </div>
