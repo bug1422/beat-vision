@@ -3120,6 +3120,11 @@ path-type@^4.0.0:
   resolved "https://registry.npmjs.org/path-type/-/path-type-4.0.0.tgz"
   integrity sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==
 
+payos-checkout@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.npmjs.org/payos-checkout/-/payos-checkout-1.0.7.tgz"
+  integrity sha512-3XGVbbvNJ38nuK/rXQ+v7RiQm0xL1tUMFMJAmb42cGgiLWe4gZyv4PdjNoa811OmgQxgcTdfNvBVun6Va+zmGA==
+
 performance-now@^0.2.0:
   version "0.2.0"
 

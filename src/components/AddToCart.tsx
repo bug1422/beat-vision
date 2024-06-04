@@ -1,5 +1,5 @@
 import { TrackDto } from "@/types/ApplicationTypes/TrackType";
-import { GetCart, AddItemToCart } from "@/utils/handleCart";
+import { AddItemToCart } from "@/utils/handleCart";
 import { toast } from "sonner";
 
 export const AddToCart = (userId: number, track: TrackDto) => {
@@ -16,26 +16,25 @@ export const AddToCart = (userId: number, track: TrackDto) => {
         //Check availab blah balh here
         //
         //
-        AddItemToCart(userId, track.Id).then(
-            (v) => {
-                console.log(v)
-                if (v == 'Success') {
-                    toast.success('Added to cart!', {
-                        position: 'bottom-right',
-                        duration: 2000,
-                    })
-                }
-                else {
-                    toast.info(v, {
-                        position: 'bottom-right',
-                        duration: 2000,
-                    })
-                }
-            })
-            .catch((e) => toast.error("Can't add to cart", {
+        const v = AddItemToCart(userId, track.Id)
+        if (v == 'Success') {
+            toast.success('Added to cart!', {
                 position: 'bottom-right',
                 duration: 2000,
-            }))
+            })
+        }
+        else if (v == "Already in cart") {
+            toast.info(v, {
+                position: 'bottom-right',
+                duration: 2000,
+            })
+        }
+        else {
+            toast.error("Can't add to cart", {
+                position: 'bottom-right',
+                duration: 2000,
+            })
+        }
     }
 
 }

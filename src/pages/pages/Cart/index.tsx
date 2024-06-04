@@ -1,43 +1,109 @@
+import { HttpClient } from "@/common"
 import { useAuthContext } from "@/context";
 import { TrackDto } from "@/types/ApplicationTypes/TrackType";
 import { GetTracksInCart, RemoveItemFromCart } from "@/utils/handleCart";
 import { useEffect, useState } from "react";
+import { AxiosResponse } from "axios"
 import { Col, Row } from "react-bootstrap"
+
 import DefaultBeatThumbnail from "/default-image/defaultSoundwave.jpg"
 import { Link, useNavigate } from "react-router-dom";
 import { Tag } from "../Search";
 import { PageMetaData } from "@/components";
+import { CartItemDto } from "@/types/ApplicationTypes/CartItemType";
+import { toast } from "sonner";
 
 const Cart = () => {
     const { isAuthenticated, user } = useAuthContext()
-    const [tracks, setTracks] = useState<TrackDto[]>()
-    const [isLoading, SetIsLoading] = useState<boolean>(false)
+    const [tracks, SetTracks] = useState<TrackDto[]>([])
+    const [isLoading, SetIsLoading] = useState(false)
+    const [isPaid, setPaid] = useState(false)
+    const [error, SetError] = useState<string>("")
     const navigate = useNavigate()
     useEffect(() => {
-        if (!isAuthenticated || user == undefined) navigate("/auth/login")
-        else {
-            SetIsLoading(true)
-            GetTracksInCart(parseInt(user.userid)).then((c) => { if (c != null) setTracks(c); }).catch((e) => console.log(e)).finally(() => { SetIsLoading(false); });
-        }
+        GetTracksInCart()
     }, [])
+    const CheckForPurchased = async () => {
+        
+    }
 
-    const removeFromCart = (trackId: number) => {
+    const GetTracksInCart = async () => {
+        SetIsLoading(true)
+        if (isAuthenticated && user?.userid) {
+            try {
+                const res: AxiosResponse<CartItemDto[]> =
+                    await HttpClient.get("/api/ManageOrder/get-user-cart-items?userId=" + user?.userid)
+                if (res?.data) {
+                    let tempt: TrackDto[] = []
+                    res?.data.forEach(p => {
+                        if (p.Track) {
+                            if (p.Track.Price && p.Track.Price > 0) setPaid(true)
+                            tempt = [...tempt, p.Track]
+                        }
+                    })
+                    SetTracks(tempt)
+                }
+            } catch (e: any) {
+                console.log(e)
+            }
+        }
+        else {
+            SetError("please log in again")
+        }
+        SetIsLoading(false)
+    }
+
+    const removeFromCart = async (trackId: number) => {
         if (!isAuthenticated || user == undefined) navigate("/auth/login")
         else {
-            RemoveItemFromCart(parseInt(user.userid), trackId).then((c) => {
-                if (c == "Success") {
-                    if (tracks != undefined) {
-                        const filtered = tracks.filter(p => p.Id !== trackId)
-                        setTracks([...filtered])
-                        console.log(tracks)
-                    }
+            try {
+                const userId = user?.userid
+                const res = await HttpClient.delete(`/api/ManageOrder/remove-cart-item?UserId=${userId}&ItemId=${trackId}`)
+                if (res?.status == 200) {
+                    toast.success("Removed from cart!", { position: "bottom-right", duration: 2000 })
+                    const tempt = tracks.filter(p => p.Id != trackId)
+                    SetTracks(tempt)
                 }
+            } catch (e: any) {
+                if (e?.response.data.ErrorMessage) {
+                    toast.error(e?.response.data.ErrorMessage, { position: "bottom-right", duration: 2000 })
+                }
+                console.log(e)
             }
-            ).catch((e) => console.log(e));
         }
     }
+
+    const checkOut = async () => {
+        if (!isAuthenticated || user == undefined) navigate("/auth/login")
+        else {
+            try {
+                const userId = user?.userid
+                const res = await HttpClient.post(`/api/ManageOrder/checkout`, {
+                    userProfileId: userId,
+                }, {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    }
+                })
+                console.log(res)
+                if (res) {
+                    if(isPaid) navigate("/checkout/" + userId)
+                    else{
+                        toast.success("Check your Purchases to see your downloadable content",{position:"bottom-right", duration: 2000})
+                        tracks.forEach(p => removeFromCart(p.Id))
+                    }
+                }
+            } catch (e: any) {
+                if (e?.response.data.ErrorMessage) {
+                    toast.info(e?.response.data.ErrorMessage, { position: "bottom-right", duration: 2000 })
+                }
+                console.log(e)
+            }
+        }
+    }
+
     return (<div className="cart">
-        <PageMetaData title="Cart"/>
+        <PageMetaData title="Cart" />
         <div className="fst-bold title my-3">
             Shopping Cart
         </div>
@@ -52,7 +118,7 @@ const Cart = () => {
                                     <div className="rank">{index + 1} </div>
                                 </Col>
                                 <Col xl={1}>
-                                    <img className="img-fluid icon" src={DefaultBeatThumbnail}></img>
+                                    <img className="img-fluid icon" src={track.ProfileBlobUrl ?? DefaultBeatThumbnail}></img>
                                 </Col>
                                 <Col className="d-flex justify-content-between">
                                     <div className="desc1 d-flex flex-column">
@@ -63,7 +129,7 @@ const Cart = () => {
                                             <Tag className="py-2 me-2" name="Trap" />
                                             <Tag className="py-2 me-2" name="Hard Beat" />
                                             <div className="me-2 price">
-                                                {track.Price?.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' })}
+                                                {track.Price != null ? track.Price > 0 ? track.Price?.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' }) : "Free" : "Null"}
                                             </div>
                                         </div>
                                         <div className="me-2 d-flex justify-content-end"><u className="remove" onClick={() => { removeFromCart(track.Id) }}>remove</u></div>
@@ -81,7 +147,7 @@ const Cart = () => {
                                 </div>
                             </div>
                             <div className="mt-3">
-                                <Link to={"/checkout/"+user?.userid}><div  className="btn btn-primary purchase">Purchase</div></Link>
+                                <div className="btn btn-primary purchase" onClick={checkOut}>Purchase</div>
                             </div>
                         </div>
                     </div> :

@@ -82,9 +82,9 @@ export default function LicenseUploadForm({
           },
         });
       console.log(res)
-      // if (res?.data) {
-      //   setShowing(false)
-      // }
+      if (res?.data) {
+        setShowing(false)
+      }
     } catch (error: any) {
       setError("Can't add license");
       if (error?.response?.data?.ErrorMessage) {

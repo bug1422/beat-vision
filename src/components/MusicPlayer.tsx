@@ -11,8 +11,10 @@ import { AddToCart } from "./AddToCart"
 import { Link, useNavigate } from "react-router-dom"
 import { useAuthContext } from "@/context"
 import { toast } from "sonner"
+import { AxiosResponse } from "axios"
+import { HttpClient } from "@/common"
 
-const MusicPlayer = (props: { trackId: number }) => {
+const MusicPlayer = (props: { trackId: number, tracks: TrackDto[] }) => {
     const { user } = useAuthContext()
     const navigate = useNavigate()
     function useToggle(
@@ -29,8 +31,7 @@ const MusicPlayer = (props: { trackId: number }) => {
 
     const [trackId, setTrackId] = useState<number>(props.trackId)
     const [track, setTrack] = useState<TrackDto | undefined>()
-    const [playlist, setPlaylist] = useState<TrackDto[]>()
-    const [file, setFile] = useState("")
+    const [fileURL, setFileURL] = useState("")
 
     const container = useRef<HTMLElement>(null);
     const waveSurfer = useRef<WaveSurfer | null>(null);
@@ -49,49 +50,70 @@ const MusicPlayer = (props: { trackId: number }) => {
         setTrackId(props.trackId)
     }, [props.trackId])
 
+    useEffect(() => {
+        setFileURL("")
+        setTrack(undefined)
+        fetchData(trackId)
+    }, [trackId])
+    useEffect(() => {
+        if (fileURL != "" && props.tracks) {
+            const tempt = props.tracks.filter(p => p.Id == trackId).at(0)
+            setTrack(tempt)
+            console.log(track)
+        }
+    }, [fileURL])
+
     const fetchData = async (id: number) => {
-        const data = await FetchTrack(id)
-        setTrack(data)
-        if (track != undefined) setPlaylist([track, ...FetchPopularTracks()])
+        try {
+            const res: AxiosResponse<Blob> = await HttpClient.get("/api/ManageTrack/get-public-trackfile", {
+                params: {
+                    trackId: id
+                },
+                headers: {
+                    "Content-Type": "audio/mpeg",
+                },
+                responseType: "blob"
+            })
+            if (res?.data) {
+                setFileURL(URL.createObjectURL(res?.data))
+            }
+        }
+        catch (e: any) {
+            console.log(e)
+        }
     }
 
     useEffect(() => {
-        fetchData(trackId)
-
-        console.log(trackId)
-        console.log(track)
         setBarValue(0)
         setSkipping(false)
         setPlayPercent(0)
         SetPlaying(false)
-        if (track != undefined) {
-            const beat = FetchAudio(track?.Id)
-
-            if (beat) {
-                setFile(beat.Path)
-            }
-            if (container.current) {
-                // Ensure the previous instance is destroyed before creating a new one
-                if (waveSurfer.current) {
-                    waveSurfer.current.destroy();
+        if (trackId != undefined && track != undefined) {
+            if (fileURL != "") {
+                console.log(fileURL)
+                if (container.current) {
+                    // Ensure the previous instance is destroyed before creating a new one
+                    if (waveSurfer.current) {
+                        waveSurfer.current.destroy();
+                    }
+                    waveSurfer.current = WaveSurfer.create({
+                        container: container.current,
+                        url: fileURL
+                    });
+                    setTimeout(async () => {
+                        await waveSurfer.current?.playPause();
+                        setPlaying(true)
+                    }, 150)
+                    // return () => {
+                    //     if (waveSurfer.current) {
+                    //         waveSurfer.current.destroy();
+                    //         waveSurfer.current = null;
+                    //     }
+                    // };
                 }
-                waveSurfer.current = WaveSurfer.create({
-                    container: container.current,
-                    url: file,
-                });
-                setTimeout(async () => {
-                    await waveSurfer.current?.playPause();
-                    setPlaying(true)
-                }, 150)
-                // return () => {
-                //     if (waveSurfer.current) {
-                //         waveSurfer.current.destroy();
-                //         waveSurfer.current = null;
-                //     }
-                // };
             }
         }
-    }, [trackId]);
+    }, [track]);
     useEffect(() => {
         if (playPercent == 100) {
             setPlayPercent(0)
@@ -110,7 +132,6 @@ const MusicPlayer = (props: { trackId: number }) => {
                     let calculate = 100 * (current / duration)
                     setPlayPercent(calculate)
                     setBarValue(calculate)
-                    console.log(barValue.toString() + " " + calculate.toString())
                 }
             }
         }, 600)
@@ -148,20 +169,24 @@ const MusicPlayer = (props: { trackId: number }) => {
     }
 
     function handleSkipBack() {
-        if (trackId > 1) setTrackId(trackId - 1)
+        const tracks = props.tracks
+        const pos = tracks.findIndex(p => p.Id == trackId)
+        if (tracks && pos > 0) setTrackId(trackId - 1)
         console.log(trackId)
     }
 
     function handleSkipForward() {
-        if (playlist && trackId < playlist.length) setTrackId(trackId + 1)
+        const tracks = props.tracks
+        const pos = tracks.findIndex(p => p.Id == trackId)
+        if (tracks && (pos >= 0 && pos < tracks.length)) setTrackId(trackId + 1)
         else setTrackId(1)
         console.log(trackId)
     }
 
     const OffCanvasItem = () => {
         return (<>
-            {playlist?.map((track, index) => (
-                <Row className="track align-items-center" key={index} onClick={() => { setTrackId(track.Id) }} >
+            {props.tracks?.map((track, index) => (
+                <Row className="track align-items-center border-bottom py-3" key={index} onClick={() => { setTrackId(track.Id) }} >
                     <Col xl={1} className="d-flex">
                         <div className="rank user-select-none">{index + 1} </div>
                         <FiPlayCircle className="play" />
@@ -185,9 +210,9 @@ const MusicPlayer = (props: { trackId: number }) => {
         </div>
         <Row className=" align-items-center my-2">
             <Col xl={5} className="music-player-content d-flex justify-content-end ">
-                <img className="img-fluid icon me-2" src={DefaultBeatThumbnail}></img>
+                <img className="img-fluid icon me-2" src={track?.ProfileBlobUrl ?? DefaultBeatThumbnail}></img>
                 <Link to={"/music-detail/detail/" + track?.Id} className="info me-2">
-                    <div className="name pt-1"><div className="text">{track?.TrackName}dafdsfsdf</div></div>
+                    <div className="name pt-1"><div className="text">{track?.TrackName}</div></div>
                     <div className="tag">{track?.Tags.map((tag, idx) => (
                         <Badge bg="secondary" key={idx}>{tag.Name}</Badge>
                     ))}</div>
@@ -196,19 +221,19 @@ const MusicPlayer = (props: { trackId: number }) => {
                     <Button className="buy d-flex align-items-center" onClick={() => {
                         if (user) {
                             if (track) AddToCart(parseInt(user?.userid), track)
-                            else toast.error("Can't get track", { position: "bottom-right", duration: 2000})
+                            else toast.error("Can't get track", { position: "bottom-right", duration: 2000 })
                         } else {
                             navigate("/auth/login")
                         }
-                    }}><FiShoppingBag className="me-2" />{track?.Price?.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' })}</Button>
+                    }}><FiShoppingBag className="me-2" />{track?.Price != null ? track.Price > 0 ? track.Price?.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' }) : "Free" : "Null"}</Button>
                 </div>
             </Col>
             <Col xl={2} className="center d-flex justify-content-center align-items-center">
-                {trackId > 1 ? <FiSkipBack onClick={() => { handleSkipBack() }} /> : <FiSkipBack style={{ color: "grey" }} />}
+                {props.tracks && props.tracks.findIndex(p => p.Id == trackId) > 0 ? <FiSkipBack onClick={() => { handleSkipBack() }} /> : <FiSkipBack style={{ color: "grey" }} />}
                 <div className="play mx-3" onClick={() => { SetPlaying(!isPlaying) }}>
                     {isPlaying ? <FiStopCircle /> : <FiPlayCircle />}
                 </div>
-                {playlist && trackId < playlist.length ? <FiSkipForward onClick={() => { handleSkipForward() }} /> : <FiSkipForward style={{ color: "grey" }} />}
+                {props.tracks && (props.tracks.findIndex(p => p.Id == trackId) != props.tracks.length - 1) ? <FiSkipForward onClick={() => { handleSkipForward() }} /> : <FiSkipForward style={{ color: "grey" }} />}
             </Col>
             <Col xl={5} className="d-flex justify-content-start align-items-center">
                 <div className="volumne" onClick={() => { waveSurfer.current?.setMuted(!isMuted); setMuted(!isMuted); }}>

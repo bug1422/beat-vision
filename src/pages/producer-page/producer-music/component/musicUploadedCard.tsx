@@ -136,7 +136,7 @@ const ProducerMusicCard = ({ producerMusic }: { producerMusic: TrackDto }) => {
           <hr className="hr-dashed" />
           <div className="d-flex justify-content-between">
             <div className="align-self-center">
-              <Link to="/music-detail/detail" className="text-dark">
+              <Link to={"/music-detail/detail/"+Id} className="text-dark">
                 detail of music id: {Id} <i className="fas fa-long-arrow-alt-right" />
               </Link>
             </div>

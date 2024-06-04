@@ -37,6 +37,10 @@ export default function ProducerTags() {
     getTags()
   }, [])
 
+  useEffect(() => {
+    getTags()
+  }, [addTag])
+
 
   return (
     <>

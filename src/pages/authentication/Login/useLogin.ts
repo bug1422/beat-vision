@@ -43,17 +43,17 @@ export default function useLogin() {
 
 	const login = handleSubmit(async function (values: LoginFormFields) {
 		setLoading(true)
-		const dummy = FetchUser()
-		if(values.email == dummy.user.email && values.password == dummy.password){
-			saveSession({
-				...(dummy.user ?? {}),
-			})
-			toast.success('Successfully logged in. Redirecting....', {
-				position: 'bottom-right',
-				duration: 2000,
-			})
-			navigate(redirectUrl)
-		}
+		// const dummy = FetchUser()
+		// if(values.email == dummy.user.email && values.password == dummy.password){
+		// 	saveSession({
+		// 		...(dummy.user ?? {}),
+		// 	})
+		// 	toast.success('Successfully logged in. Redirecting....', {
+		// 		position: 'bottom-right',
+		// 		duration: 2000,
+		// 	})
+		// 	navigate(redirectUrl)
+		// }
 		try {
 
 			const res: AxiosResponse<AuthReturnType> = await HttpClient.post('/api/ManageIdentity/login', values)

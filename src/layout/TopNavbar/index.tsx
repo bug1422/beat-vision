@@ -12,7 +12,7 @@ import Cart from './components/Carts'
 
 const TopNavBar = () => {
 	const { isAuthenticated, user } = useAuthContext();
-	const [ loggedIn, setLogged ] = useState<boolean>(isAuthenticated)
+	const [loggedIn, setLogged] = useState<boolean>(isAuthenticated)
 	const { isOpen, toggle } = useToggle()
 	const navigate = useNavigate()
 	useEffect(() => {
@@ -35,7 +35,7 @@ const TopNavBar = () => {
 						<div>
 							<form className="me-auto d-flex app-search-topbar" onSubmit={(e) => {
 								e.preventDefault()
-								if (keyword.current.length > 0) handleSearchBeat(keyword.current)
+								handleSearchBeat(keyword.current)
 							}}>
 								<div className="input-group">
 									<input
@@ -54,7 +54,7 @@ const TopNavBar = () => {
 										id="button-addon2"
 									>
 										<i className="fas fa-search" onClick={(e) => {
-											if (keyword.current.length > 0) handleSearchBeat(keyword.current)
+											handleSearchBeat(keyword.current)
 										}} />
 									</Button>
 								</div>
@@ -90,7 +90,7 @@ const TopNavBar = () => {
 					{
 						isAuthenticated ?
 							<>
-								<Cart userId={ user != undefined ? parseInt(user.userid) : undefined}/>
+								<Cart userId={user != undefined ? parseInt(user.userid) : undefined} />
 								<Notifications notifications={notifications} />
 								<ProfileDropdown />
 							</> :

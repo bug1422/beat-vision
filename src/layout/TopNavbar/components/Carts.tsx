@@ -1,18 +1,47 @@
+import { HttpClient } from "@/common"
+import { CartItemDto } from "@/types/ApplicationTypes/CartItemType"
 import { TrackDto } from "@/types/ApplicationTypes/TrackType"
-import { CartType } from "@/types/CartType"
-import { GetTracksInCart } from "@/utils/handleCart"
+import DefaultBeatThumbnail from "/default-image/defaultSoundwave.jpg"
+import { AxiosResponse } from "axios"
 import { useEffect, useState } from "react"
 import { Col, Dropdown, DropdownMenu, DropdownToggle, Row } from "react-bootstrap"
 import { FiShoppingCart } from "react-icons/fi"
 import { Link } from "react-router-dom"
 
 const Cart = (props: { userId: number | undefined }) => {
-    const [tracks, SetTracks] = useState<TrackDto[] | undefined>()
+    const [tracks, SetTracks] = useState<TrackDto[]>([])
     const [isLoading, SetIsLoading] = useState<boolean>(false)
     const [error, SetError] = useState<string>("")
     useEffect(() => {
-        console.log(tracks)
     }, [tracks])
+    useEffect(() => {
+        GetTracksInCart()
+    }, [])
+
+    const GetTracksInCart = async () => {
+        SetIsLoading(true)
+        if (props.userId != undefined) {
+            try {
+                const res: AxiosResponse<CartItemDto[]> =
+                    await HttpClient.get("/api/ManageOrder/get-user-cart-items?userId=" + props.userId)
+                if (res?.data) {
+                    let tempt: TrackDto[] = []
+                    res?.data.forEach(p => {
+                        if (p.Track) {
+                            tempt = [...tempt, p.Track]
+                        }
+                    })
+                    SetTracks(tempt)
+                }
+            } catch (e: any) {
+                console.log(e)
+            }
+        }
+        else {
+            SetError("please log in again")
+        }
+        SetIsLoading(false)
+    }
 
     return (
         <Dropdown as="div">
@@ -21,13 +50,7 @@ const Cart = (props: { userId: number | undefined }) => {
                 className="nav-link arrow-none waves-light waves-effect"
             >
                 <FiShoppingCart className="align-self-center topbar-icon" onClick={() => {
-                    if (props.userId != undefined) {
-                        SetIsLoading(true)
-                        GetTracksInCart(props.userId).then((c) => { if (c != null) SetTracks(c); }).catch((e) => console.log(e)).finally(() => { SetIsLoading(false); });
-                    }
-                    else {
-                        SetError("please log in again")
-                    }
+                    GetTracksInCart()
                 }} />
             </DropdownToggle>
             <DropdownMenu className="dropdown-menu-end dropdown-lg pt-0 topbar-cart">
@@ -38,35 +61,11 @@ const Cart = (props: { userId: number | undefined }) => {
                 {!isLoading ? <div className="list">
                     {tracks?.map((track, index) => (
                         <ul key={index} className="navbar-nav ps-2">
-                            <li className="nav-item my-2">
+                            <li className="nav-item my-2 w-100">
                                 <Link to={"/music-detail/detail/" + track.Id} className="link">
-                                    <Row>
-                                        <Col xl={9} className="text-left">{track.TrackName}</Col>
-                                        <Col xl={3} className="text-right">{track.Price?.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' })}</Col>
-                                    </Row>
-                                </Link>
-                            </li>
-                        </ul>
-                    ))}
-                    {tracks?.map((track, index) => (
-                        <ul key={index} className="navbar-nav ps-2">
-                            <li className="nav-item my-2">
-                                <Link to={"/music-detail/detail/" + track.Id} className="link">
-                                    <Row>
-                                        <Col xl={9} className="text-left">{track.TrackName}</Col>
-                                        <Col xl={3} className="text-right">{track.Price?.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' })}</Col>
-                                    </Row>
-                                </Link>
-                            </li>
-                        </ul>
-                    ))}
-                    {tracks?.map((track, index) => (
-                        <ul key={index} className="navbar-nav ps-2">
-                            <li className="nav-item my-2">
-                                <Link to={"/music-detail/detail/" + track.Id} className="link">
-                                    <Row>
-                                        <Col xl={9} className="text-left">{track.TrackName}</Col>
-                                        <Col xl={3} className="text-right">{track.Price?.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' })}</Col>
+                                    <Row >
+                                        <Col xs={9} className="text-left text-nowrap">{track.TrackName.slice(0, 24) + "..."}</Col>
+                                        <Col xs={3} className="text-right">{track.Price != null ? track.Price > 0 ? track.Price?.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' }) : "Free" : "Null"}</Col>
                                     </Row>
                                 </Link>
                             </li>
@@ -75,7 +74,7 @@ const Cart = (props: { userId: number | undefined }) => {
                 </div> : <div>{error != "" ? error : "LOADING"}</div>
 
                 }
-                <Link to={"/cart/"+props.userId} className="dropdown-item text-center text-primary view-all border-top">
+                <Link to={"/cart/" + props.userId} className="dropdown-item text-center text-primary view-all border-top">
                     View all <i className="fi-arrow-right"></i>
                 </Link>
             </DropdownMenu>

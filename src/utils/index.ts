@@ -2,27 +2,9 @@ import { HttpClient } from "@/common";
 import default_profile from "/default-image/defaultprofile.png"
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
+import { getCookie } from "cookies-next";
 
-
-
-export function FetchableImg(url: string | null | undefined) {
-    const [path, setPath] = useState(default_profile)
-    if (url) {
-        const fetching = async () => {
-            try {
-                const res = await HttpClient.get(url)
-                console.log(res)
-                if (res?.data) {
-                    setPath(url)
-                }
-            }
-            catch (e: any) {
-            }
-        }
-        fetching()
-    }
-    return path
-}
 
 export function CompareDate(date1: number, date2: number) {  
     const diffInMilliseconds: number = Math.abs(date2 - date1);

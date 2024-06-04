@@ -18,7 +18,7 @@ export default function FetchUser() {
                 console.log(isAuthenticated)
                 const res: AxiosResponse<CustomIdentityUserDto> = await HttpClient.get("/api/ManageIdentity/get-useridentity", {
                     params: {
-                        id: 2
+                        id: user?.userid
                     }
                 })
                 if (res?.data) {
@@ -33,7 +33,6 @@ export default function FetchUser() {
             }
         }
     }
-    console.log(isAuthenticated, user, fetchSuccess, userData)
 
     return { Fetch, isAuthenticated, fetchSuccess, userData }
 }

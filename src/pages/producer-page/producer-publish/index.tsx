@@ -18,7 +18,7 @@ import {
   Pagination,
   Row,
 } from "react-bootstrap";
-import { TrackDto } from "@/types/ApplicationTypes/TrackType";
+import { TRACK_STATUS, TrackDto } from "@/types/ApplicationTypes/TrackType";
 import PublishForm from "./component/publishForm";
 import defaultAudioImage from "../../../assets/images/logo-dark.png";
 import { HttpClient } from "@/common";
@@ -118,7 +118,7 @@ export default function ProducerPublish() {
             <CardTitle>Publish music</CardTitle>
           </CardHeader>
           <CardBody>
-            <div className="table-responsive">
+            <div className="table-responsive"  style={{minHeight: "500px"}}>
               <table className="table table-bordered mb-0 table-centered">
                 <thead>
                   <tr>
@@ -172,9 +172,9 @@ const PublishRow = ({ track }: PublishDetailRowPropsExtra) => {
         onFail={() => {
           onResult(false, "create publish fail");
         }}
-        onSuccess={() => {
-          onResult(true, "create publish success");
-          window.location.reload();
+        onSuccess={(isPublishNow: any) => {
+          onResult(true, "change publish success");
+          track.Status = isPublishNow ? TRACK_STATUS.PUBLISH : TRACK_STATUS.WAIT_FOR_PUBLISH
         }}
       />
 

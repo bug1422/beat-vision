@@ -2,8 +2,8 @@ import { FetchTrack } from "@/pages/pages/Search/getBeat"
 import { TrackDto } from "@/types/ApplicationTypes/TrackType"
 import { CartType } from "@/types/CartType"
 
-export async function AddItemToCart(userId: number, trackId: number) {
-    const cart = await GetCart(userId)
+export function AddItemToCart(userId: number, trackId: number) {
+    const cart = GetCart(userId)
     if (cart) {
         if (cart.tracksId) {
             if (cart.tracksId.find(p => p == trackId) === undefined) {
@@ -24,8 +24,8 @@ export async function AddItemToCart(userId: number, trackId: number) {
     }
 }
 
-export async function RemoveItemFromCart(userId: number, trackId: number) {
-    const cart = await GetCart(userId)
+export function RemoveItemFromCart(userId: number, trackId: number) {
+    const cart = GetCart(userId)
     if (cart) {
         if (cart.tracksId) {
             const filtered = cart.tracksId.filter(p => p !== trackId)
@@ -45,7 +45,7 @@ export async function RemoveItemFromCart(userId: number, trackId: number) {
     }
 }
 
-async function GetCart(userId: number) {
+function GetCart(userId: number) {
     try {
         var cart = localStorage.getItem("user-" + userId)
         if (cart) {
@@ -65,15 +65,6 @@ async function GetCart(userId: number) {
 }
 
 export async function GetTracksInCart(userId: number) {
-    const trackIds = (await GetCart(userId))?.tracksId
-    const tracks: TrackDto[] = []
-    if (trackIds) {
-        for (let i = 0; i < trackIds.length; i++) {
-            var track = await FetchTrack(trackIds[i])
-            console.log(track)
-            if (track != undefined) tracks.push(track)
-        }
-    }
-    return tracks
+   
 }
 

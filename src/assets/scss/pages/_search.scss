@@ -1,6 +1,6 @@
 .search-page {
     $card-height: 70px;
-
+    
     .search {
         // background-color: rgb(15, 15, 15);
     }
@@ -101,4 +101,11 @@
             display: block !important;
         }
     }
+}
+
+.tag-search:hover{
+    background-color: black !important;
+}
+.highlighted{
+    background-color: rgb(243, 239, 0) !important;
 }

@@ -12,13 +12,18 @@ const Register = lazy(() => import("@/pages/authentication/Register"));
 const RecoverPW = lazy(() => import("@/pages/authentication/RecoverPW"));
 const Error404 = lazy(() => import("@/pages/authentication/Error404"));
 const Error500 = lazy(() => import("@/pages/authentication/Error500"));
+const EmailConfirm = lazy(() => import("@/pages/authentication/EmailConfirm"));
 
 // Pages
 const HomePage = lazy(() => import("@/pages/pages/Home"));
 const Profile = lazy(() => import("@/pages/pages/Profile"));
 const Search = lazy(() => import("@/pages/pages/Search"));
 const Cart = lazy(() => import("@/pages/pages/Cart"));
-const Checkout = lazy(() => import("@/pages/pages/Checkout"));
+
+// Transaction
+const PaymentResult = lazy(() => import("@/pages/pages/Transaction/PaymentResult"))
+const Checkout = lazy(() => import("@/pages/pages/Transaction/Checkout"));
+const PaymentHistory = lazy(() => import("@/pages/pages/Transaction/History"));
 
 //Applicatoin create page
 const MusicDetail = lazy(() => import("@/pages/music-detail"));
@@ -98,6 +103,21 @@ const appsRoutes: RoutesProps[] = [
     element: <Checkout />
   },
   {
+    path: "/payment/history/:userId",
+    name: "Payment History",
+    element: <PaymentHistory />
+  },
+  {
+    path: "/checkout/payment/success",
+    name: "Payment Success",
+    element: <PaymentResult isSuccess={true} />
+  },
+  {
+    path: "/checkout/payment/failed",
+    name: "Payment Failed",
+    element: <PaymentResult isSuccess={false} />
+  },
+  {
     path: "/profile/:userId",
     name: "Profile",
     element: <Profile />
@@ -140,6 +160,11 @@ const authRoutes: RoutesProps[] = [
     name: "500 Error",
     element: <Error500 />,
   },
+  {
+    path: "/auth/confirm-email",
+    name: "Email Confirm",
+    element: < EmailConfirm/>,
+  }
 ];
 
 const allCustomerRoutes = [...appsRoutes];

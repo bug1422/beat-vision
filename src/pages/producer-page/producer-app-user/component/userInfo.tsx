@@ -1,12 +1,11 @@
 import { UserProfileDto } from "@/types/ApplicationTypes/UserProfileType"
 import { Button, Card, CardBody, Col, Row } from "react-bootstrap"
-import { FetchableImg } from '@/utils'
 import user4 from '@/assets/images/users/user-4.jpg'
 
 const UserInfo = (props: { user: UserProfileDto }) => {
     const { user } = props
     console.log(user?.ProfileBlobUrl)
-    const imgUrl = FetchableImg(user?.ProfileBlobUrl)
+    const imgUrl = user?.ProfileBlobUrl ?? user4
     return (<Card>
         <CardBody className="p-0">
 

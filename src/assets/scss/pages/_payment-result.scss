@@ -1,0 +1,33 @@
+.payment-result {
+    height: 950px;
+
+    background: rgb(194, 204, 255);
+    background: linear-gradient(45deg, rgba(194, 204, 255, 1) 0%, rgba(91, 44, 255, 1) 27%, rgba(205, 136, 255, 1) 53%, rgba(255, 97, 131, 1) 77%, rgba(255, 213, 222, 1) 100%);
+
+    .result-container{
+
+        border: 1px solid rgba(0, 0, 0, 0.418);
+        background-color: white;
+        border-radius: 24px;
+    }
+    .result-title {
+        font-size: 62px;
+    }
+
+    .result-icon {
+        width: 250px;
+    }
+
+    .result-description {
+        font-size: 32px;
+    }
+
+    .result-support{
+        font-size: 22px;
+        color: black;
+        font-weight: lighter;
+        .icon{
+            font-size: 33px
+        }
+    }
+}

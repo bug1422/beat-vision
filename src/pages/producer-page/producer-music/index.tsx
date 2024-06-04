@@ -128,13 +128,10 @@ export default function ProducerMusics() {
                 {error != "" ? <div>{error}</div> : <>
                   {producerMusics.length > 0 ? <Row>
                     {producerMusics.map((music, idx) => (
-                      <div key={idx}>
-                        <Col xs={3}>
-                          <ProducerMusicCard producerMusic={music} />
-                        </Col>
-                      </div>
+                      <Col key={idx} xs={3}>
+                        <ProducerMusicCard producerMusic={music} />
+                      </Col>
                     ))}
-
                     <div>
                       <Row className="d-flex justify-content-center align-content-center">
                         <div>

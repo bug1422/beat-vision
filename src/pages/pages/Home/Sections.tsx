@@ -5,8 +5,15 @@ import img2 from '/images/homepage/img2.jpg'
 import img3 from '/images/homepage/img3.jpg'
 import fpt_logo from '/images/brand-logo/fpt.png'
 import { beats, artists } from "@/testing/FetchFakeData"
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { useAuthContext } from "@/context"
+import { AxiosResponse } from "axios"
+import { TrackDto } from "@/types/ApplicationTypes/TrackType"
+import { HttpClient } from "@/common"
+import { PagingResponseDto } from "@/types/ApplicationTypes/PagingResponseType"
+import { Tag } from "../Search"
+
 
 const Section1 = () => {
     const navigate = useNavigate()
@@ -69,19 +76,38 @@ const Section1 = () => {
 }
 
 const Section2 = () => {
-    const [list, _] = useState(beats)
     const [currentPage, setCurrentPage] = useState(1)
     const itemsPerPage = 4;
+    const [list, setList] = useState<TrackDto[]>([])
     const lastPage = Math.floor(list.length / itemsPerPage) + 1;
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     const currentItems = list.slice(startIndex, endIndex);
+    const [error, setError] = useState("")
 
     const handlePageChange = (pageNumber: number) => {
         if (pageNumber > 0 && pageNumber < lastPage + 1) {
             setCurrentPage(pageNumber);
         }
     }
+
+    const getTracks = async () => {
+        setError("")
+        try {
+            const res: AxiosResponse<PagingResponseDto<TrackDto[]>> =
+                await HttpClient.get("/api/ManageTrack/get-range?currentPage=" + (currentPage - 1) + "&amount=" + itemsPerPage)
+            if (res?.data) {
+                setList(res?.data.Value)
+            }
+            else setError("Can't get data")
+        }
+        catch (e: any) {
+            setError(e)
+        }
+    }
+    useEffect(() => {
+        getTracks()
+    }, [currentPage])
 
     return (
         <div className="section2 pt-2 pb-4">
@@ -90,25 +116,27 @@ const Section2 = () => {
             </div>
             <div className="content">
                 <Row className="justify-content-center">
-                    {currentItems.map((beat, idx) => (
-                        <Col xs={4} sm={2} key={idx}>
-                            <Card>
-                                <img src={demoBeat} className="card-img-top img-fluid bg-light-alt" />
-                                <CardHeader>
-                                    <div>{beat.title}</div>
-                                    <div>{beat.author}</div>
-                                    <div>
-                                        {beat.tag.slice(0, 3).map((tag, ix) => (
-                                            <Badge bg="secondary" key={ix} className="mx-1">{tag}</Badge>
-                                        ))}
-                                        {beat.tag.length > 3 ?
-                                            <Badge bg="secondary" className="mx-1">{beat.tag.length - 3}+...</Badge> : <></>
-                                        }
-                                    </div>
-                                </CardHeader>
-                            </Card>
-                        </Col>
-                    ))}
+                    {error != "" ? <div className="text-danger text-center mt-5" style={{fontSize:"52px"}}>{error}</div> :
+                        <>
+                            {currentItems.map((beat, idx) => (
+                                <Col xs={4} sm={2} key={idx}>
+                                    <Card >
+                                        <img src={beat.ProfileBlobUrl ?? demoBeat} className="card-img-top img-fluid bg-light-alt" style={{height: "250px"}} />
+                                        <CardHeader style={{height: "80px"}}>
+                                            <div>{beat.TrackName}</div>
+                                            <div>
+                                                {beat.Tags.slice(0, 3).map((tag, ix) => (
+                                                    <Badge bg="secondary" key={ix} className="mx-1">{tag.Name}</Badge>
+                                                ))}
+                                                {beat.Tags.length > 3 ?
+                                                    <Badge bg="secondary" className="mx-1">{beat.Tags.length - 3}+...</Badge> : <></>
+                                                }
+                                            </div>
+                                        </CardHeader>
+                                    </Card>
+                                </Col>
+                            ))}
+                        </>}
                 </Row>
             </div>
             <div className="d-flex justify-content-center">
@@ -166,19 +194,20 @@ const Section4 = () => {
             <Row>
                 <Col xl={4} className="left-col pt-3 mt-3">
                     <div className="home-text">
-                        Why choose beat vision
+                        <div>Why choose</div> 
+                        <div className="ms-5 text-info">Beat Vision</div> 
                     </div>
                 </Col>
                 <Col />
                 <Col xl={6} className="right-col d-flex flex-column ">
                     <div className="reason my-3">
-                        <div className="home-text">Reason A</div>
+                        <div className="home-text">Fast Delivery</div>
                     </div>
                     <div className="reason my-3">
-                        <div className="home-text">Reason B</div>
+                        <div className="home-text">Quality Beats</div>
                     </div>
                     <div className="reason my-3">
-                        <div className="home-text">Reason C</div>
+                        <div className="home-text">Long-term Support</div>
                     </div>
                 </Col>
             </Row>
@@ -211,7 +240,7 @@ const Section6 = () => {
                 <Col xl={6}>
                     <Card className="left-card">
                         <CardBody>
-                            <div className="home-text">FAQ</div>
+                            <div className="home-text ps-5">FAQ</div>
                         </CardBody>
                     </Card>
                 </Col>
@@ -245,7 +274,6 @@ const SectionList = [
     Section2,
     Section3,
     Section4,
-    Section5,
     Section6
 ]
 export { SectionList }

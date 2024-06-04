@@ -43,7 +43,7 @@ interface MusicUploadFormProps {
   isShow: boolean;
   trackId: number;
   onHide: () => void;
-  onSuccess?: () => void;
+  onSuccess?: (isPublishNow: boolean) => void;
   onFail?: () => void;
 }
 registerPlugin(
@@ -91,7 +91,7 @@ export default function PublishForm({
       onHide();
       if (!onSuccess) {
       } else {
-        onSuccess();
+        onSuccess(isPublishNow);
       }
     } catch (error) {
       console.log(error);

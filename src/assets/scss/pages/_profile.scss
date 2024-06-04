@@ -70,7 +70,14 @@
   }
 }
 
-
+.verify{
+  font-size: 12px;
+  text-decoration: underline;
+  color: red;
+}
+.verify:hover{
+  color: grey !important;
+}
 
 
 

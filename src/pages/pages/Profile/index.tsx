@@ -9,6 +9,7 @@ const Profile = () => {
 
 	const { Fetch, isAuthenticated, fetchSuccess, userData } = FetchUser()
 	useEffect(() => {
+		console.log(isAuthenticated)
 		Fetch();
 	}, [])
 	return (
@@ -16,8 +17,10 @@ const Profile = () => {
 			{!isAuthenticated && <Navigate to="/" replace />}
 			{
 				fetchSuccess ? <>
-					<ProfileInfo user={userData}/>
-					<ProfileTask user={userData}/>
+					{
+						userData ? <ProfileInfo userId={userData.Id} roles={userData.Roles} verified={userData.EmailConfirmed} /> : <></>
+					}
+					<ProfileTask user={userData} />
 				</> : <>
 					<div>Can't get data</div>
 				</>

@@ -6,7 +6,7 @@ import {
 	Image,
 } from 'react-bootstrap'
 
-import { FiPower, FiSettings, FiShoppingCart, FiUser } from 'react-icons/fi'
+import { FiArchive , FiPower, FiSettings, FiShoppingCart, FiUser } from 'react-icons/fi'
 import { useAuthContext } from '@/context'
 import { useNavigate } from 'react-router-dom'
 import { fetchAvt } from '@/testing/FetchFakeData'
@@ -17,9 +17,9 @@ const ProfileDropdown = () => {
 
 	const logout = () => {
 		removeSession()
-        setTimeout(()=>{
+		setTimeout(() => {
 			navigate('/auth/login')
-		},500)
+		}, 500)
 	}
 
 	return (
@@ -42,6 +42,10 @@ const ProfileDropdown = () => {
 				<DropdownItem onClick={() => navigate("/cart/" + user?.userid)}>
 					<FiShoppingCart className="align-self-center icon-xs icon-dual me-1" />{' '}
 					Carts
+				</DropdownItem>
+				<DropdownItem onClick={() => navigate("/payment/history/" + user?.userid)}>
+					<FiArchive  className="align-self-center icon-xs icon-dual me-1" />{' '}
+					Purchases
 				</DropdownItem>
 				<div className="dropdown-divider mb-0"></div>
 				<DropdownItem onClick={() => logout()}>

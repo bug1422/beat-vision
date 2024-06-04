@@ -153,8 +153,9 @@ const MusicUploadForm = (props: { refresh: () => void }) => {
       setKey(1)
       return true
     } catch (err: any) {
+      let mess = err?.response?.data?.title ?? ""
       console.log(err);
-      toast.error("Creating fail", { position: "bottom-right", duration: 2000 })
+      toast.error("Creating fail \n"+mess, { position: "bottom-right", duration: 2000 })
     }
     return false
   };

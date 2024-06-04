@@ -1,44 +1,89 @@
-import { Button, Card, CardBody, Col, Modal, ModalHeader, Row } from 'react-bootstrap'
+import { Button, Card, CardBody, Col, Modal, Row } from 'react-bootstrap'
 import user4 from '@/assets/images/users/user-4.jpg'
-import { Link } from 'react-router-dom'
-import { User } from '@/types'
-import { FetchableImg } from '@/utils'
-import { CustomIdentityUserDto } from '@/types/ApplicationTypes/IdentityType'
+import { CustomIdentityRoleDto } from '@/types/ApplicationTypes/IdentityType'
 import { useEffect, useState } from 'react'
 import { FilePond } from 'react-filepond'
 import { HttpClient } from '@/common'
-const ProfileInfo = (props: { user: CustomIdentityUserDto | undefined }) => {
-	const { user } = props;
-	const imgUrl = FetchableImg(user?.UserProfile?.ProfileBlobUrl)
+import { UserProfileDto } from '@/types/ApplicationTypes/UserProfileType'
+import { AxiosResponse } from 'axios'
+import { FiCheck } from 'react-icons/fi'
+import { toast } from 'sonner'
+import { Link } from 'react-router-dom'
+const ProfileInfo = (props: { userId: number, roles: CustomIdentityRoleDto[], verified: boolean }) => {
+	const [user, setUser] = useState<UserProfileDto>();
+	const [imgUrl, setImgURL] = useState(user4)
 	const [show, setShow] = useState(false);
+	const [loading, setLoading] = useState(false)
 
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
 
+	useEffect(() => {
+		FetchUserProfile()
+
+	}, [])
+	const CheckVerified = async () => {
+
+	}
+
+	const FetchUserProfile = async () => {
+		try {
+			const res: AxiosResponse<UserProfileDto> =
+				await HttpClient.get('/api/ManageUser/' + props.userId)
+			if (res?.data) {
+				setUser(res?.data)
+				if(user?.ProfileBlobUrl) setImgURL(user?.ProfileBlobUrl)
+				console.log(res?.data)
+				console.log(user)
+			}
+		} catch (e: any) {
+			console.log(e)
+		}
+	}
+
 	const UploadImg = () => {
 		const [upload, setUpload] = useState<File>()
-		const [imgUrl, setImgUrl] = useState("")
+		const [newImgURL, setNewImgUrl] = useState("")
 		const [loading, setLoading] = useState(false)
+		const [error, setError] = useState("")
 		const reader = new FileReader()
 		reader.onload = (e) => {
 			const res = e.target?.result?.toString()
-			if (res) setImgUrl(res)
+			if (res) setNewImgUrl(res)
 		}
 		useEffect(() => {
 			if (upload != undefined) {
-				const url = reader.readAsDataURL(upload)
+				reader.readAsDataURL(upload)
 			}
 		}, [upload])
 
-		const onClickSubmit = async () => {
-			try {
-				const res = await HttpClient.put("/api/ManagerUser/get-track-commne")
-				if(res?.data)
-					console.log(res?.data)
-			} catch (e: any) {
-				console.log(e)
+		const UploadImage = async () => {
+			setLoading(true)
+			if (upload != undefined) {
+				try {
+					const data = new FormData();
+					data.append('imageFile', upload);
+					const res: AxiosResponse = await
+						HttpClient.put('/api/ManageUser/profile-image/' + user?.Id, data, {
+							headers: {
+								'accept': '*/*',
+								'Content-Type': 'multipart/form-data',
+							},
+						})
+					if (res?.status == 200) {
+						toast.info("Profile updated", { position: "bottom-right", duration: 2000 })
+						FetchUserProfile()
+					}
+					console.log(res)
+				} catch (e: any) {
+					console.log(e)
+					setError("Something went wrong")
+				}
 			}
+			else setError("You haven't upload any")
+			setLoading(false)
 		}
+
 		return (<>
 			<Modal show={show} onHide={handleClose} backdrop='static'>
 				<Modal.Header closeButton>
@@ -50,7 +95,7 @@ const ProfileInfo = (props: { user: CustomIdentityUserDto | undefined }) => {
 							<Col xs={2}>
 								<div className="user-profile-main-pic">
 									<img
-										src={imgUrl}
+										src={newImgURL != "" ? newImgURL : imgUrl}
 										alt=""
 										width={90}
 										height={90}
@@ -65,7 +110,7 @@ const ProfileInfo = (props: { user: CustomIdentityUserDto | undefined }) => {
 								allowMultiple={false}
 								allowReorder={true}
 								allowDrop
-								acceptedFileTypes={["image/png", "image/jpg"]}
+								acceptedFileTypes={["image/png", "image/jpeg"]}
 								maxFiles={1}
 								onupdatefiles={(files) => {
 									let getFile = files[0];
@@ -77,121 +122,126 @@ const ProfileInfo = (props: { user: CustomIdentityUserDto | undefined }) => {
 								}}
 							/>
 						</Row>
-
+						{error != "" ? <div className='text-danger fw-bold fs-3'>{error}</div> : <></>}
 					</Row>
 				</Modal.Body>
 				<Modal.Footer>
 					<Button disabled={loading} variant="secondary" onClick={handleClose}>
 						Close
 					</Button>
-					<Button disabled={loading} variant="primary" onClick={onClickSubmit}>Upload</Button>
+					<Button disabled={loading} variant="primary" onClick={() => { UploadImage(); handleClose(); }}>Upload</Button>
 				</Modal.Footer>
 			</Modal>
 		</>)
 	}
 
+
 	return (
 		<div>
-			<Row>
-				<Col xs={12}>
-					<Card>
-						<CardBody className="p-0">
+			{!loading ?
+				<>
+					<Row>
+						<Col xs={12}>
+							<Card>
+								<CardBody className="p-0">
 
-						</CardBody>
-						<CardBody>
-							<div className="user-profile">
-								<Row>
-									<Col lg={4} className="align-self-center mb-3 mb-lg-0">
-										<div className="user-profile-main">
-											<div className="user-profile-main-pic">
-												<img
-													src={imgUrl}
-													alt=""
-													height="110"
-													className="rounded-circle"
-												/>
-												<span className="user-profile_main-pic-change" onClick={handleShow}>
-													<i className="fas fa-camera"></i>
-												</span>
-											</div>
-											<div className="user-profile_user-detail">
-												<h5 className="user-user-name text-capitalize">{user?.UserProfile?.Fullname}</h5>
-												<p className="mb-0 user-user-name-post">
-													{user?.Roles.map(p => p.Name).join("-")}
-												</p>
-											</div>
-										</div>
-									</Col>
-
-									<Col lg={4} className="ms-auto align-self-center">
-										<ul className="list-unstyled personal-detail mb-0">
-											<li className="">
-												<i className="ti ti-mobile me-2 text-secondary font-16 align-middle"></i>{' '}
-												<b> phone </b> : {undefined ?? "Not Updated"}
-											</li>
-											<li className="mt-2">
-												<i className="ti ti-email text-secondary font-16 align-middle me-2"></i>{' '}
-												<b> Email </b> : {undefined ?? "Not Updated"}
-											</li>
-										</ul>
-									</Col>
-
-									<Col lg={4} className="align-self-center">
+								</CardBody>
+								<CardBody>
+									<div className="user-profile">
 										<Row>
-											<Col className="col-auto text-center">
-												<Button
-													variant="soft-info"
-													className="btn-icon-circle btn-icon-circle-sm mb-2"
-												>
-													<i className="fab fa-facebook-f">{user?.UserProfile?.Facebook ?? <a href={user?.UserProfile?.Facebook ?? ""} target='_blank' />}
-													</i>
-												</Button>
-												<p className="mb-0 fw-semibold">Facebook</p>
+											<Col lg={4} className="align-self-center mb-3 mb-lg-0">
+												<div className="user-profile-main">
+													<div className="user-profile-main-pic">
+														<img
+															src={imgUrl}
+															alt=""
+															height="110"
+															className="rounded-circle"
+														/>
+														<span className="user-profile_main-pic-change" onClick={handleShow}>
+															<i className="fas fa-camera"></i>
+														</span>
+													</div>
+													<div className="user-profile_user-detail">
+														<h5 className="user-user-name text-capitalize">{user?.Fullname}{props.verified ? <FiCheck /> : <Link to="/auth/confirm-email" className='mx-3 verify'>verify email now</Link>}</h5>
+														<p className="mb-0 user-user-name-post">
+															{props.roles.map(p => p.Name).join("-")}
+														</p>
+													</div>
+												</div>
 											</Col>
 
-											<Col className="col-auto text-center">
-												<Button
-													variant="soft-info"
-													className="btn-icon-circle btn-icon-circle-sm mb-2"
-												>
-													<i className="fab fa-instagram">
-														{user?.UserProfile?.Instagram ?? <a href={user?.UserProfile?.Instagram ?? ""} target='_blank' />}
-													</i>
-												</Button>
-												<p className="mb-0 fw-semibold">Instagram</p>
+											<Col lg={4} className="ms-auto align-self-center">
+												<ul className="list-unstyled personal-detail mb-0">
+													<li className="">
+														<i className="ti ti-mobile me-2 text-secondary font-16 align-middle"></i>{' '}
+														<b> phone </b> : {undefined ?? "Not Updated"}
+													</li>
+													<li className="mt-2">
+														<i className="ti ti-email text-secondary font-16 align-middle me-2"></i>{' '}
+														<b> Email </b> : {undefined ?? "Not Updated"}
+													</li>
+												</ul>
 											</Col>
 
-											<Col className="col-auto text-center">
-												<Button
-													variant="soft-info"
-													className="btn-icon-circle btn-icon-circle-sm mb-2"
-												>
-													<i className="fab fa-youtube">
-														{user?.UserProfile?.Youtube ?? <a href={user?.UserProfile?.Youtube ?? ""} target='_blank' />}
-													</i>
-												</Button>
-												<p className="mb-0 fw-semibold">Youtube</p>
-											</Col>
+											<Col lg={4} className="align-self-center">
+												<Row>
+													<Col className="col-auto text-center">
+														<Button
+															variant="soft-info"
+															className="btn-icon-circle btn-icon-circle-sm mb-2"
+														>
+															<i className="fab fa-facebook-f">{user?.Facebook ?? <a href={user?.Facebook ?? ""} target='_blank' />}
+															</i>
+														</Button>
+														<p className="mb-0 fw-semibold">Facebook</p>
+													</Col>
 
-											<Col className="col-auto text-center">
-												<Button
-													variant="soft-info"
-													className="btn-icon-circle btn-icon-circle-sm mb-2"
-												>
-													<i className="fab fa-soundcloud">{user?.UserProfile?.SoundCloud ?? <a href={user?.UserProfile?.SoundCloud ?? ""} target='_blank' />}
-													</i>
-												</Button>
-												<p className="mb-0 fw-semibold">SoundCloud</p>
+													<Col className="col-auto text-center">
+														<Button
+															variant="soft-info"
+															className="btn-icon-circle btn-icon-circle-sm mb-2"
+														>
+															<i className="fab fa-instagram">
+																{user?.Instagram ?? <a href={user?.Instagram ?? ""} target='_blank' />}
+															</i>
+														</Button>
+														<p className="mb-0 fw-semibold">Instagram</p>
+													</Col>
+
+													<Col className="col-auto text-center">
+														<Button
+															variant="soft-info"
+															className="btn-icon-circle btn-icon-circle-sm mb-2"
+														>
+															<i className="fab fa-youtube">
+																{user?.Youtube ?? <a href={user?.Youtube ?? ""} target='_blank' />}
+															</i>
+														</Button>
+														<p className="mb-0 fw-semibold">Youtube</p>
+													</Col>
+
+													<Col className="col-auto text-center">
+														<Button
+															variant="soft-info"
+															className="btn-icon-circle btn-icon-circle-sm mb-2"
+														>
+															<i className="fab fa-soundcloud">{user?.SoundCloud ?? <a href={user?.SoundCloud ?? ""} target='_blank' />}
+															</i>
+														</Button>
+														<p className="mb-0 fw-semibold">SoundCloud</p>
+													</Col>
+												</Row>
 											</Col>
 										</Row>
-									</Col>
-								</Row>
-							</div>
-						</CardBody>
-					</Card>
-				</Col>
-			</Row>
-			<UploadImg />
+									</div>
+								</CardBody>
+							</Card>
+						</Col>
+					</Row>
+					<UploadImg />
+				</> : <></>
+			}
 		</div>
 	)
 }

@@ -5,5 +5,5 @@ export type CartItemDto = {
   UserId?: number | null;
   ItemType: "TRACK" | "SERVICE" | 0 | 1;
   ItemId: number;
-  Tracks?: TrackDto[];
+  Track: TrackDto;
 };
