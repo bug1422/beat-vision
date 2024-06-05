@@ -3,8 +3,17 @@ export type MessageDto = {
   MessageName: string;
   Content: string;
   CreatedDate: string; //datetime
-  Type: "ALL" | "GROUP" | "SINGLE" | 0 | 1 | 2;
-  Weight: "MINOR" | "MAJOR" | 1 | 2;
+  Type: MessageType;
+  Weight: MessageWeigth;
   CreatorId: number;
   IsServerNotification: boolean;
 };
+export enum MessageWeigth {
+  MINOR = 1,
+  MAJOR = 2,
+}
+export enum MessageType {
+  ALL = 0,
+  GROUP = 1,
+  SINGLE = 2,
+}

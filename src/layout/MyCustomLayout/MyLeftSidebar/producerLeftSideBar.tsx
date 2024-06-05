@@ -5,7 +5,7 @@ import { getMenuItems } from "@/common";
 import logoImg from "@/assets/images/logo-sm.png";
 import AppMenu from "@/layout/LeftSidebar/Menu";
 import { MenuItemType } from "@/common/menu";
-import { FiMusic,FiUsers,FiTag,FiShoppingCart,FiFileText    } from "react-icons/fi";
+import { FiMusic, FiUsers, FiTag, FiShoppingCart, FiFileText } from "react-icons/fi";
 const leftMenuItems: MenuItemType[] = [
   {
     key: "1",
@@ -36,10 +36,17 @@ const leftMenuItems: MenuItemType[] = [
     url: "/producer-page/my-license",
   },
   {
+    key: "8",
+    label: "my notification",
+    isTitle: false,
+    icon: FiMusic,
+    url: "/producer-page/my-notification",
+  },
+  {
     key: "4",
     label: "Sale",
     isTitle: false,
-    icon: FiShoppingCart ,
+    icon: FiShoppingCart,
     url: "/producer-page/my-sale",
   },
 
