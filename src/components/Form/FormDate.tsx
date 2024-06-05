@@ -7,9 +7,9 @@ import {
 import type { FormInputProps } from '../types'
 import { Form, FormControlProps } from 'react-bootstrap'
 
-const FormInput = <
+const FormDate = <
 	TFieldValues extends FieldValues = FieldValues,
-	TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+	TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues> 
 >({
 	control,
 	id,
@@ -20,8 +20,8 @@ const FormInput = <
 	labelClassName,
 	className,
 	type,
-	noValidate,
 	value,
+	noValidate,
 	...other
 }: FormInputProps<TFieldValues> & FormControlProps) => {
 	return (
@@ -32,9 +32,10 @@ const FormInput = <
 				<Form.Group className={containerClass}>
 					{label && <Form.Label className={labelClassName}>{label}</Form.Label>}
 					<Form.Control
+						defaultValue={value}
 						className={className}
 						id={id ?? name}
-						type={type}
+						type="date"
 						placeholder={placeholder}
 						isInvalid={!noValidate && fieldState.error != null}
 						{...other}
@@ -42,7 +43,7 @@ const FormInput = <
 					/>
 					{!noValidate && fieldState.error?.message && (
 						<Form.Control.Feedback type="invalid" className="text-danger">
-							{fieldState.error?.message}
+							{fieldState.error?.type == "typeError" ? "Can't leave a blank date" : fieldState.error?.message}
 						</Form.Control.Feedback>
 					)}
 				</Form.Group>
@@ -51,4 +52,4 @@ const FormInput = <
 	)
 }
 
-export default FormInput
+export default FormDate

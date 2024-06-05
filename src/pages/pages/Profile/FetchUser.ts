@@ -1,24 +1,26 @@
 import { HttpClient } from "@/common";
 import { useAuthContext } from "@/context";
 import { CustomIdentityUserDto } from "@/types/ApplicationTypes/IdentityType";
+import { UserProfileDto } from "@/types/ApplicationTypes/UserProfileType";
 import { AxiosResponse } from "axios";
 import { useState } from "react";
 
 
 export default function FetchUser() {
-    const { isAuthenticated, user } = useAuthContext();
+    const { isAuthenticated, user, removeSession } = useAuthContext();
 
 
     const [fetchSuccess, setFetchSuccess] = useState<boolean>(false);
     const [userData, setUserData] = useState<CustomIdentityUserDto>();
-    const Fetch = async () => {
+    const [otherData, setOtherData] = useState<UserProfileDto>();
+    const Fetch = async (userId: string | undefined = undefined) => {
 
         if (isAuthenticated) {
             try {
                 console.log(isAuthenticated)
                 const res: AxiosResponse<CustomIdentityUserDto> = await HttpClient.get("/api/ManageIdentity/get-useridentity", {
                     params: {
-                        id: user?.userid
+                        id: userId ?? user?.userid
                     }
                 })
                 if (res?.data) {
@@ -34,5 +36,5 @@ export default function FetchUser() {
         }
     }
 
-    return { Fetch, isAuthenticated, fetchSuccess, userData }
+    return { Fetch, isAuthenticated, fetchSuccess, userData, removeSession, otherData }
 }

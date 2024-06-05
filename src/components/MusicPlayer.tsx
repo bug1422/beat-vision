@@ -28,7 +28,7 @@ const MusicPlayer = (props: { trackId: number, tracks: TrackDto[] }) => {
 
         return [isOpen, toggle, show, hide]
     }
-
+    const [count, setCount] = useState(0)
     const [trackId, setTrackId] = useState<number>(props.trackId)
     const [track, setTrack] = useState<TrackDto | undefined>()
     const [fileURL, setFileURL] = useState("")
@@ -80,6 +80,14 @@ const MusicPlayer = (props: { trackId: number, tracks: TrackDto[] }) => {
         }
         catch (e: any) {
             console.log(e)
+            if(count > 3){
+                setCount(0)
+                setTrackId(1)
+            }
+            else{
+                setTrackId(trackId+1)
+                setCount(count+1)
+            }
         }
     }
 
@@ -116,7 +124,6 @@ const MusicPlayer = (props: { trackId: number, tracks: TrackDto[] }) => {
     }, [track]);
     useEffect(() => {
         if (playPercent == 100) {
-            setPlayPercent(0)
             handleSkipForward()
             console.log("next")
         }
@@ -177,10 +184,10 @@ const MusicPlayer = (props: { trackId: number, tracks: TrackDto[] }) => {
 
     function handleSkipForward() {
         const tracks = props.tracks
-        const pos = tracks.findIndex(p => p.Id == trackId)
-        if (tracks && (pos >= 0 && pos < tracks.length)) setTrackId(trackId + 1)
-        else setTrackId(1)
         console.log(trackId)
+        const pos = tracks.findIndex(p => p.Id == trackId)
+        console.log(pos)
+        if (tracks && (pos >= 0 && pos < tracks.length)) setTrackId(trackId + 1)
     }
 
     const OffCanvasItem = () => {

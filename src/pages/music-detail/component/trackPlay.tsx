@@ -1,4 +1,4 @@
-import { Button, Row } from "react-bootstrap";
+import { Button, Col, Row } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../index.css";
 import { MutableRefObject, useEffect, useRef, useState } from "react";
@@ -9,6 +9,10 @@ import _AudioPlayer from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
 
 import WaveSurfer from "wavesurfer.js";
+import { AxiosResponse } from "axios";
+import { HttpClient } from "@/common";
+import { FiPlayCircle, FiStopCircle, FiVolumeX, FiVolume, FiVolume1, FiVolume2 } from "react-icons/fi";
+import FormRange from "react-bootstrap/esm/FormRange";
 type TrackType = {
   url: string;
   title: string;
@@ -23,17 +27,59 @@ const DefaultAudioArray = [
     title: "sample 2",
   },
 ];
-export default function TrackPlay() {
+export default function TrackPlay(props: { trackId: number, price: number }) {
+  const [trackId, setTrackId] = useState(props.trackId)
+  const [fileURL, setFileURL] = useState("")
   // const [audioList, setAudioList] = useState<Array<TrackType>>(DefaultAudioArray);
   const [percentage, setPercentage] = useState<number>(0);
-  const [isPlay, setIsPlay] = useState(false);
+  const [isPlaying, setPlaying] = useState(false);
   const audioContainer = useRef<HTMLElement>(null);
   const waveSurferRef = useRef<WaveSurfer | null>(null);
-  const [currentlySelectAudio, _setCurrentlySelectAudio] = useState<TrackType>(
-    DefaultAudioArray[0]
-  );
-  const [volume, SetVolume] = useState("100");
+
+  const [isMuted, setMuted] = useState<boolean>(false)
+  const [volumne, setVolume] = useState<number>(0)
+
+  const FetchFile = async () => {
+    try {
+      const res: AxiosResponse<Blob> =
+        await HttpClient.get("/api/ManageTrack/get-public-trackfile", {
+          params: {
+            trackId: trackId
+          },
+          headers: {
+            "Content-Type": "audio/mpeg",
+          },
+          responseType: "blob"
+        })
+      if (res) {
+        setFileURL(URL.createObjectURL(res?.data))
+      }
+    }
+    catch (e: any) {
+      console.log(e)
+    }
+  }
+
+  const AddPlayCount = async () => {
+    try {
+      const res: AxiosResponse<Blob> =
+        await HttpClient.get("/api/ManageTrack/plus-play-count", {
+          params: {
+            trackId: trackId
+          }
+        })
+    }
+    catch (e: any) {
+      console.log(e)
+    }
+  }
+
   useEffect(() => {
+    FetchFile()
+  }, [trackId])
+
+  useEffect(() => {
+    setPlaying(false)
     if (audioContainer.current) {
       // Ensure the previous instance is destroyed before creating a new one
       if (waveSurferRef.current) {
@@ -41,13 +87,13 @@ export default function TrackPlay() {
       }
       waveSurferRef.current = WaveSurfer.create({
         container: audioContainer.current,
-        waveColor: "rgb(200, 0, 200)",
-        progressColor: "rgb(100, 0, 100)",
+        waveColor: "rgb(0, 0, 0)",
+        progressColor: "rgb(66, 135, 245)",
         barWidth: 2,
         barGap: 1,
         barRadius: 2,
         height: 50,
-        url: currentlySelectAudio.url,
+        url: fileURL,
       });
       waveSurferRef.current.on("timeupdate", (time) => {
         let totaltime = waveSurferRef.current?.getDuration() as number;
@@ -68,94 +114,78 @@ export default function TrackPlay() {
         }
       };
     }
-  }, []);
-  useEffect(() => {
-    console.log(percentage);
-  }, [percentage]);
+  }, [fileURL]);
+
+  function SetPlaying(value: boolean) {
+    if (value) {
+      var playPromise = waveSurferRef.current?.play();
+      if (playPromise != undefined) {
+        playPromise
+          .then(_ => { setPlaying(true) })
+          .catch((e: any) => { console.log(e); })
+      }
+    }
+    else {
+      waveSurferRef.current?.pause()
+      setPlaying(false)
+    }
+  }
+
   return (
     <>
-      <div className="border">
-        <Row className="border border-secondary">
+      <div className="track-play">
+        <Row className="border box">
           <div className="d-flex">
-            <Button
-              className="m-1"
-              onClick={() => {
-                setIsPlay(!isPlay);
-                waveSurferRef.current?.playPause();
-              }}
-            >
-              Play
-            </Button>
+            <div className="icon me-3" onClick={() => { SetPlaying(!isPlaying); AddPlayCount() }}>
+              {!isPlaying ? <FiPlayCircle /> : <FiStopCircle />}
+            </div>
             <div
-              className="m-1 border border-secondary "
+              className="my-1"
               ref={audioContainer as MutableRefObject<HTMLDivElement>}
               style={{ width: "100%" }}
             ></div>
           </div>
         </Row>
-        <Row className="border border-secondary">
-          <div className="m-2 d-flex justify-content-between ">
-            <div className="d-flex flex-column  justify-content-center ">
-              <div className="d-flex flex-row align-items-center  ">
-                <img src={someRandomHeart} className="square-icon me-2 "></img>
-                <div className="ms-1 me-1">
-                  <p className="m-0">
-                    <strong>Song name</strong>
-                  </p>
-                  <p className="m-0">
-                    <span>producer </span>
-                    <span> |</span>
-                    <span>18 play</span>
-                  </p>
-                </div>
-                <div>
-                  <Button className="rounded-circle me-1">+</Button>
-                  <Button className="rounded-circle">...</Button>
-                </div>
-              </div>
+        <Row className="">
+          <Col xl={8} className="d-flex justify-content-start align-items-center">
+            <div className="volumne" onClick={() => { waveSurferRef.current?.setMuted(!isMuted); setMuted(!isMuted); }}>
+              {
+                isMuted ? <div className="icon"><FiVolumeX /></div> : (
+                  volumne <= 25 ? <div className="icon"><FiVolume /> </div> : (
+                    volumne <= 75 ? <div className="icon"><FiVolume1 /></div> : (
+                      <div className="icon"><FiVolume2 /></div>
+                    )
+                  )
+                )
+              }
             </div>
-            <div className="d-flex justify-content-center p-1 ">
-              <Button
-                className="me-1"
-                onClick={(_event) => {
-                  let timeNow = waveSurferRef.current?.getCurrentTime() as number;
-                  let totalTime = waveSurferRef.current?.getDuration() as number;
-                  waveSurferRef.current?.seekTo((timeNow - 5) / totalTime);
-                }}
-              >
-                {" "}
-                &lt;&lt;{" "}
-              </Button>
-              <Button
-                className="me-1"
-                onClick={(_event) => {
-                  waveSurferRef.current?.playPause();
-                }}
-              >
-                Play
-              </Button>
-              <Button
-                className="me-1"
-                onClick={(_event) => {
-                  let timeNow = waveSurferRef.current?.getCurrentTime() as number;
-                  let totalTime = waveSurferRef.current?.getDuration() as number;
-                  waveSurferRef.current?.seekTo((timeNow + 5) / totalTime);
-                }}
-              >
-                {" "}
-                &gt;&gt;{" "}
-              </Button>
+            <div className="volumne-bar align-items-center me-4 mt-2">
+              <FormRange min={0} max={100} onChange={(e) => {
+                let value = parseInt(e.target.value)
+                if (isMuted && value < volumne) {
+                  waveSurferRef.current?.setVolume(value / 100)
+                  setVolume(value)
+                }
+                else {
+                  setMuted(false)
+                  waveSurferRef.current?.setMuted(false)
+                  waveSurferRef.current?.setVolume(value / 100)
+                  setVolume(value)
+                }
+              }} className="ms-2" />
             </div>
-            <input
-              type="range"
-              onChange={(event) => {
-                SetVolume(event.target.value);
-              }}
-              min="0"
-              max="100"
-              value={volume}
-            ></input>
-          </div>
+          </Col>
+          <Col>
+            <div className="d-flex justify-content-end pt-1 align-items-center">
+              <span className="me-2 d-flex pt-2">
+                <p className="me-2">total:</p>
+                <p className="m-0">
+                  <strong>{props.price != null ? props.price > 0 ? props.price?.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' }) : "Free" : "Null"}</strong>
+                </p>
+              </span>
+              <Button>Add To Card</Button>
+            </div>
+          </Col>
         </Row>
       </div>
     </>

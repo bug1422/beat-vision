@@ -60,9 +60,24 @@ const Search = () => {
             else setError2("Can't get data")
         }
         catch (e: any) {
-            setError2(e)
+            console.log(e)
+            setError2("Internal error")
         }
     }
+
+    const AddPlayCount = async (trackId: number) => {
+        try {
+          const res: AxiosResponse<Blob> =
+            await HttpClient.get("/api/ManageTrack/plus-play-count", {
+              params: {
+                trackId: trackId
+              }
+            })
+        }
+        catch (e: any) {
+          console.log(e)
+        }
+      }
 
     const fetchTracks = async (curr: number) => {
         setError1("")
@@ -83,7 +98,8 @@ const Search = () => {
             else setError1("Can't get data")
         }
         catch (e: any) {
-            setError1(e)
+            console.log(e)
+            setError1("Internal error. Try again later")
         }
     }
 
@@ -173,7 +189,7 @@ const Search = () => {
                                 <div className="d-flex flex-column">
                                     <FormControl name="tagSearch" placeholder="find a tag" onChange={(e) => { setSearchTagValue(e.target.value.toLowerCase()) }} />
                                     <div className="mt-3 d-flex flex-wrap">
-                                        {filtered.length > 0 ? <>
+                                        {filtered && filtered.length > 0 ? <>
                                             {filtered.map((tag, idx) => (
                                                 <div key={idx} onClick={() => { if (!selectedTags.includes(tag)) setSelectedTags([...selectedTags, tag]) }}>
                                                     <Tag className={"mx-2 my-1 tag-search"} name={tag.Name} key={idx} />
@@ -211,7 +227,7 @@ const Search = () => {
                         {(tracks && tracks?.length > 0) ?
                             <div className="search-body pt-2 d-flex flex-column">
                                 {tracks.map((track, index) => (
-                                    <Row className="track align-items-center" key={index} onClick={() => { setSelected(track); }} >
+                                    <Row className="track align-items-center" key={index} onClick={() => { setSelected(track); AddPlayCount(track.Id)}} >
                                         <Col xl={1} className="d-flex">
                                             <div className="rank">{index + 1} </div>
                                             <FiPlayCircle className="play" />

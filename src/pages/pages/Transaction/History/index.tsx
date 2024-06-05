@@ -1,5 +1,6 @@
 import { HttpClient } from "@/common"
 import { OrderStatus, OrderType } from "@/types/ApplicationTypes/OrderItemType"
+import { PagingResponseDto } from "@/types/ApplicationTypes/PagingResponseType"
 import { TrackDto } from "@/types/ApplicationTypes/TrackType"
 import { AxiosResponse } from "axios"
 import { createRef, useEffect, useRef, useState } from "react"
@@ -31,32 +32,37 @@ const PaymentHistory = () => {
 
     const GetPaymentHistory = async () => {
         try {
-            const res: AxiosResponse<OrderType[]> = await
+            const res: AxiosResponse<PagingResponseDto<OrderType[]>> = await
                 HttpClient.get(`/api/ManageOrder/get-order-range?userProfileId=${userId}&start=${currentPage * itemPerPage}&take=${itemPerPage}`)
             if (res) {
                 console.log(res)
-                setOrders(res.data)
+                setOrders(res.data.Value)
             }
         }
         catch (e: any) {
             console.log(e)
         }
     }
-    const HandleDownload = async (orderId: number, itemId: number, curr: EventTarget & HTMLAnchorElement) => {
+    const HandleDownload = async (orderId: number, itemId: number, trackName: string) => {
 
         try {
             const res: AxiosResponse = await
-                HttpClient.post(`/api/ManageTrack/download-bought-content`, {
-                    userProfileId: parseInt(userId),
-                    orderId: orderId,
-                    itemId: itemId
+                HttpClient.get(`/api/ManageTrack/download-bought-content?UserProfileId=${userId}&OrderId=${orderId}&ItemId=${itemId}`,{
+                    headers:{
+                        "Content-Type": "application/zip"
+                    },
+                    responseType: "arraybuffer"
                 })
             if (res) {
-                let url = URL.createObjectURL(new Blob([res.data]))
+                console.log(res.data)
+                
+                const content = new Blob([res.data], { type: "application/zip" })
+                console.log(content)
+                let url = URL.createObjectURL(content)
                 console.log(url)
+                console.log(downloadRef.current)
                 downloadRef.current?.setAttribute("href", url)
-                downloadRef.current?.setAttribute("target", "_blank")
-                downloadRef.current?.setAttribute("donwload", "audio.zip")
+                downloadRef.current?.setAttribute("download", `${trackName}.zip`)
                 downloadRef.current?.click()
                 downloadRef.current?.setAttribute("href", "")
                 window.URL.revokeObjectURL(url);
@@ -148,7 +154,7 @@ const PaymentHistory = () => {
                                                                 </td>
                                                                 <td>
                                                                     {order.Status == OrderStatus[OrderStatus.PAID] ? <>
-                                                                        <a className="btn btn-info" onClick={(e) => { HandleDownload(parseInt(order.Id), item.Id, e.currentTarget) }}>Download</a>
+                                                                        <a className="btn btn-info" onClick={() => { HandleDownload(parseInt(order.Id), item.Id, item.TrackName) }}>Download</a>
                                                                     </> : <></>}
                                                                 </td>
                                                             </tr>
@@ -170,7 +176,7 @@ const PaymentHistory = () => {
                             </Row>
                         </div>
                     </Row>
-                    <a ref={downloadRef} />
+                    <a ref={downloadRef}/>
                 </>
         }
     </>)

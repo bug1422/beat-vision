@@ -102,7 +102,8 @@ const Section2 = () => {
             else setError("Can't get data")
         }
         catch (e: any) {
-            setError(e)
+            console.log(e)
+            setError("Internal error. Try again later")
         }
     }
     useEffect(() => {
@@ -118,7 +119,7 @@ const Section2 = () => {
                 <Row className="justify-content-center">
                     {error != "" ? <div className="text-danger text-center mt-5" style={{fontSize:"52px"}}>{error}</div> :
                         <>
-                            {currentItems.map((beat, idx) => (
+                            {currentItems && currentItems.map((beat, idx) => (
                                 <Col xs={4} sm={2} key={idx}>
                                     <Card >
                                         <img src={beat.ProfileBlobUrl ?? demoBeat} className="card-img-top img-fluid bg-light-alt" style={{height: "250px"}} />

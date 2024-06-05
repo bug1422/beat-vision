@@ -1,11 +1,5 @@
 import {
-	Button,
-	Card,
-	CardBody,
 	Col,
-	Form,
-	FormControl,
-	Image,
 	Nav,
 	NavItem,
 	NavLink,
@@ -14,18 +8,19 @@ import {
 	TabContent,
 	TabPane,
 } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
 import AboutMe from './AboutMe'
 import Comments from './Comments'
 import { CustomIdentityUserDto } from '@/types/ApplicationTypes/IdentityType'
+import UpdateForm from './UpdateForm'
 
 const ProfileTask = (props: { user: CustomIdentityUserDto | undefined }) => {
 	const { user } = props;
+
 	return (
-		<TabContainer defaultActiveKey="2">
-			<div className="pb-4">
+		<TabContainer defaultActiveKey="1">
+			<div className="">
 				<Nav
-					className="nav-border nav-pills mb-0"
+					className="nav-border nav-pills"
 					id="pills-tab"
 					role="tablist"
 				>
@@ -35,21 +30,29 @@ const ProfileTask = (props: { user: CustomIdentityUserDto | undefined }) => {
 					<NavItem>
 						<NavLink eventKey="2">Comments</NavLink>
 					</NavItem>
+					<NavItem>
+						<NavLink eventKey="3">Update Profile</NavLink>
+					</NavItem>
 				</Nav>
 			</div>
 
-			<Row>
-				<Col xs={12}>
-					<TabContent className="chat-list" id="pills-tabContent">
-						<TabPane eventKey="1" className="fade">
-							<AboutMe userData={user?.UserProfile}/>
-						</TabPane>
-						<TabPane eventKey="2" className="fade">
-							<Comments userData={user?.UserProfile} />
-						</TabPane>
-					</TabContent>
-				</Col>
-			</Row>
+			{
+				user ? <Row>
+					<Col xs={12}>
+						<TabContent className="chat-list" id="pills-tabContent">
+							<TabPane eventKey="1" className="fade">
+								<AboutMe userData={user?.UserProfile} />
+							</TabPane>
+							<TabPane eventKey="2" className="fade">
+								<Comments userData={user?.UserProfile} />
+							</TabPane>
+							<TabPane eventKey="3" className="fade">
+								<UpdateForm />
+							</TabPane>
+						</TabContent>
+					</Col>
+				</Row> : <></>
+			}
 		</TabContainer>
 	)
 }

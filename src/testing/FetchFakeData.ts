@@ -1,5 +1,3 @@
-import user from '/avatar.jpg'
-
 type Beat = {
     title: string
     author: string,
@@ -8,7 +6,7 @@ type Beat = {
 type Artist = {
     author: string,
 }
-const fetchAvt = user
+
 const beats: Beat[] = [
     {
         title: "Sainte type beat",

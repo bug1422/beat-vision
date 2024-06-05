@@ -6,13 +6,18 @@ import {
 	Image,
 } from 'react-bootstrap'
 
-import { FiArchive , FiPower, FiSettings, FiShoppingCart, FiUser } from 'react-icons/fi'
+import { FiArchive, FiPower, FiSettings, FiShoppingCart, FiUser } from 'react-icons/fi'
 import { useAuthContext } from '@/context'
 import { useNavigate } from 'react-router-dom'
-import { fetchAvt } from '@/testing/FetchFakeData'
+import { AxiosResponse } from 'axios'
+import { UserProfileDto } from '@/types/ApplicationTypes/UserProfileType'
+import { HttpClient } from '@/common'
+import { useEffect, useState } from 'react'
+import defaultProfile from '/default-image/defaultprofile.png'
 
 const ProfileDropdown = () => {
 	const { removeSession, user } = useAuthContext()
+	const [imgURL, setImgURL] = useState(defaultProfile)
 	const navigate = useNavigate()
 
 	const logout = () => {
@@ -22,6 +27,23 @@ const ProfileDropdown = () => {
 		}, 500)
 	}
 
+	useEffect(() => {
+		FetchUserProfile()
+	}, [])
+
+	const FetchUserProfile = async () => {
+		try {
+			const res: AxiosResponse<UserProfileDto> =
+				await HttpClient.get('/api/ManageUser/' + user?.userid)
+			if (res?.data) {
+				if(res?.data.ProfileBlobUrl) setImgURL(res?.data.ProfileBlobUrl)
+
+			}
+		} catch (e: any) {
+			console.log(e)
+		}
+	}
+
 	return (
 		<Dropdown as="div" className='align-self-center'>
 			<DropdownToggle
@@ -29,7 +51,7 @@ const ProfileDropdown = () => {
 				className="nav-link arrow-none waves-effect waves-light nav-user"
 			>
 				<Image
-					src={fetchAvt}
+					src={imgURL}
 					alt="profile-user"
 					className="rounded-circle thumb-md"
 				/>
@@ -44,7 +66,7 @@ const ProfileDropdown = () => {
 					Carts
 				</DropdownItem>
 				<DropdownItem onClick={() => navigate("/payment/history/" + user?.userid)}>
-					<FiArchive  className="align-self-center icon-xs icon-dual me-1" />{' '}
+					<FiArchive className="align-self-center icon-xs icon-dual me-1" />{' '}
 					Purchases
 				</DropdownItem>
 				<div className="dropdown-divider mb-0"></div>

@@ -124,6 +124,11 @@ const appsRoutes: RoutesProps[] = [
     element: <PaymentResult isSuccess={false} />,
   },
   {
+    path: "/profile",
+    name: "Profile",
+    element: <Profile />
+  },
+  {
     path: "/profile/:userId",
     name: "Profile",
     element: <Profile />,

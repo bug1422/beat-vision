@@ -15,16 +15,16 @@ const Comments = (props: { userData: UserProfileDto | undefined | null }) => {
 	useEffect(() => {
 		const fetchComment = async () => {
 			try {
-				const res = await httpClient.get("/api/ManageUser/get-track-comment", {
+				const res = await httpClient.get("/api/ManageComment/get-user-track-comment", {
 					params: {
 						userId: userData?.Id
 					}
 				})
-				setIsSuccess(res?.data?.Value)
-				if (isSuccess) {
-					setTrackComments(res?.data?.Value)
+				if (res) {
+					setTrackComments(res?.data)
 					let sum = trackComments?.map(p => p.LikesCount)?.reduce((partialSum, a) => partialSum + a, 0) ?? 0
 					setLikes(sum)
+					console.log(res)
 				}
 			} catch (e: any) {
 				setIsSuccess(true)
@@ -94,10 +94,10 @@ const Comments = (props: { userData: UserProfileDto | undefined | null }) => {
 																			<p>
 																				{comment.Content}
 																			</p>
-																			<div className="text-primary">
+																			<Link to={"/music-detail/detail/"+comment.TrackId} className="text-primary">
 																				<i className="fas fa-reply me-1"></i>
-																				See Source
-																			</div>
+																				See Track
+																			</Link>
 																		</div>
 																	</Col>
 																</Row>
