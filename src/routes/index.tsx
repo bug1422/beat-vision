@@ -1,6 +1,7 @@
 import ProducerPage from "@/pages/producer-page";
 import ProducerAppUser from "@/pages/producer-page/producer-app-user";
 import ProducerLicenses from "@/pages/producer-page/producer-licenses";
+import ProducerNotification from "@/pages/producer-page/producer-notification";
 import ProducerPublish from "@/pages/producer-page/producer-publish";
 import ProducerSale from "@/pages/producer-page/producer-sales";
 import ProducerTags from "@/pages/producer-page/producer-tags";
@@ -21,7 +22,7 @@ const Search = lazy(() => import("@/pages/pages/Search"));
 const Cart = lazy(() => import("@/pages/pages/Cart"));
 
 // Transaction
-const PaymentResult = lazy(() => import("@/pages/pages/Transaction/PaymentResult"))
+const PaymentResult = lazy(() => import("@/pages/pages/Transaction/PaymentResult"));
 const Checkout = lazy(() => import("@/pages/pages/Transaction/Checkout"));
 const PaymentHistory = lazy(() => import("@/pages/pages/Transaction/History"));
 
@@ -80,6 +81,11 @@ const producerRoute: RoutesProps[] = [
     name: "license",
     element: <ProducerLicenses />,
   },
+  {
+    path: "/producer-page/my-notification",
+    name: "notificatoin ",
+    element: <ProducerNotification />,
+  },
 ];
 const appsRoutes: RoutesProps[] = [
   {
@@ -95,43 +101,43 @@ const appsRoutes: RoutesProps[] = [
   {
     path: "/cart/:userId",
     name: "Cart",
-    element: <Cart />
+    element: <Cart />,
   },
   {
     path: "/checkout/:userId",
     name: "Checkout",
-    element: <Checkout />
+    element: <Checkout />,
   },
   {
     path: "/payment/history/:userId",
     name: "Payment History",
-    element: <PaymentHistory />
+    element: <PaymentHistory />,
   },
   {
     path: "/checkout/payment/success",
     name: "Payment Success",
-    element: <PaymentResult isSuccess={true} />
+    element: <PaymentResult isSuccess={true} />,
   },
   {
     path: "/checkout/payment/failed",
     name: "Payment Failed",
-    element: <PaymentResult isSuccess={false} />
+    element: <PaymentResult isSuccess={false} />,
   },
   {
     path: "/profile/:userId",
     name: "Profile",
-    element: <Profile />
+    element: <Profile />,
   },
   {
     path: "/beats/:keyword",
     name: "Search",
-    element: <Search />
+    element: <Search />,
   },
   {
     path: "/beats",
     name: "Search",
-    element: <Search />
-  }
+    element: <Search />,
+  },
 ];
 
 const authRoutes: RoutesProps[] = [
@@ -163,8 +169,8 @@ const authRoutes: RoutesProps[] = [
   {
     path: "/auth/confirm-email",
     name: "Email Confirm",
-    element: < EmailConfirm/>,
-  }
+    element: <EmailConfirm />,
+  },
 ];
 
 const allCustomerRoutes = [...appsRoutes];
