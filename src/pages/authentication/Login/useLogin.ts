@@ -68,6 +68,7 @@ export default function useLogin() {
 					position: 'bottom-right',
 					duration: 2000,
 				})
+				localStorage.setItem("BeatVision", res.data.AccessToken)
 				navigate(redirectUrl)
 			}
 		} catch (e: any) {
@@ -75,10 +76,45 @@ export default function useLogin() {
 			console.log(e)
 			let mess = "Unknown error"
 			if (e.response?.status == 400) {
-				mess = "Wrong email or password!"
-				
+				await tryAdmin(values)
 			}
-			if (e.response?.status == 500){
+			if (e.response?.status == 500) {
+				mess = "Internal error!"
+				toast.error(mess, {
+					position: 'bottom-right',
+					duration: 2000,
+				})
+			}
+
+		} finally {
+			setLoading(false)
+		}
+	})
+	const tryAdmin = async (values: LoginFormFields) => {
+		try {
+
+			const res: AxiosResponse<AuthReturnType> = await HttpClient.post('/api/ManageIdentity/login-admin', values)
+			console.log(res)
+			if (res.data) {
+				const decoded = jwtDecode<User>(res.data?.AccessToken)
+				console.log(decoded)
+				saveSession({
+					...(decoded ?? {}),
+				})
+				toast.success('Successfully logged in. Redirecting....', {
+					position: 'bottom-right',
+					duration: 2000,
+				})
+				navigate("/producer-page/my-music")
+			}
+		} catch (e: any) {
+
+			console.log(e)
+			let mess = "Unknown error"
+			if (e.response?.status == 400) {
+				mess = "Wrong email or password!"
+			}
+			if (e.response?.status == 500) {
 				mess = "Internal error!"
 			}
 			toast.error(mess, {
@@ -88,7 +124,6 @@ export default function useLogin() {
 		} finally {
 			setLoading(false)
 		}
-	})
-
+	}
 	return { loading, login, redirectUrl, isAuthenticated, control }
 }

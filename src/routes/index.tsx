@@ -104,14 +104,9 @@ const appsRoutes: RoutesProps[] = [
     element: <Cart />,
   },
   {
-    path: "/checkout/:userId",
+    path: "/checkout/:subDirectory",
     name: "Checkout",
     element: <Checkout />,
-  },
-  {
-    path: "/payment/history/:userId",
-    name: "Payment History",
-    element: <PaymentHistory />,
   },
   {
     path: "/checkout/payment/success",

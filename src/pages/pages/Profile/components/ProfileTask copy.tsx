@@ -12,7 +12,6 @@ import AboutMe from './AboutMe'
 import Comments from './Comments'
 import { CustomIdentityUserDto } from '@/types/ApplicationTypes/IdentityType'
 import UpdateForm from './UpdateForm'
-import PasswordForm from './PasswordForm'
 
 const ProfileTask = (props: { user: CustomIdentityUserDto | undefined }) => {
 	const { user } = props;
@@ -54,7 +53,7 @@ const ProfileTask = (props: { user: CustomIdentityUserDto | undefined }) => {
 								<UpdateForm />
 							</TabPane>
 							<TabPane eventKey="4" className="fade">
-								<PasswordForm />
+								<UpdateForm />
 							</TabPane>
 						</TabContent>
 					</Col>

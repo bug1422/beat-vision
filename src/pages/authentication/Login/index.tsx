@@ -18,10 +18,11 @@ import { FormInputPassword, FormTextInput, PageMetaData } from '@/components'
 import useLogin from './useLogin'
 import AuthLayout from '../AuthLayout'
 import { FiChrome, FiFacebook } from 'react-icons/fi'
+import { useState } from 'react'
 
 const Login = () => {
 	const { loading, control, login, redirectUrl, isAuthenticated } = useLogin()
-
+	const [hovered, setHovered]  = useState(false)
 	return (
 		<>
 			<PageMetaData title="Login" />
@@ -79,25 +80,13 @@ const Login = () => {
 										/>
 
 										<Row className="form-group my-3">
-											<Col sm={6}>
-												<div className="custom-control custom-switch switch-success">
-													<input
-														type="checkbox"
-														className="custom-control-input"
-														id="customSwitchSuccess"
-													/>
-													<label
-														className="form-label text-muted"
-														htmlFor="customSwitchSuccess"
-													>
-														Remember me
-													</label>
-												</div>
-											</Col>
-											<Col sm={6} className="text-end">
+											<Col sm={6} className="text-start">
 												<Link
-													to="/auth-recover-pw"
-													className="text-muted font-13"
+													to="/auth/recover-pw"
+													className=" font-13"
+													onMouseEnter={() => setHovered(true)}
+													onMouseOut={() => setHovered(false)}
+													style={{color: hovered ? "purple" : "grey"}}
 												>
 													<i className="dripicons-lock"></i> Forgot password?
 												</Link>

@@ -1,6 +1,6 @@
 import { Card, CardBody, Image } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import logoDark from '/logo-sm-dark.png'
+import logo from '/logo-sm.png'
 import error from '/error.svg'
 import { PageMetaData } from '@/components'
 import AuthLayout from '../AuthLayout'
@@ -14,7 +14,7 @@ const Error404 = () => {
 					<div className="text-center p-3">
 						<Link to="/" className="logo logo-admin">
 							<Image
-								src={logoDark}
+								src={logo}
 								height="50"
 								alt="logo"
 								className="auth-logo"
@@ -23,7 +23,7 @@ const Error404 = () => {
 						<h4 className="mt-3 mb-1 fw-semibold text-white font-18">
 							Oops! Sorry page does not found
 						</h4>
-						<p className="text-muted  mb-0">Back to dashboard of Dastone.</p>
+						<p className="text-muted  mb-0">Back to Beat Vision Homepage.</p>
 					</div>
 				</CardBody>
 				<CardBody>
@@ -36,13 +36,10 @@ const Error404 = () => {
 						className="btn btn-primary w-100 waves-effect waves-light"
 						to="/"
 					>
-						Back to Dashboard <i className="fas fa-redo ms-1"></i>
+						Back to Home <i className="fas fa-redo ms-1"></i>
 					</Link>
 				</CardBody>
 				<CardBody className="bg-light-alt text-center">
-					<span className="text-muted d-none d-sm-inline-block">
-						Mannatthemes © <script>{new Date().getFullYear()}</script>
-					</span>
 				</CardBody>
 			</Card>
 		</AuthLayout>

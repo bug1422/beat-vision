@@ -18,6 +18,7 @@ const RecoverPW = () => {
 	const { control, handleSubmit } = useForm({
 		resolver: yupResolver(schemaResolver),
 	})
+
 	return (
 		<AuthLayout>
 			<PageMetaData title="Recover PW" />
@@ -44,7 +45,7 @@ const RecoverPW = () => {
 				<CardBody>
 					<Form
 						className="form-horizontal auth-form"
-						onSubmit={handleSubmit(() => {})}
+						onSubmit={handleSubmit(() => { })}
 					>
 						<FormTextInput
 							name="email"
@@ -67,17 +68,15 @@ const RecoverPW = () => {
 							</Col>
 						</Row>
 					</Form>
-					<p className="text-muted mb-0 mt-3">
-						Remember It ?{' '}
-						<a href="auth-register.html" className="text-primary ms-2">
-							Sign in here
-						</a>
-					</p>
+
 				</CardBody>
 				<CardBody className="bg-light-alt text-center">
-					<span className="text-muted d-none d-sm-inline-block">
-						Mannatthemes ©<script>{new Date().getFullYear()}</script>
-					</span>
+					<p className="text-muted mb-0 mt-3">
+						Remember It ?{' '}
+						<Link to="/auth/login" className="text-primary ms-2">
+							Log in here
+						</Link>
+					</p>
 				</CardBody>
 			</Card>
 		</AuthLayout>

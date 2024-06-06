@@ -5,7 +5,9 @@ import { getMenuItems } from "@/common";
 import logoImg from "@/assets/images/logo-sm.png";
 import AppMenu from "@/layout/LeftSidebar/Menu";
 import { MenuItemType } from "@/common/menu";
-import { FiMusic, FiUsers, FiTag, FiShoppingCart, FiFileText } from "react-icons/fi";
+import { useAuthContext } from '@/context'
+import { useNavigate } from 'react-router-dom'
+import { FiMusic, FiUsers, FiTag, FiShoppingCart, FiFileText, FiPower } from "react-icons/fi";
 const leftMenuItems: MenuItemType[] = [
   {
     key: "1",
@@ -59,6 +61,14 @@ const leftMenuItems: MenuItemType[] = [
 ];
 
 const LeftSidebar = () => {
+  const navigate = useNavigate()
+	const { removeSession } = useAuthContext()
+  const logout = () => {
+    removeSession()
+    setTimeout(() => {
+      navigate('/auth/login')
+    }, 500)
+  }
   return (
     <div className="left-sidenav-admin">
       <div className="brand">
@@ -74,6 +84,10 @@ const LeftSidebar = () => {
       <SimpleBar className="menu-content h-100">
         {/* <AppMenu menuItems={getMenuItems()} /> */}
         <AppMenu menuItems={leftMenuItems} />
+        <hr></hr>
+        <div style={{ margin: "0px 20%", cursor: "pointer" }}>
+          <div onClick={() => logout()} className="text-center btn-outline-secondary p-2" style={{ fontSize: "22px", borderRadius: "16px" }}><FiPower />Logout</div>
+        </div>
         <div className="update-msg text-center">
           <Link
             to=""

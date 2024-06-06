@@ -127,7 +127,7 @@ const PaymentHistory = () => {
                                     <tbody>
                                         {orders.map((order, idx) => {
                                             return (
-                                                <>
+                                                <div key={idx}>
                                                     {order.OrderItems.map((item, idx) => {
                                                         return (
                                                             <tr key={idx}>
@@ -160,8 +160,7 @@ const PaymentHistory = () => {
                                                             </tr>
                                                         )
                                                     })}
-                                                </>
-
+                                                </div>
                                             )
                                         })}
                                     </tbody>

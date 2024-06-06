@@ -7,7 +7,7 @@ import { Navigate, useParams } from 'react-router-dom'
 
 const Profile = () => {
 	const { userId } = useParams()
-	const { Fetch, isAuthenticated, fetchSuccess, userData, otherData } = FetchUser()
+	const { Fetch, isAuthenticated, fetchSuccess, userData } = FetchUser()
 	useEffect(() => {
 		console.log(isAuthenticated)
 		Fetch(userId);

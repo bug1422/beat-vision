@@ -1,12 +1,11 @@
 import { Navigate, Route, RouteProps, Routes } from "react-router-dom";
 import { allAdminRoutes, allBlankRoutes, allCustomerRoutes, allProducerRoutes } from "./index";
-import Layout from "@/layout/Layout";
 import { useAuthContext } from "@/context";
 import DefaultLayout from "@/layout/DefaultLayout";
 import { ProducerLayout } from "@/layout/MyCustomLayout/ProducerLayout";
 
 const AllRoutes = (props: RouteProps) => {
-  const { isAuthenticated } = useAuthContext();
+  const { user } = useAuthContext();
   return (
     <Routes>
       <Route>
@@ -18,28 +17,6 @@ const AllRoutes = (props: RouteProps) => {
           />
         ))}
       </Route>
-
-      <Route>
-        {allAdminRoutes.map((route, idx) => (
-          <Route
-            path={route.path}
-            element={
-              isAuthenticated === false ? (
-                <Navigate
-                  to={{
-                    pathname: "/auth/login",
-                    search: "next=" + route.path,
-                  }}
-                />
-              ) : (
-                <Layout {...props}>{route.element}</Layout>
-              )
-            }
-            key={idx}
-          />
-        ))}
-      </Route>
-
       <Route>
         {allCustomerRoutes.map((route, idx) => (
           <Route
@@ -54,11 +31,22 @@ const AllRoutes = (props: RouteProps) => {
           <Route
             key={index}
             path={route.path}
-            element={<ProducerLayout {...props}>{route.element}</ProducerLayout>}
+            element={
+              !user || user.role.toLowerCase() !== "admin" ? (
+                <Navigate
+                  to={{
+                    pathname: "/auth/auth-500",
+                    search: "next=" + route.path,
+                  }}
+                />
+              ) : (
+                <ProducerLayout {...props}>{route.element}</ProducerLayout>
+              )
+            }
           />
         ))}
       </Route>
-      <Route path="*" element={ <Navigate to="/auth/auth-404" replace />}/>
+      <Route path="*" element={<Navigate to="/auth/auth-404" replace />} />
     </Routes>
   );
 };
