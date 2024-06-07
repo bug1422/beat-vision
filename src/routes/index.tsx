@@ -14,6 +14,7 @@ const RecoverPW = lazy(() => import("@/pages/authentication/RecoverPW"));
 const Error404 = lazy(() => import("@/pages/authentication/Error404"));
 const Error500 = lazy(() => import("@/pages/authentication/Error500"));
 const EmailConfirm = lazy(() => import("@/pages/authentication/EmailConfirm"));
+const PasswordConfirm = lazy(() => import("@/pages/authentication/PasswordConfirm"));
 
 // Pages
 const HomePage = lazy(() => import("@/pages/pages/Home"));
@@ -170,6 +171,11 @@ const authRoutes: RoutesProps[] = [
     path: "/auth/confirm-email",
     name: "Email Confirm",
     element: <EmailConfirm />,
+  },
+  {
+    path: "/auth/confirm-password",
+    name: "Password Confirm",
+    element: <PasswordConfirm />,
   },
 ];
 
