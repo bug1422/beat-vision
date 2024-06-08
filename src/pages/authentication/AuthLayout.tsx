@@ -4,7 +4,7 @@ import { Col, Container, Row } from 'react-bootstrap'
 
 const AuthLayout = ({ children }: { children: ReactNode }) => {
 	return (
-		<div className="account-body accountbg" 	>
+		<div className="account-body accountbg h-100" >
 			<Container>
 				<Row className="d-flex justify-content-center" >
 					<Col xs={12} className="align-self-center" >

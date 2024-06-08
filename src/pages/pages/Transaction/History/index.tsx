@@ -1,4 +1,5 @@
 import { HttpClient } from "@/common"
+import { useAuthContext } from "@/context"
 import { OrderStatus, OrderType } from "@/types/ApplicationTypes/OrderItemType"
 import { PagingResponseDto } from "@/types/ApplicationTypes/PagingResponseType"
 import { TrackDto } from "@/types/ApplicationTypes/TrackType"
@@ -9,7 +10,7 @@ import { Link, useParams } from "react-router-dom"
 import { toast } from "sonner"
 
 const PaymentHistory = () => {
-    const { userId } = useParams()
+    const { user } = useAuthContext()
     const [error, setError] = useState("")
     const [orders, setOrders] = useState<OrderType[]>([])
     const itemPerPage = 5
@@ -18,14 +19,14 @@ const PaymentHistory = () => {
     const downloadRef = createRef<HTMLAnchorElement>();
 
     useEffect(() => {
-        if (userId) {
+        if (user?.userid) {
             GetPaymentHistory()
         }
         else setError("Can't get data")
     }, [])
 
     useEffect(() => {
-        if (userId) {
+        if (user?.userid) {
             GetPaymentHistory()
         }
     }, [currentPage])
@@ -33,10 +34,11 @@ const PaymentHistory = () => {
     const GetPaymentHistory = async () => {
         try {
             const res: AxiosResponse<PagingResponseDto<OrderType[]>> = await
-                HttpClient.get(`/api/ManageOrder/get-order-range?userProfileId=${userId}&start=${currentPage * itemPerPage}&take=${itemPerPage}`)
+                HttpClient.get(`/api/ManageOrder/get-order-range?userProfileId=${user?.userid}&start=${currentPage * itemPerPage}&take=${itemPerPage}`)
             if (res) {
                 console.log(res)
-                setOrders(res.data.Value)
+                const tempt = [...res.data.Value.filter(p => p.Status != "CANCELLED")]
+                setOrders([...tempt])
             }
         }
         catch (e: any) {
@@ -47,15 +49,15 @@ const PaymentHistory = () => {
 
         try {
             const res: AxiosResponse = await
-                HttpClient.get(`/api/ManageTrack/download-bought-content?UserProfileId=${userId}&OrderId=${orderId}&ItemId=${itemId}`,{
-                    headers:{
+                HttpClient.get(`/api/ManageTrack/download-bought-content?UserProfileId=${user?.userid}&OrderId=${orderId}&ItemId=${itemId}`, {
+                    headers: {
                         "Content-Type": "application/zip"
                     },
                     responseType: "arraybuffer"
                 })
             if (res) {
                 console.log(res.data)
-                
+
                 const content = new Blob([res.data], { type: "application/zip" })
                 console.log(content)
                 let url = URL.createObjectURL(content)
@@ -125,42 +127,44 @@ const PaymentHistory = () => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {orders.map((order, idx) => {
+                                        {orders.map((order) => {
                                             return (
-                                                <div key={idx}>
-                                                    {order.OrderItems.map((item, idx) => {
-                                                        return (
-                                                            <tr key={idx}>
-                                                                <td>{order.Id}</td>
-                                                                <td>
-                                                                    <p className="d-inline-block align-middle mb-0 ms-1">
-                                                                        {new Date(order.CreateDate).toLocaleDateString("vn-VN")}
-                                                                        <br />
-                                                                        <span className="text-muted font-13">
-                                                                            {order.Status}
-                                                                        </span>
-                                                                    </p>
-                                                                </td>
-                                                                <td> {order.Price != null ? order.Price > 0 ? order.Price?.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' }) : "Free" : "Null"}</td>
-                                                                <td>
-                                                                    <ul className="list-inline mb-0">
-                                                                        <li
-                                                                            key={idx}
-                                                                            className="list-inline-item align-middle"
-                                                                        >
-                                                                            {item.TrackName}
-                                                                        </li>
-                                                                    </ul>
-                                                                </td>
-                                                                <td>
-                                                                    {order.Status == OrderStatus[OrderStatus.PAID] ? <>
-                                                                        <a className="btn btn-info" onClick={() => { HandleDownload(parseInt(order.Id), item.Id, item.TrackName) }}>Download</a>
-                                                                    </> : <></>}
-                                                                </td>
-                                                            </tr>
-                                                        )
-                                                    })}
-                                                </div>
+                                                <>
+                                                    {
+                                                        order.OrderItems.map((item, idx) => {
+                                                            return (
+                                                                <tr key={idx}>
+                                                                    <td>{order.Id}</td>
+                                                                    <td>
+                                                                        <p className="d-inline-block align-middle mb-0 ms-1">
+                                                                            {new Date(order.CreateDate).toLocaleDateString("vn-VN")}
+                                                                            <br />
+                                                                            <span className="text-muted font-13">
+                                                                                {order.Status}
+                                                                            </span>
+                                                                        </p>
+                                                                    </td>
+                                                                    <td> {order.Price != null ? order.Price > 0 ? order.Price?.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' }) : "Free" : "Null"}</td>
+                                                                    <td>
+                                                                        <ul className="list-inline mb-0">
+                                                                            <li
+                                                                                key={idx}
+                                                                                className="list-inline-item align-middle"
+                                                                            >
+                                                                                {item.TrackName}
+                                                                            </li>
+                                                                        </ul>
+                                                                    </td>
+                                                                    <td>
+                                                                        {order.Status == OrderStatus[OrderStatus.PAID] ? <>
+                                                                            <button type="button" className="btn btn-info" onClick={(e) => { e.currentTarget.textContent = "Pending";e.currentTarget.disabled = true; HandleDownload(parseInt(order.Id), item.Id, item.TrackName); e.currentTarget.textContent = "Download";e.currentTarget.disabled = false; }}>Download</button>
+                                                                        </> : <></>}
+                                                                    </td>
+                                                                </tr>
+                                                            )
+                                                        })
+                                                    }
+                                                </>
                                             )
                                         })}
                                     </tbody>
@@ -175,7 +179,7 @@ const PaymentHistory = () => {
                             </Row>
                         </div>
                     </Row>
-                    <a ref={downloadRef}/>
+                    <a ref={downloadRef} />
                 </>
         }
     </>)

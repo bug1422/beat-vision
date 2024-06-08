@@ -21,6 +21,7 @@ const HomePage = lazy(() => import("@/pages/pages/Home"));
 const Profile = lazy(() => import("@/pages/pages/Profile"));
 const Search = lazy(() => import("@/pages/pages/Search"));
 const Cart = lazy(() => import("@/pages/pages/Cart"));
+const Notification = lazy(()=> import("@/pages/pages/Notification"))
 
 // Transaction
 const PaymentResult = lazy(() => import("@/pages/pages/Transaction/PaymentResult"));
@@ -100,7 +101,17 @@ const appsRoutes: RoutesProps[] = [
     element: <MusicDetail />,
   },
   {
-    path: "/cart/:userId",
+    path: "/notification",
+    name: "Notification",
+    element: <Notification />,
+  },
+  {
+    path: "/payment/history",
+    name: "Purchases",
+    element: <PaymentHistory />,
+  },
+  {
+    path: "/cart",
     name: "Cart",
     element: <Cart />,
   },

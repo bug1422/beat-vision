@@ -17,3 +17,11 @@ export enum MessageType {
   GROUP = 1,
   SINGLE = 2,
 }
+
+export type MessageResponse = {
+  ReceiverId: number,
+  MessageId: number,
+  Message: MessageDto,
+  IsReaded: boolean,
+  ExpiredDate: string
+}

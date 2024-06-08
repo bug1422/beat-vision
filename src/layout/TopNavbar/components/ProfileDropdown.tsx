@@ -6,7 +6,7 @@ import {
 	Image,
 } from 'react-bootstrap'
 
-import { FiArchive, FiPower, FiSettings, FiShoppingCart, FiUser } from 'react-icons/fi'
+import { FiArchive, FiBell, FiPower, FiSettings, FiShoppingCart, FiUser } from 'react-icons/fi'
 import { useAuthContext } from '@/context'
 import { useNavigate } from 'react-router-dom'
 import { AxiosResponse } from 'axios'
@@ -36,7 +36,7 @@ const ProfileDropdown = () => {
 			const res: AxiosResponse<UserProfileDto> =
 				await HttpClient.get('/api/ManageUser/' + user?.userid)
 			if (res?.data) {
-				if(res?.data.ProfileBlobUrl) setImgURL(res?.data.ProfileBlobUrl)
+				if (res?.data.ProfileBlobUrl) setImgURL(res?.data.ProfileBlobUrl)
 
 			}
 		} catch (e: any) {
@@ -57,17 +57,21 @@ const ProfileDropdown = () => {
 				/>
 			</DropdownToggle>
 			<DropdownMenu className="dropdown-menu-end">
-				<DropdownItem onClick={() => navigate("/profile/" + user?.userid)}>
+				<DropdownItem onClick={() => navigate("/profile")}>
 					<FiUser className="align-self-center icon-xs icon-dual me-1" />{' '}
 					Profile
 				</DropdownItem>
-				<DropdownItem onClick={() => navigate("/cart/" + user?.userid)}>
+				<DropdownItem onClick={() => navigate("/cart")}>
 					<FiShoppingCart className="align-self-center icon-xs icon-dual me-1" />{' '}
 					Carts
 				</DropdownItem>
-				<DropdownItem onClick={() => navigate("/payment/history/" + user?.userid)}>
+				<DropdownItem onClick={() => navigate("/payment/history")}>
 					<FiArchive className="align-self-center icon-xs icon-dual me-1" />{' '}
 					Purchases
+				</DropdownItem>
+				<DropdownItem onClick={() => navigate("/notification")}>
+					<FiBell className="align-self-center icon-xs icon-dual me-1" />{' '}
+					Notification
 				</DropdownItem>
 				<div className="dropdown-divider mb-0"></div>
 				<DropdownItem onClick={() => logout()}>

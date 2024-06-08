@@ -7,7 +7,7 @@ import AppMenu from "@/layout/LeftSidebar/Menu";
 import { MenuItemType } from "@/common/menu";
 import { useAuthContext } from '@/context'
 import { useNavigate } from 'react-router-dom'
-import { FiMusic, FiUsers, FiTag, FiShoppingCart, FiFileText, FiPower } from "react-icons/fi";
+import { FiMusic, FiUsers, FiTag, FiShoppingCart, FiFileText, FiPower, FiCalendar, FiBell } from "react-icons/fi";
 const leftMenuItems: MenuItemType[] = [
   {
     key: "1",
@@ -20,7 +20,7 @@ const leftMenuItems: MenuItemType[] = [
     key: "3",
     label: "Publishing",
     isTitle: false,
-    icon: FiMusic,
+    icon: FiCalendar,
     url: "/producer-page/my-publish",
   },
   {
@@ -39,9 +39,9 @@ const leftMenuItems: MenuItemType[] = [
   },
   {
     key: "8",
-    label: "my notification",
+    label: "Notification",
     isTitle: false,
-    icon: FiMusic,
+    icon: FiBell,
     url: "/producer-page/my-notification",
   },
   {

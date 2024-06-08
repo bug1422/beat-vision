@@ -59,9 +59,9 @@ const Cart = (props: { userId: number | undefined }) => {
                 </h6>
 
                 {!isLoading ? <div className="list">
-                    {tracks?.map((track, index) => (
-                        <ul key={index} className="navbar-nav ps-2">
-                            <li className="nav-item my-2 w-100">
+                    <ul className="navbar-nav ps-2">
+                        {tracks?.map((track, index) => (
+                            <li key={index} className="nav-item my-2 w-100">
                                 <Link to={"/music-detail/detail/" + track.Id} className="link">
                                     <Row >
                                         <Col xs={9} className="text-left text-nowrap">{track.TrackName.slice(0, 24) + "..."}</Col>
@@ -69,8 +69,8 @@ const Cart = (props: { userId: number | undefined }) => {
                                     </Row>
                                 </Link>
                             </li>
-                        </ul>
-                    ))}
+                        ))}
+                    </ul>
                 </div> : <div>{error != "" ? error : "LOADING"}</div>
 
                 }
