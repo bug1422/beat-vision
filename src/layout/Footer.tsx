@@ -1,5 +1,6 @@
 import { Col, Row } from "react-bootstrap"
 import { FiFacebook } from "react-icons/fi"
+import { Link } from "react-router-dom"
 
 const Footer = () => {
 	return (
@@ -8,9 +9,7 @@ const Footer = () => {
 				<Col>
 					<div className="my-3">BeatVision</div>
 					<div className="d-flex flex-column">
-						<div>About Us</div>
-						<div>See Beats</div>
-						<div>Support</div>
+						<Link to={"/beats/"}>See Beats</Link>
 					</div>
 				</Col>
 				<Col></Col>
@@ -19,7 +18,7 @@ const Footer = () => {
 					<div className="d-flex">
 						{/* <FiInstagram className="me-4"></FiInstagram>
 						<FiTwitter className="me-4"></FiTwitter> */}
-						<FiFacebook className="me-4"><a href="https://www.facebook.com/profile.php?id=61560419540654" target="_blank"></a></FiFacebook>
+						<a href="https://www.facebook.com/profile.php?id=61560419540654" target="_blank"><FiFacebook className="me-4"></FiFacebook></a>
 					</div>
 				</Col>
 			</Row>
