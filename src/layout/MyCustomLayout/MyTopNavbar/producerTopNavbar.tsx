@@ -1,21 +1,11 @@
 import {
   Collapse,
-  Button,
-  Dropdown,
-  DropdownDivider,
-  DropdownItem,
-  DropdownMenu,
-  DropdownToggle,
 } from "react-bootstrap";
-import { Link } from "react-router-dom";
 import { useAuthContext } from '@/context'
-import logoImg from "@/assets/images/logo-sm.png";
 import useToggle from "@/hooks/useToggle";
-import { useState } from "react";
 
 export default function ProducerTopNavBar() {
-	const { isAuthenticated, user } = useAuthContext();
-	const [ loggedIn, setLogged ] = useState<boolean>(isAuthenticated)
+	const { user } = useAuthContext();
   const { isOpen, toggle } = useToggle();
 
   return (

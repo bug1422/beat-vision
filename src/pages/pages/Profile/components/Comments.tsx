@@ -9,7 +9,6 @@ import { Link } from 'react-router-dom'
 const Comments = (props: { userData: UserProfileDto | undefined | null }) => {
 	const { userData } = props
 	const [isLoading, setIsLoading] = useState(true)
-	const [isSuccess, setIsSuccess] = useState(false)
 	const [trackComments, setTrackComments] = useState<TrackCommentDto[]>()
 	const [likes, setLikes] = useState(0)
 	useEffect(() => {
@@ -27,7 +26,6 @@ const Comments = (props: { userData: UserProfileDto | undefined | null }) => {
 					console.log(res)
 				}
 			} catch (e: any) {
-				setIsSuccess(true)
 			}
 			setIsLoading(false)
 		}

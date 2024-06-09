@@ -4,10 +4,8 @@ import DefaultBeatThumbnail from "/default-image/defaultSoundwave.jpg"
 import { FiMenu, FiPlayCircle, FiShoppingBag, FiSkipBack, FiSkipForward, FiStopCircle, FiVolume, FiVolume1, FiVolume2, FiVolumeX } from "react-icons/fi"
 import { MutableRefObject, useCallback, useEffect, useRef, useState } from "react"
 import FormRange from "react-bootstrap/esm/FormRange"
-import { FetchAudio, FetchPopularTracks, FetchTrack } from "@/pages/pages/Search/getBeat"
 import WaveSurfer from "wavesurfer.js"
 import OffcanvasPlacement from "./OffCanvas"
-import { AddToCart } from "./AddToCart"
 import { Link, useNavigate } from "react-router-dom"
 import { useAuthContext } from "@/context"
 import { toast } from "sonner"
@@ -80,13 +78,13 @@ const MusicPlayer = (props: { trackId: number, tracks: TrackDto[] }) => {
         }
         catch (e: any) {
             console.log(e)
-            if(count > 3){
+            if (count > 3) {
                 setCount(0)
                 setTrackId(1)
             }
-            else{
-                setTrackId(trackId+1)
-                setCount(count+1)
+            else {
+                setTrackId(trackId + 1)
+                setCount(count + 1)
             }
         }
     }
@@ -208,6 +206,28 @@ const MusicPlayer = (props: { trackId: number, tracks: TrackDto[] }) => {
         </>)
     }
 
+    const AddToCart = async (trackId: number) => {
+        try {
+            const userId = user?.userid
+            const res = await HttpClient.post("/api/ManageOrder/add-cart-item", {
+                UserId: userId,
+                ItemId: trackId,
+            }, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                }
+            })
+            if (res?.status == 200) {
+                toast.success("Added to cart!", { position: "bottom-right", duration: 2000 })
+            }
+        } catch (e: any) {
+            if (e?.response.data.ErrorMessage) {
+                toast.info(e?.response.data.ErrorMessage, { position: "bottom-right", duration: 2000 })
+            }
+            console.log(e)
+        }
+    }
+
     return (<div className="music-player">
         <div className="play-bar" >
             <div ref={container as MutableRefObject<HTMLDivElement>} style={{ display: "none" }}></div>
@@ -227,7 +247,7 @@ const MusicPlayer = (props: { trackId: number, tracks: TrackDto[] }) => {
                 <div className="w-10 my-1">
                     <Button className="buy d-flex align-items-center" onClick={() => {
                         if (user) {
-                            if (track) AddToCart(parseInt(user?.userid), track)
+                            if (track) AddToCart(track.Id)
                             else toast.error("Can't get track", { position: "bottom-right", duration: 2000 })
                         } else {
                             navigate("/auth/login")

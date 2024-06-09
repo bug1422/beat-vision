@@ -1,4 +1,4 @@
-import { DetailedHTMLProps, FormHTMLAttributes, LegacyRef, MutableRefObject, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FilePond, registerPlugin } from "react-filepond";
 
 import {
@@ -10,9 +10,7 @@ import {
   CardBody,
   FormLabel,
   FormControl,
-  Modal,
   Button,
-  Form,
 } from "react-bootstrap";
 import Select from "react-select";
 import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orientation";
@@ -24,23 +22,10 @@ import { TagDto } from "@/types/ApplicationTypes/TagType";
 import { TrackLicenseDto } from "@/types/ApplicationTypes/TrackLicenseType";
 import { HttpClient } from "@/common";
 import { PagingResponseDto } from "@/types/ApplicationTypes/PagingResponseType";
-import axios, { AxiosResponse } from "axios";
-import { ButtonAllert2 } from "@/my-component/ButtonAllert";
+import { AxiosResponse } from "axios";
 import { toast } from "sonner";
 
-interface UploadMusicParameters {
-  trackName: string;
-  isPrivate: boolean;
-  isForSale: boolean;
-  wavFile: File;
-}
 
-interface MusicUploadFormProps {
-  isShow: boolean;
-  onHide: () => void;
-  onSuccess?: () => void;
-  onFail?: () => void;
-}
 interface optionsParameter {
   value: string;
   label: string;

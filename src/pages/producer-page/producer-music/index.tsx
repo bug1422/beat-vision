@@ -1,6 +1,5 @@
-import defautAudioImage from "../../../../public/default-image/defaultSoundwave.jpg";
 import { useEffect, useState } from "react";
-import { Button, Col, Form, Nav, NavItem, NavLink, Pagination, Row, TabContainer, TabContent, TabPane } from "react-bootstrap";
+import { Col, Nav, NavItem, NavLink, Pagination, Row, TabContainer, TabContent, TabPane } from "react-bootstrap";
 import MusicUploadForm from "./component/musicUploadForm";
 import { PagingResponseDto } from "@/types/ApplicationTypes/PagingResponseType";
 import { TrackDto } from "@/types/ApplicationTypes/TrackType";
@@ -13,7 +12,7 @@ export default function ProducerMusics() {
   const [error, setError] = useState("");
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPage, setTotalPage] = useState(0);
-  const [pageSize, setPageSize] = useState(4);
+  const [pageSize, _setPageSize] = useState(4);
   const [cache, setCache] = useState<{ [key: number]: TrackDto[] }>({});
   const navigate = useNavigate();
   const renderPaging = () => {

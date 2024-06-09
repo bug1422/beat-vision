@@ -2,16 +2,10 @@ import {
 	Button,
 	Card,
 	CardBody,
-	Col,
-	Form,
 	Image,
 	Nav,
 	NavItem,
-	NavLink,
-	Row,
 	TabContainer,
-	TabContent,
-	TabPane,
 } from 'react-bootstrap'
 import { Link, Navigate } from 'react-router-dom'
 import logo from '/logo-sm-2.png'

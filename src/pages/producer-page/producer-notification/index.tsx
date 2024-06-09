@@ -6,9 +6,7 @@ import {
 } from "@/my-component/ButtonAllert";
 
 import { MessageDto, MessageType, MessageWeigth } from "@/types/ApplicationTypes/MessageType";
-import { NotificationDto } from "@/types/ApplicationTypes/NotificationType";
 import { PagingResponseDto } from "@/types/ApplicationTypes/PagingResponseType";
-import { TrackDto } from "@/types/ApplicationTypes/TrackType";
 import axios, { AxiosResponse } from "axios";
 import { format } from "date-fns";
 import { useEffect, useState } from "react";
@@ -61,9 +59,9 @@ export default function ProducerNotification() {
   const [messageList, setMessageList] = useState<MessageDto[]>([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPage, setTotalPage] = useState(0);
-  const [pageSize, setPageSize] = useState(4);
-  const [typeSort, setTypeSort] = useState<MessageType | null>(null);
-  const [isOrderDate, setIsOrderDate] = useState(false);
+  const [pageSize, _setPageSize] = useState(4);
+  const [typeSort, _setTypeSort] = useState<MessageType | null>(null);
+  const [isOrderDate, _setIsOrderDate] = useState(false);
   const [isShowCreateForm, setIsShowCreateForm] = useState(false);
   const navigate = useNavigate();
   const { onResult } = SimpleAllertTopRight();
@@ -146,6 +144,7 @@ export default function ProducerNotification() {
     let baseUrl = `/api/ManageNotification/delete-message?messageId=${messageId}`;
     try {
       const res: AxiosResponse<PagingResponseDto<MessageDto[]>> = await HttpClient.delete(baseUrl);
+      if(res){}
       onResult(true, "delete successfully");
       return true;
     } catch (err: any) {
@@ -244,7 +243,7 @@ export default function ProducerNotification() {
               </table>
             </div>
             {messageList.map((message) => (
-              <></>
+              <>{message.Content}</>
             ))}
           </Col>
         </Row>

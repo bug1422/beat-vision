@@ -20,7 +20,6 @@ import {
 } from "react-bootstrap";
 import { TRACK_STATUS, TrackDto } from "@/types/ApplicationTypes/TrackType";
 import PublishForm from "./component/publishForm";
-import defaultAudioImage from "../../../assets/images/logo-dark.png";
 import { HttpClient } from "@/common";
 import axios, { AxiosResponse, isAxiosError } from "axios";
 import { PagingResponseDto } from "@/types/ApplicationTypes/PagingResponseType";
@@ -31,7 +30,7 @@ export default function ProducerPublish() {
   const [trackList, setTrackList] = useState<TrackDto[]>([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPage, setTotalPage] = useState(0);
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, _setPageSize] = useState(10);
   const [cache, setCache] = useState<{ [key: number]: TrackDto[] }>({});
   const navigate = useNavigate();
   const renderPaging = () => {
@@ -262,6 +261,7 @@ async function PulldownTrack(trackId: number): Promise<FetchFunctionResult> {
         },
       }
     );
+    if(createResult){}
     return { isSuccess: true };
   } catch (err: any) {
     if (isAxiosError(err)) {

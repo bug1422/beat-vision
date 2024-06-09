@@ -6,7 +6,6 @@ import {
 	Image,
 	Nav,
 	NavItem,
-	NavLink,
 	Row,
 	TabContainer,
 	TabContent,

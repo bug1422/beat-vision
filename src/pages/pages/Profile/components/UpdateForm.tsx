@@ -1,10 +1,6 @@
 import { HttpClient } from "@/common"
-import { FormInputPassword } from "@/components"
-import FormDate from "@/components/Form/FormDate"
-import FormInput from "@/components/Form/FormTextInput"
 import { useAuthContext } from "@/context"
 import { UserProfileDto } from "@/types/ApplicationTypes/UserProfileType"
-import { yupResolver } from "@hookform/resolvers/yup"
 import { AxiosResponse } from "axios"
 import { useEffect, useState } from "react"
 import { Col, Row } from "react-bootstrap"
@@ -56,10 +52,6 @@ const UpdateForm = () => {
             toast.error("Birth year must be 18 or greater", { position: "bottom-right", duration: 2000 })
             flag = true;
         }
-        if (e.target["password"].value == "") {
-            toast.error("Password is empty", { position: "bottom-right", duration: 2000 })
-            flag = true;
-        }
         if (!flag) {
             try {
                 const res: AxiosResponse<UserProfileDto> =
@@ -99,9 +91,6 @@ const UpdateForm = () => {
                     </li>
                     <li className="list-group-item py-3 d-flex align-items-center ">
                         <input type="date" name="birthday" value={birth?.slice(0, 10)} onChange={e => {console.log(e.target.value);  setBirth(e.target.value)}} placeholder="Type in your birthday" className="form-control" style={{ width: "500px" }} />
-                    </li>
-                    <li className="list-group-item py-3 d-flex align-items-center ">
-                        <input type="password" name="password"  placeholder="Type in your password" className="form-control" style={{ width: "500px" }} />
                     </li>
                 </Col>
                 <Col xs={4}>

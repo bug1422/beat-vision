@@ -1,4 +1,4 @@
-import { Button, Card, CardBody, CardFooter, Col, Form, Image, Row } from 'react-bootstrap'
+import { Button, Card, CardBody, CardFooter, Col, Image, Row } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import logoDark from '/logo-sm-dark.png'
 import { FormTextInput, PageMetaData } from '@/components'
@@ -7,7 +7,6 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 import AuthLayout from '../AuthLayout'
 import httpClient from '@/common/helpers/httpClient'
-import { toast } from 'sonner'
 import { useState } from 'react'
 
 const RecoverPW = () => {

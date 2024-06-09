@@ -1,14 +1,9 @@
-import { Fragment, useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import {
 	Button,
 	ButtonGroup,
-	ButtonToolbar,
 	Card,
 	Col,
-	Dropdown,
-	DropdownItem,
-	DropdownMenu,
-	DropdownToggle,
 	Row,
 } from 'react-bootstrap'
 import { useAuthContext } from '@/context'
@@ -20,7 +15,7 @@ import NotiCard from './NotiCard'
 const Inbox = () => {
 	const { user } = useAuthContext()
 	const [notis, setNotis] = useState<MessageResponse[]>()
-	const [error, SetError] = useState<string>("")
+	const [_error, SetError] = useState<string>("")
 	const [isLoading, SetIsLoading] = useState<boolean>(false)
 
 	useEffect(() => {

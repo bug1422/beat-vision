@@ -1,5 +1,5 @@
 import { Navigate, Route, RouteProps, Routes } from "react-router-dom";
-import { allAdminRoutes, allBlankRoutes, allCustomerRoutes, allProducerRoutes } from "./index";
+import { allBlankRoutes, allCustomerRoutes, allProducerRoutes } from "./index";
 import { useAuthContext } from "@/context";
 import DefaultLayout from "@/layout/DefaultLayout";
 import { ProducerLayout } from "@/layout/MyCustomLayout/ProducerLayout";

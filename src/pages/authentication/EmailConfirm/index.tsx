@@ -2,7 +2,7 @@ import { HttpClient } from "@/common"
 import { useAuthContext } from "@/context"
 import { AuthReturnType } from "@/types/AuthTypes"
 import { AxiosResponse } from "axios"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { Button, Card, CardBody, Col, Row } from "react-bootstrap"
 import { toast } from "sonner"
 

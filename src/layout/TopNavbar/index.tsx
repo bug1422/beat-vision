@@ -5,7 +5,6 @@ import { Link, useNavigate } from 'react-router-dom'
 import logoSM from '/logo-sm.png'
 import { useToggle } from '@/hooks'
 import { Notifications, ProfileDropdown } from './components'
-import { notifications } from './data'
 import { useAuthContext } from '@/context'
 import { useEffect, useRef, useState } from 'react'
 import Cart from './components/Carts'
@@ -53,7 +52,7 @@ const TopNavBar = () => {
 										type="button"
 										id="button-addon2"
 									>
-										<i className="fas fa-search" onClick={(e) => {
+										<i className="fas fa-search" onClick={() => {
 											handleSearchBeat(keyword.current)
 										}} />
 									</Button>

@@ -1,7 +1,6 @@
 import { HttpClient } from "@/common"
 import { CartItemDto } from "@/types/ApplicationTypes/CartItemType"
 import { TrackDto } from "@/types/ApplicationTypes/TrackType"
-import DefaultBeatThumbnail from "/default-image/defaultSoundwave.jpg"
 import { AxiosResponse } from "axios"
 import { useEffect, useState } from "react"
 import { Col, Dropdown, DropdownMenu, DropdownToggle, Row } from "react-bootstrap"

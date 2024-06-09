@@ -19,8 +19,6 @@ import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 import { HttpClient } from "@/common";
 import { PagingResponseDto } from "@/types/ApplicationTypes/PagingResponseType";
 import { TrackLicenseDto } from "@/types/ApplicationTypes/TrackLicenseType";
-import { useNavigate } from "react-router-dom";
-import { SimpleAllertTopRight } from "@/my-component/ButtonAllert";
 import { AxiosResponse } from "axios";
 class CreateLicenseParam {
   constructor(name: string, file: File) {
@@ -52,7 +50,7 @@ export default function LicenseUploadForm({
 }: LicenseUploadFormProps) {
   const [licenceName, setLicenceName] = useState("");
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [loading, _setLoading] = useState(false);
   const [licensePdfFile, setLicensePdfFile] = useState<File | null>(null);
   const onClickSubmit = async () => {
     try {

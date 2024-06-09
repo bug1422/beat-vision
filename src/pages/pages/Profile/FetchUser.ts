@@ -1,7 +1,6 @@
 import { HttpClient } from "@/common";
 import { useAuthContext } from "@/context";
 import { CustomIdentityUserDto } from "@/types/ApplicationTypes/IdentityType";
-import { UserProfileDto } from "@/types/ApplicationTypes/UserProfileType";
 import { AxiosResponse } from "axios";
 import { useState } from "react";
 
@@ -12,7 +11,6 @@ export default function FetchUser() {
 
     const [fetchSuccess, setFetchSuccess] = useState<boolean>(false);
     const [userData, setUserData] = useState<CustomIdentityUserDto>();
-    const [otherData, setOtherData] = useState<UserProfileDto>();
     const Fetch = async (userId: string | undefined = undefined) => {
 
         if (isAuthenticated) {
@@ -36,5 +34,5 @@ export default function FetchUser() {
         }
     }
 
-    return { Fetch, isAuthenticated, fetchSuccess, userData, removeSession, otherData }
+    return { Fetch, isAuthenticated, fetchSuccess, userData, removeSession }
 }

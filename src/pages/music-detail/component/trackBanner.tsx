@@ -1,14 +1,12 @@
-import { Button, Card, CardBody, CardHeader, CardTitle, Col, Image, Row } from "react-bootstrap";
+import { Card, CardBody, CardHeader, CardTitle, Col, Row } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import defautAudioImage from "../../../../public/default-image/defaultSoundwave.jpg";
 import "../index.css";
-import someRandomHeart from "/heart_1077035.png";
-import { useState } from "react";
-import { Link } from "react-router-dom";
 import { TrackDto } from "@/types/ApplicationTypes/TrackType";
 import { Tag } from "@/pages/pages/Search";
+import { useState } from "react";
 export default function TrackBanner(props: { track: TrackDto }) {
-  const [track, setTrack] = useState<TrackDto>(props.track)
+  const [track, _setTrack] = useState<TrackDto>(props.track)
 
 
   return (

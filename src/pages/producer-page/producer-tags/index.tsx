@@ -1,11 +1,9 @@
 import { TagDto } from "@/types/ApplicationTypes/TagType";
 import { useEffect, useState } from "react";
-import { Button, Card, CardBody, CardHeader, Col, Form, FormLabel, ListGroup, Nav, NavItem, NavLink, Pagination, Row, TabContainer, TabContent, TabPane } from "react-bootstrap";
+import { Button, Card, CardBody, CardHeader, Col, ListGroup, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { ButtonAllert2, SimpleAllertTopRight } from "@/my-component/ButtonAllert";
-import { HttpClient } from "@/common";
-import { AxiosResponse } from "axios";
 import { FormTextInput } from "@/components";
 import { handleTags } from "./handleTags";
 export default function ProducerTags() {
@@ -13,7 +11,7 @@ export default function ProducerTags() {
   const [filtered, setFiltered] = useState<TagDto[]>([]);
   const [search, setSearch] = useState("");
   const { onResult } = SimpleAllertTopRight();
-  const { loading, res, control, addTag, fetchTags, deletingTag } = handleTags()
+  const { loading, control, addTag, fetchTags, deletingTag } = handleTags()
   const deleteTag = async (tagId: number) => {
     let delteResult = await deletingTag(tagId)
     console.log(delteResult);

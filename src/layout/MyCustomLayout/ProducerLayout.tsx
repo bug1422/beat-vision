@@ -1,11 +1,9 @@
-import { Suspense, lazy, type ReactNode, useEffect } from "react";
+import { Suspense, type ReactNode, useEffect } from "react";
 import { Preloader } from "@/components";
 import { useThemeContext } from "@/context";
 import { useViewPort } from "@/hooks";
 import { MyLeftSidebar } from "./MyLeftSidebar/producerLeftSideBar";
 import ProducerTopNavBar from "./MyTopNavbar/producerTopNavbar";
-
-const Footer = lazy(() => import("../Footer"));
 
 const Layout = ({ children }: { children: ReactNode }) => {
   const { updateSideNavMode } = useThemeContext();

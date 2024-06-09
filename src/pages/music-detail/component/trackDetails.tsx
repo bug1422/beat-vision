@@ -1,13 +1,10 @@
-import { Card, Row, Button, CardBody, Col, Dropdown, DropdownToggle, DropdownMenu } from "react-bootstrap";
-import appLogo from "/logo-sm-dark.png";
-import { useEffect, useState } from "react";
+import { Card, Row, CardBody, Col } from "react-bootstrap";
+import { useState } from "react";
 import { TrackLicenseDto } from "@/types/ApplicationTypes/TrackLicenseType";
-import { AxiosResponse } from "axios";
-import { HttpClient } from "@/common";
 
 
 export default function TrackDetail(props: { licenses: TrackLicenseDto[] }) {
-  const [licenses, setLicenses] = useState<TrackLicenseDto[]>(props.licenses)
+  const [licenses, _setLicenses] = useState<TrackLicenseDto[]>(props.licenses)
 
   return (
     <>

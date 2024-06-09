@@ -2,9 +2,6 @@ import { Button, Col, Row } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../index.css";
 import { MutableRefObject, useEffect, useRef, useState } from "react";
-import sampleAudio1 from "../../../assets/audio/defaultAudio.mp3";
-import sampleAudio2 from "../../../assets/audio/defaultAudio2.mp3";
-import someRandomHeart from "/heart_1077035.png";
 import _AudioPlayer from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
 
@@ -13,25 +10,11 @@ import { AxiosResponse } from "axios";
 import { HttpClient } from "@/common";
 import { FiPlayCircle, FiStopCircle, FiVolumeX, FiVolume, FiVolume1, FiVolume2 } from "react-icons/fi";
 import FormRange from "react-bootstrap/esm/FormRange";
-type TrackType = {
-  url: string;
-  title: string;
-};
-const DefaultAudioArray = [
-  {
-    url: sampleAudio1,
-    title: "sample 1",
-  },
-  {
-    url: sampleAudio2,
-    title: "sample 2",
-  },
-];
+
 export default function TrackPlay(props: { trackId: number, price: number }) {
-  const [trackId, setTrackId] = useState(props.trackId)
+  const [trackId, _setTrackId] = useState(props.trackId)
   const [fileURL, setFileURL] = useState("")
   // const [audioList, setAudioList] = useState<Array<TrackType>>(DefaultAudioArray);
-  const [percentage, setPercentage] = useState<number>(0);
   const [isPlaying, setPlaying] = useState(false);
   const audioContainer = useRef<HTMLElement>(null);
   const waveSurferRef = useRef<WaveSurfer | null>(null);
@@ -68,6 +51,7 @@ export default function TrackPlay(props: { trackId: number, price: number }) {
             trackId: trackId
           }
         })
+      if(res){}
     }
     catch (e: any) {
       console.log(e)
@@ -104,7 +88,6 @@ export default function TrackPlay(props: { trackId: number, price: number }) {
         if (percentage > 100) {
           percentage = 100;
         }
-        setPercentage(percentage);
       });
       // waveSurferRef.current.on('')
       return () => {

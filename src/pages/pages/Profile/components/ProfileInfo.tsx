@@ -1,4 +1,4 @@
-import { Button, Card, CardBody, Col, Modal, Row } from 'react-bootstrap'
+import { Button, CardBody, Col, Modal, Row } from 'react-bootstrap'
 import defaultProfile from '/default-image/defaultprofile.png'
 import { CustomIdentityRoleDto } from '@/types/ApplicationTypes/IdentityType'
 import { useEffect, useState } from 'react'
@@ -178,34 +178,34 @@ const ProfileInfo = (props: { userId: number, roles: CustomIdentityRoleDto[], ve
 										<Col lg={4} className="align-self-center">
 											<Row className='social d-flex justify-content-start'>
 												<Col className="col-auto me-2 p-1 text-center">
-													<a href={user?.Facebook} target='_blank'>
+													{user?.Facebook ? <a href={user?.Facebook} target='_blank'>
 														<i className="fab fa-facebook-f" />
 														<p className="mb-0 fw-semibold">Facebook</p>
-													</a>
+													</a>: <></>}
 												</Col>
 
 												<Col className="col-auto me-2 p-1 text-center">
-													<a href={user?.Instagram} target='_blank'>
+													{user?.Instagram ? <a href={user?.Instagram} target='_blank'>
 														<i className="fab fa-instagram">
 														</i>
 														<p className="mb-0 fw-semibold">Instagram</p>
-													</a>
+													</a>: <></>}
 												</Col>
 
 												<Col className="col-auto me-2 p-1 text-center">
-													<a href={user?.Youtube} target='_blank'>
+													{user?.Youtube ? <a href={user?.Youtube} target='_blank'>
 														<i className="fab fa-youtube">
 														</i>
 														<p className="mb-0 fw-semibold">Youtube</p>
-													</a>
+													</a>: <></>}
 												</Col>
 
 												<Col className="col-auto me-2 p-1 text-center">
-													<a href={user?.SoundCloud} target='_blank'>
+													{user?.SoundCloud ? <a href={user?.SoundCloud} target='_blank'>
 														<i className="fab fa-soundcloud">
 														</i>
 														<p className="mb-0 fw-semibold">SoundCloud</p>
-													</a>
+													</a> : <></>}
 												</Col>
 											</Row>
 										</Col>

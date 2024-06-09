@@ -1,4 +1,3 @@
-import ProducerPage from "@/pages/producer-page";
 import ProducerAppUser from "@/pages/producer-page/producer-app-user";
 import ProducerLicenses from "@/pages/producer-page/producer-licenses";
 import ProducerNotification from "@/pages/producer-page/producer-notification";
@@ -25,7 +24,6 @@ const Notification = lazy(()=> import("@/pages/pages/Notification"))
 
 // Transaction
 const PaymentResult = lazy(() => import("@/pages/pages/Transaction/PaymentResult"));
-const Checkout = lazy(() => import("@/pages/pages/Transaction/Checkout"));
 const PaymentHistory = lazy(() => import("@/pages/pages/Transaction/History"));
 
 //Applicatoin create page
@@ -114,11 +112,6 @@ const appsRoutes: RoutesProps[] = [
     path: "/cart",
     name: "Cart",
     element: <Cart />,
-  },
-  {
-    path: "/checkout/:subDirectory",
-    name: "Checkout",
-    element: <Checkout />,
   },
   {
     path: "/checkout/payment/success",

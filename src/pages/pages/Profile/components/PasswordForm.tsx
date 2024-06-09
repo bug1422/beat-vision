@@ -3,7 +3,7 @@ import { FormInputPassword } from "@/components"
 import { useAuthContext } from "@/context"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { AxiosResponse } from "axios"
-import { Card, CardBody, CardTitle, Col, FormLabel, Row } from "react-bootstrap"
+import { Card, CardBody, CardTitle, FormLabel } from "react-bootstrap"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as yup from 'yup'

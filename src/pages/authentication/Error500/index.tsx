@@ -4,8 +4,6 @@ import logo from '/logo-sm.png'
 import error from '/error.svg'
 import { PageMetaData } from '@/components'
 import AuthLayout from '../AuthLayout'
-import axios from 'axios'
-import { HttpClient } from '@/common'
 
 const Error500 = () => {
 	return (

@@ -1,12 +1,9 @@
-import { FilePond } from "filepond";
 import { useState } from "react";
 import Select from "react-select";
 import { Button, Card, CardBody, Col, FormControl, FormLabel, Modal, Row } from "react-bootstrap";
-import { MessageDto, MessageType, MessageWeigth } from "@/types/ApplicationTypes/MessageType";
+import { MessageType, MessageWeigth } from "@/types/ApplicationTypes/MessageType";
 import { HttpClient } from "@/common";
-import { PagingResponseDto } from "@/types/ApplicationTypes/PagingResponseType";
 import { AxiosResponse } from "axios";
-import { string } from "yup";
 import { SimpleAllertTopRight } from "@/my-component/ButtonAllert";
 interface CreateNotificationFormProps {
   isShow: boolean;
@@ -16,8 +13,8 @@ export default function CreateNotificationForm({
   isShow,
   setShowing,
 }: CreateNotificationFormProps) {
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [error, _setError] = useState("");
+  const [loading, _setLoading] = useState(false);
   const [messageTitle, setMessageTitle] = useState("");
   const [messageContent, setMessageContent] = useState("");
   const [messageType, setMessageType] = useState<MessageType | null>(MessageType.ALL);
@@ -40,13 +37,14 @@ export default function CreateNotificationForm({
           "Content-Type": "multipart/form-data",
         },
       });
+      if (res) { }
       onResult(true);
     } catch (err: any) {
       onResult(false);
     }
   };
   const onClickSubmit = async () => {
-    let result = await createMessage();
+    await createMessage();
     window.location.reload();
   };
   return (

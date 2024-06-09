@@ -1,23 +1,5 @@
-import { Link } from 'react-router-dom'
-import { notificationType } from './data'
 import { MessageResponse } from '@/types/ApplicationTypes/MessageType'
 
-const CategoriesType = ({ cate }: { cate: string }) => {
-	switch (cate) {
-		case 'Freelance':
-			return <span className="badge-soft-warning badge me-2">{cate}</span>
-		case 'Support':
-			return <span className="badge-soft-info badge me-2">{cate}</span>
-		case 'Social':
-			return <span className="badge-soft-purple badge me-2">{cate}</span>
-		case 'Family':
-			return <span className="badge-soft-success badge me-2">{cate}</span>
-		case 'Friends':
-			return <span className="badge-soft-pink badge me-2">{cate}</span>
-		default:
-			return
-	}
-}
 function timeSince(value: string) {
 	const date = new Date(value)
 

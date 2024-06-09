@@ -1,34 +1,22 @@
 import { Badge, Button, Card, CardBody } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { withSwal } from "react-sweetalert2";
-import SweetAlerts from "@/components/advanced-ui/SweetAlerts";
 import "../../../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import { TRACK_STATUS, TrackDto } from "@/types/ApplicationTypes/TrackType";
 import defautAudioImage from "../../../../../public/default-image/defaultSoundwave.jpg";
-import { HttpClient } from "@/common";
-import { AxiosResponse } from "axios";
 import MusicUpdateForm from "./musicUpdateForm";
 import { useState } from "react";
-import { ButtonAllert2, SimpleAllertTopRight } from "@/my-component/ButtonAllert";
+import { SimpleAllertTopRight } from "@/my-component/ButtonAllert";
 
 const ProducerMusicCard = ({ producerMusic }: { producerMusic: TrackDto }) => {
   const [isShowUpdateForm, setIsShowUpdateForm] = useState(false);
   const { onResult } = SimpleAllertTopRight();
   const {
     Id,
-    AudioBitPerSample,
-    AudioChannels,
-    AudioLenghtSeconds,
-    AudioSampleRate,
-    Comments,
     IsAudioForSale,
     IsAudioPrivate,
-    IsAudioRemoved,
     IsPublished,
-    Licenses,
     PlayCount,
     Price,
-    PublishDateTime,
     Status,
     Tags,
     TrackName,
@@ -53,11 +41,11 @@ const ProducerMusicCard = ({ producerMusic }: { producerMusic: TrackDto }) => {
           </div>
 
           {Tags.map((tag, index) => (
-            <>
+            <div key={index}>
               <span className="badge badge-purple px-3 py-2 bg-soft-primary fw-semibold mt-3 me-1">
                 {tag.Name}
               </span>
-            </>
+            </div>
           ))}
 
           <h4 className="my-3">{TrackName}</h4>
@@ -147,17 +135,4 @@ const ProducerMusicCard = ({ producerMusic }: { producerMusic: TrackDto }) => {
   );
 };
 
-async function PulldownTrack(trackId: number): Promise<boolean> {
-  try {
-    let createResult: AxiosResponse<string> = await HttpClient.delete(
-      `/api/ManageTrack/pulldown-track/${trackId}`,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
-  } catch (err: any) {}
-  return false;
-}
 export default ProducerMusicCard;

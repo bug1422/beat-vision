@@ -1,9 +1,7 @@
 import { Row, Col, TabContent, TabPane, TabContainer, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { FiFolder, FiLock } from "react-icons/fi";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { TrackLicenseDto } from "@/types/ApplicationTypes/TrackLicenseType";
-import { boolean, number } from "yup";
 import axios, { AxiosResponse } from "axios";
 import { useNavigate } from "react-router-dom";
 import { PagingResponseDto } from "@/types/ApplicationTypes/PagingResponseType";
@@ -46,11 +44,10 @@ const MockLicenseFiles: TrackLicenseDto[] = [
 export default function ProducerLicenses() {
   const [licenseFiles, setLicenseFiles] = useState(MockLicenseFiles);
   const [isShowForm, setIsShowForm] = useState(false);
-  const [currentPage, setCurrentPage] = useState(0);
-  const [totalPage, setTotalPage] = useState(0);
-  const [pageSize, setPageSize] = useState(100);
+  const [currentPage, _setCurrentPage] = useState(0);
+  const [_totalPage, setTotalPage] = useState(0);
+  const [pageSize, _setPageSize] = useState(100);
   const navigate = useNavigate();
-  const downloadRef = useRef<HTMLAnchorElement | null>(null);
   const fetchData = async () => {
     try {
       const res: AxiosResponse<PagingResponseDto<TrackLicenseDto[]>> = await HttpClient.get(
@@ -164,7 +161,7 @@ export default function ProducerLicenses() {
                               to="#"
                               //download={`/api/ManageTrack/download-track-license?licenseId=${projects.Id}`}
                               className="download-icon-link"
-                              onClick={(event) => {
+                              onClick={() => {
                                 downloadLicense(projects);
                               }}
                             >

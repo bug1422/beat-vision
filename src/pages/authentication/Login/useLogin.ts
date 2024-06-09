@@ -10,7 +10,6 @@ import * as yup from 'yup'
 import { jwtDecode } from 'jwt-decode'
 import type { User } from '@/types'
 import { AuthReturnType } from '@/types/AuthTypes'
-import { FetchUser } from '@/testing/TestDummy'
 
 
 export default function useLogin() {

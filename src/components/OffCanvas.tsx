@@ -1,6 +1,3 @@
-import { useToggle } from "@/hooks"
-import { ReactNode } from "react"
-import { Button } from "react-bootstrap"
 import { Offcanvas as BootstrapOffcanvas, } from "react-bootstrap"
 interface PlacementOption {
 	name: string,

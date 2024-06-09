@@ -12,7 +12,6 @@ import {
   FormControl,
   Modal,
   Button,
-  Form,
 } from "react-bootstrap";
 import Select from "react-select";
 import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orientation";
@@ -29,26 +28,10 @@ import { useNavigate } from "react-router-dom";
 import { SimpleAllertTopRight } from "@/my-component/ButtonAllert";
 import { TrackDto } from "@/types/ApplicationTypes/TrackType";
 import { TagDto } from "@/types/ApplicationTypes/TagType";
-import { date } from "yup";
 
 interface optionsParameter {
   value: string;
   label: string;
-}
-class UpdateTrackDto {
-  constructor(id: number, imageFile: File, newName: string, tags: number[], licenses: number[]) {
-    this.TrackId = id;
-    this.bannderFile = imageFile;
-    this.TrackName = newName;
-    this.TagsId = tags;
-    this.LicenseIds = licenses;
-  }
-
-  TrackId: number;
-  bannderFile: File;
-  TrackName: string;
-  TagsId: number[];
-  LicenseIds: number[];
 }
 
 interface MusicUploadFormProps {
@@ -140,6 +123,8 @@ export default function MusicUpdateForm({
           "Content-Type": "multipart/form-data",
         },
       });
+      if(axiosResponse){
+      }
       onResult(true);
       onHide();
       if (!onSuccess) {
@@ -302,16 +287,3 @@ export default function MusicUpdateForm({
     </>
   );
 }
-const getCurrentDateTimePlus5Minutes = (): string => {
-  const currentDate = new Date();
-  currentDate.setMinutes(currentDate.getMinutes() + 5);
-
-  // Format date to 'YYYY-MM-DDTHH:mm'
-  const year = currentDate.getFullYear();
-  const month = String(currentDate.getMonth() + 1).padStart(2, "0");
-  const day = String(currentDate.getDate()).padStart(2, "0");
-  const hours = String(currentDate.getHours()).padStart(2, "0");
-  const minutes = String(currentDate.getMinutes()).padStart(2, "0");
-
-  return `${year}-${month}-${day}T${hours}:${minutes}`;
-};

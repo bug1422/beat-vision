@@ -1,7 +1,7 @@
 import { HttpClient } from "@/common"
 import { useAuthContext } from "@/context";
 import { TrackDto } from "@/types/ApplicationTypes/TrackType";
-import { createRef, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { AxiosResponse } from "axios"
 import { Col, Row } from "react-bootstrap"
 
@@ -19,7 +19,7 @@ const Cart = () => {
     const [isLoading, SetIsLoading] = useState(false)
     const [isPaid, setPaid] = useState(false)
     const [isPurchased, setPurchased] = useState(false)
-    const [error, SetError] = useState("")
+    const [_error, SetError] = useState("")
     const navigate = useNavigate()
     useEffect(() => {
         GetTracksInCart()

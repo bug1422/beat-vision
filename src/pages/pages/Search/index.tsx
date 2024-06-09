@@ -1,13 +1,11 @@
 import { TrackDto } from "@/types/ApplicationTypes/TrackType"
 import { Suspense, lazy, useEffect, useState } from "react"
-import { Badge, Button, CardBody, CardHeader, Col, FormControl, Row } from "react-bootstrap"
+import { Badge, Button, Col, FormControl, Row } from "react-bootstrap"
 import { Link, useNavigate, useParams } from "react-router-dom"
-import { FetchAllTracks, FetchPopularTracks } from "./getBeat"
 import DefaultBeatThumbnail from "/default-image/defaultSoundwave.jpg"
 import { FiPlay, FiPlayCircle, FiShoppingBag } from "react-icons/fi"
-import { AddToCart } from "@/components/AddToCart"
 import { useAuthContext } from "@/context"
-import { FormTextInput, PageMetaData } from "@/components"
+import { PageMetaData } from "@/components"
 import { TagDto } from "@/types/ApplicationTypes/TagType"
 import { AxiosResponse } from "axios"
 import { HttpClient } from "@/common"
@@ -73,6 +71,9 @@ const Search = () => {
                 trackId: trackId
               }
             })
+            if(res){
+                
+            }
         }
         catch (e: any) {
           console.log(e)
@@ -224,7 +225,8 @@ const Search = () => {
                     <div className="my-2 search-section d-flex align-items-center">
                     </div>
                     <div className="search-container">
-                        {(tracks && tracks?.length > 0) ?
+                        {error1 != ""? <>
+                            {(tracks && tracks?.length > 0) ?
                             <div className="search-body pt-2 d-flex flex-column">
                                 {tracks.map((track, index) => (
                                     <Row className="track align-items-center" key={index} onClick={() => { setSelected(track); AddPlayCount(track.Id)}} >
@@ -266,6 +268,7 @@ const Search = () => {
                                 </div>
                             </div>
                         }
+                        </> : <div>Can't get data</div>}
                     </div>
                 </Col>
             </Row>

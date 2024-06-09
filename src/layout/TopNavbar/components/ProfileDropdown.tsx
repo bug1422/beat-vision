@@ -6,7 +6,7 @@ import {
 	Image,
 } from 'react-bootstrap'
 
-import { FiArchive, FiBell, FiPower, FiSettings, FiShoppingCart, FiUser } from 'react-icons/fi'
+import { FiArchive, FiBell, FiPower, FiShoppingCart, FiUser } from 'react-icons/fi'
 import { useAuthContext } from '@/context'
 import { useNavigate } from 'react-router-dom'
 import { AxiosResponse } from 'axios'

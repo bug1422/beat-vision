@@ -1,15 +1,11 @@
 import {
 	Dropdown,
-	DropdownItem,
 	DropdownMenu,
 	DropdownToggle,
-	Image,
 } from 'react-bootstrap'
 import { FiBell } from 'react-icons/fi'
 import { Link } from 'react-router-dom'
-import SimpleBar from 'simplebar-react'
 import 'simplebar-react/dist/simplebar.min.css'
-import { NotificationType } from '../types'
 import { useEffect, useState } from 'react'
 import { AxiosResponse } from 'axios'
 import { MessageResponse } from '@/types/ApplicationTypes/MessageType'

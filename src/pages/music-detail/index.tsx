@@ -4,14 +4,11 @@ import TrackBanner from "./component/trackBanner";
 import TrackPlay from "./component/trackPlay";
 import TrackDetail from "./component/trackDetails";
 import TrackComment from "./component/trackComment";
-import TrackRelated from "./component/trackRelated";
 import { useEffect, useState } from "react";
 import { AxiosResponse } from "axios";
 import { TrackDto } from "@/types/ApplicationTypes/TrackType";
 import { HttpClient } from "@/common";
 import { useParams } from "react-router-dom";
-import { toast } from "sonner";
-// import { TrackCommentSection } from "./component/trackComment";
 
 export default function MusicDetail() {
   const { trackId } = useParams()

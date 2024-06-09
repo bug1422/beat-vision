@@ -1,12 +1,10 @@
 import { HttpClient } from "@/common"
 import { useAuthContext } from "@/context"
-import { OrderStatus, OrderType } from "@/types/ApplicationTypes/OrderItemType"
+import { OrderType } from "@/types/ApplicationTypes/OrderItemType"
 import { PagingResponseDto } from "@/types/ApplicationTypes/PagingResponseType"
-import { TrackDto } from "@/types/ApplicationTypes/TrackType"
 import { AxiosResponse } from "axios"
-import { createRef, useEffect, useRef, useState } from "react"
-import { Button, Col, Pagination, Row } from "react-bootstrap"
-import { Link, useParams } from "react-router-dom"
+import { createRef, useEffect, useState } from "react"
+import { Col, Pagination, Row } from "react-bootstrap"
 import { toast } from "sonner"
 
 const PaymentHistory = () => {
@@ -15,7 +13,7 @@ const PaymentHistory = () => {
     const [orders, setOrders] = useState<OrderType[]>([])
     const itemPerPage = 5
     const [currentPage, setCurrentPage] = useState(0);
-    const [totalPage, setTotalPage] = useState(0);
+    const [totalPage, _setTotalPage] = useState(0);
     const downloadRef = createRef<HTMLAnchorElement>();
 
     useEffect(() => {
@@ -37,7 +35,7 @@ const PaymentHistory = () => {
                 HttpClient.get(`/api/ManageOrder/get-order-range?userProfileId=${user?.userid}&start=${currentPage * itemPerPage}&take=${itemPerPage}`)
             if (res) {
                 console.log(res)
-                const tempt = [...res.data.Value.filter(p => p.Status != "CANCELLED")]
+                const tempt = [...res.data.Value.filter(p => p.Status.toString() != "CANCELLED")]
                 setOrders([...tempt])
             }
         }
@@ -156,7 +154,7 @@ const PaymentHistory = () => {
                                                                         </ul>
                                                                     </td>
                                                                     <td>
-                                                                        {order.Status == OrderStatus[OrderStatus.PAID] ? <>
+                                                                        {order.Status.toString() == "PAID" ? <>
                                                                             <button type="button" className="btn btn-info" onClick={(e) => { e.currentTarget.textContent = "Pending";e.currentTarget.disabled = true; HandleDownload(parseInt(order.Id), item.Id, item.TrackName); e.currentTarget.textContent = "Download";e.currentTarget.disabled = false; }}>Download</button>
                                                                         </> : <></>}
                                                                     </td>

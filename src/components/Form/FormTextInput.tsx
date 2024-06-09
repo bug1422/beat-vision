@@ -2,7 +2,6 @@ import {
 	Controller,
 	type FieldPath,
 	type FieldValues,
-	type PathValue,
 } from 'react-hook-form'
 import type { FormInputProps } from '../types'
 import { Form, FormControlProps } from 'react-bootstrap'

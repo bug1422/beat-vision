@@ -1,5 +1,5 @@
 import { Col, Row } from "react-bootstrap"
-import { FiFacebook, FiInstagram, FiTwitter } from "react-icons/fi"
+import { FiFacebook } from "react-icons/fi"
 
 const Footer = () => {
 	return (

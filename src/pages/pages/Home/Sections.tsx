@@ -4,15 +4,12 @@ import img1 from '/images/homepage/img1.jpg'
 import img2 from '/images/homepage/img2.jpg'
 import img3 from '/images/homepage/img3.jpg'
 import fpt_logo from '/images/brand-logo/fpt.png'
-import { beats, artists } from "@/testing/FetchFakeData"
 import { useEffect, useRef, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { useAuthContext } from "@/context"
 import { AxiosResponse } from "axios"
 import { TrackDto } from "@/types/ApplicationTypes/TrackType"
 import { HttpClient } from "@/common"
 import { PagingResponseDto } from "@/types/ApplicationTypes/PagingResponseType"
-import { Tag } from "../Search"
 
 
 const Section1 = () => {
@@ -32,7 +29,7 @@ const Section1 = () => {
     return (
         <div className="section1">
             <div className="overlay searchbar">
-                <div className="icon dripicons-search" onClick={(e) => {
+                <div className="icon dripicons-search" onClick={() => {
                     if (keyword.current.length > 0) handleSearchBeat(keyword.current)
                 }} />
                 <form className="" onSubmit={(e) => {
@@ -215,25 +212,25 @@ const Section4 = () => {
         </div>
     </>)
 }
-const Section5 = () => {
-    return (
-        <div className="section5 pt-2 pb-4">
-            <div className="home-text ps-4 my-3">
-                Popular Artist
-            </div>
-            <div className="content pt-5">
-                <Row className="d-flex justify-content-center">
-                    {artists.slice(0, 5).map((artist, idx) => (
-                        <Col className="artist" key={idx}>
-                            <img src={demoBeat} alt="user" className="img rounded-circle thumb-xl" />
-                            <div className="home-text text-end mt-2 me-5">{artist.author}</div>
-                        </Col>
-                    ))}
-                </Row>
-            </div>
-        </div>
-    )
-}
+// const Section5 = () => {
+//     return (
+//         <div className="section5 pt-2 pb-4">
+//             <div className="home-text ps-4 my-3">
+//                 Popular Artist
+//             </div>
+//             <div className="content pt-5">
+//                 <Row className="d-flex justify-content-center">
+//                     {artists.slice(0, 5).map((artist, idx) => (
+//                         <Col className="artist" key={idx}>
+//                             <img src={demoBeat} alt="user" className="img rounded-circle thumb-xl" />
+//                             <div className="home-text text-end mt-2 me-5">{artist.author}</div>
+//                         </Col>
+//                     ))}
+//                 </Row>
+//             </div>
+//         </div>
+//     )
+// }
 const Section6 = () => {
     return (<>
         <div className="section6">

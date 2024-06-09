@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FilePond, registerPlugin } from "react-filepond";
+import { registerPlugin } from "react-filepond";
 
 import {
   Row,

@@ -1,7 +1,5 @@
 import { Link } from "react-router-dom";
 import SimpleBar from "simplebar-react";
-// import AppMenu from "./Menu";
-import { getMenuItems } from "@/common";
 import logoImg from "@/assets/images/logo-sm.png";
 import AppMenu from "@/layout/LeftSidebar/Menu";
 import { MenuItemType } from "@/common/menu";

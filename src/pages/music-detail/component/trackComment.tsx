@@ -1,13 +1,13 @@
 import { HttpClient } from "@/common";
 import { useAuthContext } from "@/context";
-import { CommentHolder, TrackCommentDto } from "@/types/ApplicationTypes/TrackCommentType";
+import { TrackCommentDto } from "@/types/ApplicationTypes/TrackCommentType";
 import { UserProfileDto } from "@/types/ApplicationTypes/UserProfileType";
 import { CompareDate } from "@/utils";
 import { AxiosResponse } from "axios";
-import { FormEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Card, CardBody, CardHeader, CardTitle, Col, Row } from "react-bootstrap";
 import { toast } from "sonner";
-
+import defaultPic from "/default-image/defaultprofile.png"
 
 export const Message = (props: { value: TrackCommentDto }) => {
   const { user } = useAuthContext()
@@ -21,7 +21,7 @@ export const Message = (props: { value: TrackCommentDto }) => {
     FetchReplies()
   }, [props.value])
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     const message = e.target[0].value
     if (message != "") {
@@ -82,7 +82,7 @@ export const Message = (props: { value: TrackCommentDto }) => {
   return (<>
     <Row className="mb-2 mt-3" style={{ width: "100%" }}>
       <div className="" style={{ width: "60px", top: "0" }}>
-        <img src={profile?.ProfileBlobUrl} className="" style={{ width: "50px", borderRadius: "100%" }} />
+        <img src={profile?.ProfileBlobUrl ?? defaultPic} className="" style={{ width: "50px", borderRadius: "100%" }} />
       </div>
 
       <Col xs={10} className="ms-1 align-items-center">
@@ -139,7 +139,7 @@ const TrackComment = (props: { trackId: number }) => {
     FetchComment()
   }, [trackId])
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     const message = e.target[0].value
     if (message != "") {
