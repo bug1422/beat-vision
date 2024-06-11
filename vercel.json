@@ -1,8 +1,12 @@
 {
-    "rewrites": [
-      {
-        "source": "/api/:path",
-        "destination": "https://localhost:5234/api/:path"
-      }
-    ]
-  }
+  "rewrites": [
+    {
+      "source": "/api/:path",
+      "destination": "https://localhost:5234/api/:path"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/"
+    }
+  ]
+}
