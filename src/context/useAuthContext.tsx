@@ -1,4 +1,5 @@
 import { AuthContextType, User } from "@/types"
+import { UserProfileDto } from "@/types/ApplicationTypes/UserProfileType"
 import { deleteCookie, getCookies, hasCookie, setCookie } from 'cookies-next'
 import { jwtDecode } from "jwt-decode"
 import { ReactNode, createContext, useContext, useState } from "react"
@@ -17,11 +18,9 @@ const authSessionKey = '_BEATVISION_AUTH_'
 
 export function AuthProvider({ children }: { children: ReactNode }) {
 
-    const saveSession = (access: string,refresh: string) => {
-        const decoded = jwtDecode<User>(access)
-        decoded.refreshToken = refresh
-        setCookie(authSessionKey, JSON.stringify(decoded))
-        setUser(decoded)
+    const saveSession = (access:string, user:User) => {
+        setCookie(authSessionKey, JSON.stringify(user))
+        setUser(user)
         setCookie("BEATVISION",access)
     }
 

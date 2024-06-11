@@ -1,6 +1,7 @@
 import { HttpClient } from "@/common";
 import HttpClientAuth from "@/common/helpers/httpClientAuth";
 import { useAuthContext } from "@/context";
+import { CustomIdentityUserDto } from "@/types/ApplicationTypes/IdentityType";
 import { UserProfileDto } from "@/types/ApplicationTypes/UserProfileType";
 import { AxiosResponse } from "axios";
 import { useEffect, useState } from "react";
@@ -8,9 +9,10 @@ import { Col, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
-const UpdateForm = () => {
+const UpdateForm = (props: { user: CustomIdentityUserDto }) => {
   const { user, removeSession } = useAuthContext();
   const navigate = useNavigate();
+  const userData = props.user
   const [loading, setLoading] = useState(false);
   const [fullname, setFullname] = useState("");
   const [description, setDescription] = useState("");
@@ -25,23 +27,15 @@ const UpdateForm = () => {
 
   const FetchUserProfile = async () => {
     try {
-      //   const res: AxiosResponse<UserProfileDto> = await HttpClient.get(
-      //     "/api/ManageUser/" + user?.userid
-      //   );
-      const get: AxiosResponse<UserProfileDto> = await HttpClient.get(
-        "/api/ManageUser/identity/" + user?.userid
-      );
-      const userId = get.data.Id;
-      if (get?.data) {
-        console.log(get.data);
-        let tempt = get.data; // res?.data;
-        setFullname(tempt.Fullname);
-        setDescription(tempt.Description ?? "");
-        setBirth(tempt.Birthday ?? "");
-        setFb(tempt.Facebook ?? "");
-        setInsta(tempt.Instagram ?? "");
-        setYtb(tempt.Youtube ?? "");
-        setSound(tempt.SoundCloud ?? "");
+      const profile = userData.UserProfile
+      if (userData.UserProfile && userData.UserProfile != undefined) {
+        setFullname(userData.UserProfile.Fullname);
+        setDescription(userData.UserProfile.Description ?? "");
+        setBirth(userData.UserProfile.Birthday ?? "");
+        setFb(userData.UserProfile.Facebook ?? "");
+        setInsta(userData.UserProfile.Instagram ?? "");
+        setYtb(userData.UserProfile.Youtube ?? "");
+        setSound(userData.UserProfile.SoundCloud ?? "");
       }
     } catch (e: any) {
       console.log(e);
@@ -150,7 +144,7 @@ const UpdateForm = () => {
               <div className="border-bottom fs-1 fw-bold text-white">Social Media Link</div>
               <ul className="list-group mb-3">
                 <li className="list-group-item py-3 d-flex align-items-center update-component">
-                  <i className="fab fa-facebook-f me-2" />
+                  <i className="fab text-warning fa-facebook-f me-2" />
                   <input
                     type="text"
                     name="facebook"
@@ -162,7 +156,7 @@ const UpdateForm = () => {
                   />
                 </li>
                 <li className="list-group-item py-3 d-flex align-items-center update-component">
-                  <i className="fab fa-instagram me-2" />
+                  <i className="fab text-warning fa-instagram me-2" />
                   <input
                     type="text"
                     name="instagram"
@@ -174,7 +168,7 @@ const UpdateForm = () => {
                   />
                 </li>
                 <li className="list-group-item py-3 d-flex align-items-center update-component">
-                  <i className="fab fa-youtube me-2" />
+                  <i className="fab text-warning fa-youtube me-2" />
                   <input
                     type="text"
                     name="youtube"
@@ -186,7 +180,7 @@ const UpdateForm = () => {
                   />
                 </li>
                 <li className="list-group-item py-3 d-flex align-items-center update-component">
-                  <i className="fab fa-soundcloud me-2" />
+                  <i className="fab text-warning fa-soundcloud me-2" />
                   <input
                     type="text"
                     name="soundcloud"

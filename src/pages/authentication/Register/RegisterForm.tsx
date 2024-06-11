@@ -13,6 +13,7 @@ import { toast } from 'sonner'
 import { jwtDecode } from 'jwt-decode'
 import { User } from '@/types'
 import { AuthReturnType } from '@/types/AuthTypes'
+import { UserProfileDto } from '@/types/ApplicationTypes/UserProfileType'
 
 export default function useRegister() {
 	const { isAuthenticated, saveSession } = useAuthContext()
@@ -51,8 +52,11 @@ export default function useRegister() {
 				}
 				const res: AxiosResponse<AuthReturnType> = await HttpClient.post('/api/ManageIdentity/register', request)
 				if (res.data) {
-					var data = res.data
-					saveSession(data.AccessToken, data.RefreshToken)
+					var access = res.data.AccessToken
+					var decoded = jwtDecode<User>(access)
+					const res2: AxiosResponse<UserProfileDto> = await HttpClient.get('/api/ManageUser/identity/' + decoded.userid)
+					decoded.profileId = res2.data.Id
+					saveSession(access, decoded)
 					toast.success('Successfully registered in. Redirecting....', {
 						position: 'bottom-right',
 						duration: 2000,

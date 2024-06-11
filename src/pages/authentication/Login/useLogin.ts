@@ -7,9 +7,10 @@ import { useForm } from 'react-hook-form'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { toast } from 'sonner'
 import * as yup from 'yup'
-import { jwtDecode } from 'jwt-decode'
-import type { User } from '@/types'
 import { AuthReturnType } from '@/types/AuthTypes'
+import { jwtDecode } from 'jwt-decode'
+import { User } from '@/types'
+import { UserProfileDto } from '@/types/ApplicationTypes/UserProfileType'
 
 
 export default function useLogin() {
@@ -58,8 +59,11 @@ export default function useLogin() {
 			const res: AxiosResponse<AuthReturnType> = await HttpClient.post('/api/ManageIdentity/login', values)
 			console.log(res)
 			if (res.data) {
-				var data = res.data
-				saveSession(data.AccessToken, data.RefreshToken)
+				var access = res.data.AccessToken
+				var decoded = jwtDecode<User>(access)
+				const res2: AxiosResponse<UserProfileDto> = await HttpClient.get('/api/ManageUser/identity/' + decoded.userid)
+				decoded.profileId = res2.data.Id
+				saveSession(access, decoded)
 				toast.success('Successfully logged in. Redirecting....', {
 					position: 'bottom-right',
 					duration: 2000,
@@ -92,8 +96,9 @@ export default function useLogin() {
 			const res: AxiosResponse<AuthReturnType> = await HttpClient.post('/api/ManageIdentity/login-admin', values)
 			console.log(res)
 			if (res.data) {
-				var data = res.data
-				saveSession(data.AccessToken, data.RefreshToken)
+				var access = res.data.AccessToken
+				var decoded = jwtDecode<User>(access)
+				saveSession(access, decoded)
 				toast.success('Successfully logged in. Redirecting....', {
 					position: 'bottom-right',
 					duration: 2000,

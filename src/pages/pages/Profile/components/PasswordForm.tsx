@@ -1,6 +1,7 @@
 import HttpClientAuth from "@/common/helpers/httpClientAuth"
 import { FormInputPassword } from "@/components"
 import { useAuthContext } from "@/context"
+import { CustomIdentityUserDto } from "@/types/ApplicationTypes/IdentityType"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { AxiosResponse } from "axios"
 import { Col, FormLabel, Row } from "react-bootstrap"
@@ -8,8 +9,9 @@ import { useForm } from "react-hook-form"
 import { useNavigate } from "react-router-dom"
 import { toast } from "sonner"
 import * as yup from 'yup'
-const PasswordForm = () => {
-    const { user, removeSession } = useAuthContext()
+const PasswordForm = (props: { user: CustomIdentityUserDto }) => {
+    const userData = props.user
+    const { removeSession } = useAuthContext()
     const navigate = useNavigate()
     const schemaResolver = yup.object().shape({
         NewPassword: yup.string().required("Please enter new password"),
@@ -24,7 +26,7 @@ const PasswordForm = () => {
         if (value) {
             try {
                 const res: AxiosResponse =
-                    await HttpClientAuth.post(`/api/ManageIdentity/change-password?userId=${user?.userid}`, value, {
+                    await HttpClientAuth.post(`/api/ManageIdentity/change-password?userId=${userData.UserProfile?.Id}`, value, {
                         headers: {
                             "Content-Type": "multipart/form-data",
                         }

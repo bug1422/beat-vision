@@ -16,7 +16,7 @@ import PasswordForm from './PasswordForm'
 import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
-const ProfileTask = (props: { user: CustomIdentityUserDto | undefined }) => {
+const ProfileTask = (props: { user: CustomIdentityUserDto | undefined}) => {
 	const { user } = props;
 	const [tab, setTab] = useState(1)
 	const [searchParams] = useSearchParams();
@@ -59,10 +59,10 @@ const ProfileTask = (props: { user: CustomIdentityUserDto | undefined }) => {
 									<Comments userData={user?.UserProfile} />
 								</TabPane>
 								<TabPane eventKey="3" className="fade">
-									<UpdateForm />
+									<UpdateForm user={user} />
 								</TabPane>
 								<TabPane eventKey="4" className="fade">
-									<PasswordForm />
+									<PasswordForm user={user} />
 								</TabPane>
 							</TabContent>
 						</Col>

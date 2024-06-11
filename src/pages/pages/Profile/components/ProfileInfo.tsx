@@ -25,7 +25,7 @@ const ProfileInfo = (props: { userId: number, roles: CustomIdentityRoleDto[], ve
 	const FetchUserProfile = async () => {
 		try {
 			const res: AxiosResponse<UserProfileDto> =
-				await HttpClientAuth.get('/api/ManageUser/identity/' + props.userId)
+				await HttpClientAuth.get('/api/ManageUser/' + props.userId)
 			if (res?.data) {
 				setUser(res?.data)
 				if (res?.data.ProfileBlobUrl) {
@@ -62,7 +62,7 @@ const ProfileInfo = (props: { userId: number, roles: CustomIdentityRoleDto[], ve
 					const data = new FormData();
 					data.append('imageFile', upload);
 					const res: AxiosResponse = await
-						HttpClientAuth.put('/api/ManageUser/profile-image/' + user?.Id, data, {
+						HttpClientAuth.put('/api/ManageUser/profile-image/' + props.userId, data, {
 							headers: {
 								'accept': '*/*',
 								'Content-Type': 'multipart/form-data',

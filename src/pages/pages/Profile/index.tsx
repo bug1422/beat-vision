@@ -2,15 +2,14 @@ import ProfileInfo from './components/ProfileInfo'
 import ProfileTask from './components/ProfileTask'
 import FetchUser from './FetchUser'
 import { useEffect } from 'react'
-import { Navigate, useParams } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 
 
 const Profile = () => {
-	const { userId } = useParams()
 	const { Fetch, isAuthenticated, fetchSuccess, userData } = FetchUser()
 	useEffect(() => {
 		console.log(isAuthenticated)
-		Fetch(userId);
+		Fetch();
 	}, [])
 	return (
 		<>
@@ -18,7 +17,7 @@ const Profile = () => {
 			{
 				fetchSuccess ? <>
 					{
-						userData ? <ProfileInfo userId={userData.Id} roles={userData.Roles} verified={userData.EmailConfirmed} /> : <></>
+						userData && userData.UserProfile ? <ProfileInfo userId={userData?.UserProfile.Id} roles={userData?.Roles} verified={userData.EmailConfirmed} /> : <></>
 					}
 					<ProfileTask user={userData}/>
 				</> : <>

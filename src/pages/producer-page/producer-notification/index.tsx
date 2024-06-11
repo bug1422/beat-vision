@@ -242,9 +242,6 @@ export default function ProducerNotification() {
                 </tbody>
               </table>
             </div>
-            {messageList.map((message) => (
-              <>{message.Content}</>
-            ))}
           </Col>
         </Row>
         <Row className="d-flex justify-content-center align-content-center">
