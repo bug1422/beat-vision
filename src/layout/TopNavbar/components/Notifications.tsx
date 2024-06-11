@@ -115,13 +115,13 @@ const Notifications = ({
 				as="a"
 				className="nav-link arrow-none waves-light waves-effect"
 			>
-				<FiBell className="bell align-self-center topbar-icon" />
+				<FiBell className="bell align-self-center topbar-icon text-warning" />
 				{isNew && notis && notis?.length > 0 ?
 					<span className="badge bg-danger rounded-pill noti-icon-badge">{notis?.length}</span> : <></>
 				}
 			</DropdownToggle>
 			<DropdownMenu className="dropdown-menu-end dropdown-lg pt-0 topbar-cart">
-				<h6 className="dropdown-item-text font-15 m-0 py-3 border-bottom d-flex justify-content-between align-items-center">
+				<h6 className="text-warning dropdown-item-text font-15 m-0 py-3 border-bottom d-flex justify-content-between align-items-center">
 					Carts <span className="badge bg-primary rounded-pill"></span>
 				</h6>
 				{!isLoading ? <div className="list">
@@ -142,8 +142,8 @@ const Notifications = ({
 					</ul>
 				</div> : <div>{error != "" ? error : "LOADING"}</div>
 				}
-				<Link to={"/notification"} className="dropdown-item text-center text-primary view-all border-top">
-					View all <i className="fi-arrow-right"></i>
+				<Link to={"/notification"} className="dropdown-item text-center text-warning view-all border-top">
+					View all <i className="fi-arrow-right text-warning"></i>
 				</Link>
 			</DropdownMenu>
 		</Dropdown >

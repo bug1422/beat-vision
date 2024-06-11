@@ -61,7 +61,7 @@ const PasswordConfirm = () => {
                 <Col xs={4}>
                     {success ? <div className="text-center mt-5">
                         <div className='fs-1 fw-bold text-success'>Password changed</div>
-                        <div className='my-3'>Redirecting to Login...</div>
+                        <div className='my-3 text-white fw-bold fs-3'>Redirecting to Login...</div>
                     </div> :
                         <Card>
                             <CardTitle className="my-2 ms-3">
@@ -73,7 +73,7 @@ const PasswordConfirm = () => {
                                     <FormInputPassword control={control} name="NewPassword" className="my-2" />
                                     <button type="submit"
                                         disabled={loading}
-                                        className="btn btn-primary">
+                                        className="btn btn-warning text-white fw-bold">
                                         Update Password
                                     </button>
                                 </form>

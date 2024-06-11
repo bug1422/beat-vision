@@ -91,7 +91,8 @@ const Inbox = () => {
 			<Col xs="12">
 				{isLoading ? <div className='fs-1 fw-bold text-info text-center'>LOADING</div> :
 					<div className="px-5">
-						<div className='btn btn-info' onClick={() => { setAllRead() }}>Mark All As Read</div>
+						<div className='text-white fw-bold fs-1 border-bottom mb-3'>Notifications</div>
+						<div className='btn btn-warning fw-bold' onClick={() => { setAllRead() }}>Mark All As Read</div>
 						<Card className="my-3">
 							<ul className="message-list">
 								{(notis || []).map((noti, idx) => (
@@ -110,7 +111,7 @@ const Inbox = () => {
 									<Button
 										type="button"
 										size="sm"
-										variant="soft-secondary"
+										variant="soft-warning"
 										className="waves-effect mb-0"
 									>
 										<i className="fa fa-chevron-left" />
@@ -118,7 +119,7 @@ const Inbox = () => {
 									<Button
 										type="button"
 										size="sm"
-										variant="soft-secondary"
+										variant="soft-warning"
 										className="waves-effect mb-0"
 									>
 										<i className="fa fa-chevron-right" />

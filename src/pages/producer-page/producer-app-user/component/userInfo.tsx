@@ -1,11 +1,11 @@
 import { UserProfileDto } from "@/types/ApplicationTypes/UserProfileType"
 import { Button, Card, CardBody, Col, Row } from "react-bootstrap"
-import user4 from '@/assets/images/users/user-4.jpg'
+import defaultPic from '/default-image/defaultprofile.png'
 
 const UserInfo = (props: { user: UserProfileDto }) => {
     const { user } = props
     console.log(user?.ProfileBlobUrl)
-    const imgUrl = user?.ProfileBlobUrl ?? user4
+    const imgUrl = user?.ProfileBlobUrl ?? defaultPic
     return (<Card>
         <CardBody className="p-0">
 

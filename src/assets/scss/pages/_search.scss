@@ -1,9 +1,7 @@
 .search-page {
     $card-height: 70px;
     
-    .search {
-        // background-color: rgb(15, 15, 15);
-    }
+    color: white;
 
     .left-col {
         padding-top: 10% !important;
@@ -46,7 +44,9 @@
             border: 1px solid rgb(88, 88, 88);
             border-radius: 10px;
         }
-
+        .search-body{
+            background-color: rgba(0, 0, 0, 0.349);
+        }
         .search-body>* {
             margin-left: 0px;
         }
@@ -62,7 +62,8 @@
 
             .track {
                 width: 100%;
-                height: $card-height;
+                height:auto;
+                padding-bottom: 10px;
                 margin-bottom: 30px;
                 font-size: 18px;
 
@@ -84,6 +85,10 @@
                     .name {
                         font-weight: bold;
                         text-decoration: none;
+                        color: $primary-color;
+                    }
+                    .name:hover {
+                        color: $primary-color-light;
                     }
                 }
             }
@@ -103,9 +108,10 @@
     }
 }
 
-.tag-search:hover{
+.tag-search:hover {
     background-color: black !important;
 }
-.highlighted{
+
+.highlighted {
     background-color: rgb(243, 239, 0) !important;
 }

@@ -11,17 +11,13 @@ const AboutMe = (props: { userData: UserProfileDto | undefined | null }) => {
 	const { userData } = props
 	return (
 		<Row>
-			<Col >
-				<Card>
-					<CardBody>
-						<p className="fs-2 bold">Description</p>
-						<div className="ps-2 post-title mt-4">
-							<p className="font-15 mb-0">
-								{userData?.Description ?? "No Info"}
-							</p>
-						</div>
-					</CardBody>
-				</Card>
+			<Col className='ms-2'>
+				<p className="fs-2 bold text-white">Description</p>
+				<div className="ps-2 post-title mt-4 text-white">
+					<p className="font-15 mb-0 text-white">
+						{userData?.Description ?? "No Info"}
+					</p>
+				</div>
 			</Col>
 		</Row>
 	)

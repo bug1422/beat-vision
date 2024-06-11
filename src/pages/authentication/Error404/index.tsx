@@ -23,7 +23,7 @@ const Error404 = () => {
 						<h4 className="mt-3 mb-1 fw-semibold text-white font-18">
 							Oops! Sorry page does not found
 						</h4>
-						<p className="text-muted  mb-0">Back to Beat Vision Homepage.</p>
+						<p className="text-white  mb-0">Back to Beat Vision Homepage.</p>
 					</div>
 				</CardBody>
 				<CardBody>
@@ -33,7 +33,7 @@ const Error404 = () => {
 						<h5 className="font-16 text-muted mb-5">Somthing went wrong</h5>
 					</div>
 					<Link
-						className="btn btn-primary w-100 waves-effect waves-light"
+						className="btn btn-warning text-white w-100 waves-effect waves-light"
 						to="/"
 					>
 						Back to Home <i className="fas fa-redo ms-1"></i>

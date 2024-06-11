@@ -22,7 +22,7 @@ const Profile = () => {
 					}
 					<ProfileTask user={userData}/>
 				</> : <>
-					<div>Can't get data</div>
+					<div className='text-center text-white fw-bold fs-1'>Can't get data</div>
 				</>
 			}
 		</>

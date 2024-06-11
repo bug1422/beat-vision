@@ -1,4 +1,4 @@
-import { Badge, Button, Card, CardBody, CardHeader, Carousel, CarouselItem, Col, Form, FormControl, Pagination, Row } from "react-bootstrap"
+import { Badge, Card, CardHeader, Carousel, CarouselItem, Col, FormControl, Pagination, Row } from "react-bootstrap"
 import demoBeat from '/images/products/01.png'
 import img1 from '/images/homepage/img1.jpg'
 import img2 from '/images/homepage/img2.jpg'
@@ -164,21 +164,12 @@ const Section2 = () => {
 const Section3 = () => {
     return (<>
         <Row className="section3 pt-2">
-            <Col xl={5} className="left-col d-flex justify-content-end pe-2 align-items-center">
+            <Col xl={6} className="left-col d-flex justify-content-end pe-2 align-items-center">
                 <div className="home-text">
                     Brough to you by
                 </div>
             </Col>
-            <Col xl={6} className="right-col ps-3 d-flex justify-content-around align-items-center">
-                <div className="sponsor">
-                    <img src={fpt_logo} className="img-fluid" />
-                </div>
-                <div className="sponsor">
-                    <img src={fpt_logo} className="img-fluid" />
-                </div>
-                <div className="sponsor">
-                    <img src={fpt_logo} className="img-fluid" />
-                </div>
+            <Col xl={6} className="right-col ps-3 d-flex justify-content-start align-items-center">
                 <div className="sponsor">
                     <img src={fpt_logo} className="img-fluid" />
                 </div>
@@ -193,7 +184,7 @@ const Section4 = () => {
                 <Col xl={4} className="left-col pt-3 mt-3">
                     <div className="home-text">
                         <div>Why choose</div> 
-                        <div className="ms-5 text-info">Beat Vision</div> 
+                        <div className="ms-5  brand">Beat Vision</div> 
                     </div>
                 </Col>
                 <Col />
@@ -231,47 +222,49 @@ const Section4 = () => {
 //         </div>
 //     )
 // }
-const Section6 = () => {
-    return (<>
-        <div className="section6">
-            <Row className="content align-items-center">
-                <Col xl={6}>
-                    <Card className="left-card">
-                        <CardBody>
-                            <div className="home-text ps-5">FAQ</div>
-                        </CardBody>
-                    </Card>
-                </Col>
-                <Col xl={6}>
-                    <Card className="right-card">
-                        <CardBody>
-                            <div className="pb-2">
-                                <div className="home-text title ">Don't miss a Beat!</div>
-                                <div className="description">Want to learn more about BeatVision? Enter your name and email address below.</div>
-                            </div>
-                            <Form>
-                                <Form.Group className="my-3">
-                                    <Form.Control type="text" placeholder="First Name" />
-                                </Form.Group>
-                                <Form.Group className="my-3">
-                                    <Form.Control type="text" placeholder="Email" />
-                                </Form.Group>
-                                <Button type="submit" className="me-1 submit">
-                                    Subscribe
-                                </Button>
-                            </Form>
-                        </CardBody>
-                    </Card>
-                </Col>
-            </Row>
-        </div>
-    </>)
-}
+
+
+// const Section6 = () => {
+//     return (<>
+//         <div className="section6">
+//             <Row className="content align-items-center">
+//                 <Col xl={6}>
+//                     <Card className="left-card">
+//                         <CardBody>
+//                             <div className="home-text ps-5">FAQ</div>
+//                         </CardBody>
+//                     </Card>
+//                 </Col>
+//                 <Col xl={6}>
+//                     <Card className="right-card">
+//                         <CardBody>
+//                             <div className="pb-2">
+//                                 <div className="home-text title ">Don't miss a Beat!</div>
+//                                 <div className="description">Want to learn more about BeatVision? Enter your name and email address below.</div>
+//                             </div>
+//                             <Form>
+//                                 <Form.Group className="my-3">
+//                                     <Form.Control type="text" placeholder="First Name" />
+//                                 </Form.Group>
+//                                 <Form.Group className="my-3">
+//                                     <Form.Control type="text" placeholder="Email" />
+//                                 </Form.Group>
+//                                 <Button type="submit" className="me-1 submit">
+//                                     Subscribe
+//                                 </Button>
+//                             </Form>
+//                         </CardBody>
+//                     </Card>
+//                 </Col>
+//             </Row>
+//         </div>
+//     </>)
+// }
 const SectionList = [
     Section1,
     Section2,
     Section3,
     Section4,
-    Section6
+    // Section6
 ]
 export { SectionList }

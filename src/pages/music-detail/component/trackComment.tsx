@@ -13,6 +13,7 @@ export const Message = (props: { value: TrackCommentDto }) => {
   const { user } = useAuthContext()
   const [onHovered, setHovered] = useState(false)
   const [isOpened, setOpened] = useState(false)
+  const [img, setImg] = useState(defaultPic)
   const [profile, setUser] = useState<UserProfileDto>()
   const [replies, setReplies] = useState<TrackCommentDto[]>([])
 
@@ -73,6 +74,11 @@ export const Message = (props: { value: TrackCommentDto }) => {
         await HttpClient.get('/api/ManageUser/' + props.value.AuthorId)
       if (res?.data) {
         setUser(res?.data)
+        if(res?.data.ProfileBlobUrl){
+          var img = new Image()
+          img.src = res?.data.ProfileBlobUrl;
+          if(img.height != 0) setImg(res?.data.ProfileBlobUrl)
+        }
       }
     } catch (e: any) {
       console.log(e)
@@ -82,7 +88,7 @@ export const Message = (props: { value: TrackCommentDto }) => {
   return (<>
     <Row className="mb-2 mt-3" style={{ width: "100%" }}>
       <div className="" style={{ width: "60px", top: "0" }}>
-        <img src={profile?.ProfileBlobUrl ?? defaultPic} className="" style={{ width: "50px", borderRadius: "100%" }} />
+        <img src={img} className="" style={{ width: "50px", borderRadius: "100%" }} />
       </div>
 
       <Col xs={10} className="ms-1 align-items-center">
@@ -117,7 +123,7 @@ export const Message = (props: { value: TrackCommentDto }) => {
                     <input type="text" className="form-control" placeholder="Type in your thought" />
                   </Col>
                   <Col xs={2}>
-                    <button className="btn btn-primary" type="submit">Send</button>
+                    <button className="btn btn-warning text-white" type="submit">Send</button>
                   </Col>
                 </Row>
               </form>
@@ -204,7 +210,7 @@ const TrackComment = (props: { trackId: number }) => {
                   <input type="text" className="form-control" placeholder="Type in your thought" />
                 </Col>
                 <Col xs={2}>
-                  <button className="btn btn-primary" type="submit">Send</button>
+                  <button className="btn btn-warning text-white" type="submit">Send</button>
                 </Col>
               </Row>
             </form>

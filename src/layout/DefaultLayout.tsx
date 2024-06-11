@@ -16,7 +16,7 @@ const DefaultLayout = ({ children }: DefaultLayoutProps) => {
                 <Suspense fallback={<div />}>
                     <TopNavbar />
                 </Suspense>
-                <div className='page-content'>
+                <div className='page-content metal-bg'>
                     <Suspense fallback={loading()}>{children}</Suspense>
                 </div>
                 <Suspense fallback={<div />}>

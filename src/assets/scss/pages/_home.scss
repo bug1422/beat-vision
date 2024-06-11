@@ -8,6 +8,7 @@ $section6-height: 450px;
 $title-size: 120px;
 $title-color: #ffaa1d;
 $artist-thumb-size: 200px;
+
 .home-text {
     font: $font-family-sans-serif;
     font-size: 60px;
@@ -134,7 +135,13 @@ $artist-thumb-size: 200px;
             margin-left: 7%;
             width: 100%;
             transform: skew(-$skew-deg);
+
+            .brand {
+                color: rgb(255, 251, 39) ;
+                text-shadow: rgb(174, 221, 63) 0px 5px 10px;
+            }
         }
+
     }
 
     .right-col {
@@ -168,6 +175,7 @@ $artist-thumb-size: 200px;
 
 .section5 {
     background-image: url("/public/images/homepage/dj-background.jpg");
+
     .home-text {
         font-family: $font-secondary;
         font-size: 52px;
@@ -176,12 +184,15 @@ $artist-thumb-size: 200px;
         // background-color: rgb(253, 154, 61);
         // box-shadow: 0px 15px 0px linear-gradient(,rgb(75, 75, 75));
     }
-    .img{
+
+    .img {
         width: 60px;
     }
+
     .content {
         height: $section5-height;
         padding: 0px 40px;
+
         .home-text {
             font-size: 23px;
             font-weight: bold;
@@ -189,13 +200,16 @@ $artist-thumb-size: 200px;
             // background-color: rgb(253, 154, 61);
             // box-shadow: 0px 15px 0px linear-gradient(,rgb(75, 75, 75));
         }
-        .row{
+
+        .row {
             height: 100%;
         }
     }
-    .artist{
+
+    .artist {
         height: 100%;
-        .img{
+
+        .img {
             position: relative;
             width: $artist-thumb-size;
             height: $artist-thumb-size;

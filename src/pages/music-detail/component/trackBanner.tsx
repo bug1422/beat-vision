@@ -5,9 +5,9 @@ import "../index.css";
 import { TrackDto } from "@/types/ApplicationTypes/TrackType";
 import { Tag } from "@/pages/pages/Search";
 import { useState } from "react";
+
 export default function TrackBanner(props: { track: TrackDto }) {
   const [track, _setTrack] = useState<TrackDto>(props.track)
-
 
   return (
     <>

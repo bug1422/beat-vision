@@ -78,13 +78,18 @@ const MusicPlayer = (props: { trackId: number, tracks: TrackDto[] }) => {
         }
         catch (e: any) {
             console.log(e)
-            if (count > 3) {
-                setCount(0)
-                setTrackId(1)
+            if (e.response.status = 500) {
+                toast.error("Failed to get the song", { position: "bottom-right", duration: 2000 })
             }
             else {
-                setTrackId(trackId + 1)
-                setCount(count + 1)
+                if (count > 3) {
+                    setCount(0)
+                    setTrackId(1)
+                }
+                else {
+                    setTrackId(trackId + 1)
+                    setCount(count + 1)
+                }
             }
         }
     }
@@ -232,20 +237,24 @@ const MusicPlayer = (props: { trackId: number, tracks: TrackDto[] }) => {
         <div className="play-bar" >
             <div ref={container as MutableRefObject<HTMLDivElement>} style={{ display: "none" }}></div>
             <input type="range" min={0} step={0.1} max={100} value={barValue} onMouseDown={() => { setSkipping(true) }} onMouseUp={() => { endSkip() }} onChange={(e) => { handleSkip(e) }}
-                style={{ background: 'linear-gradient(to right, #5a37e8 0%, #5a37e8 ' + barValue.toString() + '%, #454545 ' + barValue.toString() + '%, #454545 100%)' }}
+                style={{ background: 'linear-gradient(to right, #ffb310 0%, #ffb310 ' + barValue.toString() + '%, #454545 ' + barValue.toString() + '%, #454545 100%)' }}
             />
         </div>
         <Row className=" align-items-center my-2">
             <Col xl={5} className="music-player-content d-flex justify-content-end ">
                 <img className="img-fluid icon me-2" src={track?.ProfileBlobUrl ?? DefaultBeatThumbnail}></img>
-                <Link to={"/music-detail/detail/" + track?.Id} className="info me-2">
-                    <div className="name pt-1"><div className="text">{track?.TrackName}</div></div>
+                <div>
+                    <div className="name pt-1">
+                        <Link to={"/music-detail/detail/" + track?.Id} className="info me-2">
+                            <div className="text">{track?.TrackName}</div>
+                        </Link>
+                    </div>
                     <div className="tag">{track?.Tags.map((tag, idx) => (
                         <Badge bg="secondary" key={idx}>{tag.Name}</Badge>
                     ))}</div>
-                </Link>
+                </div>
                 <div className="w-10 my-1">
-                    <Button className="buy d-flex align-items-center" onClick={() => {
+                    <Button variant="warning" className="buy d-flex align-items-center" onClick={() => {
                         if (user) {
                             if (track) AddToCart(track.Id)
                             else toast.error("Can't get track", { position: "bottom-right", duration: 2000 })
@@ -275,19 +284,23 @@ const MusicPlayer = (props: { trackId: number, tracks: TrackDto[] }) => {
                     }
                 </div>
                 <div className="volumne-bar align-items-center me-4 mt-1">
-                    <FormRange min={0} max={100} onChange={(e) => {
-                        let value = parseInt(e.target.value)
-                        if (isMuted && value < volumne) {
-                            waveSurfer.current?.setVolume(value / 100)
-                            setVolume(value)
-                        }
-                        else {
-                            setMuted(false)
-                            waveSurfer.current?.setMuted(false)
-                            waveSurfer.current?.setVolume(value / 100)
-                            setVolume(value)
-                        }
-                    }} className="ms-2" />
+                    <input type="range" min={0} step={1} max={100} 
+                        style={{
+                            background: 'linear-gradient(to right, #ffb310 0%, #ffb310 ' + volumne.toString() + '%, #454545 ' + volumne.toString() + '%, #454545 100%)'
+                        }}
+                        onChange={(e) => {
+                            let value = parseInt(e.target.value)
+                            if (isMuted && value < volumne) {
+                                waveSurfer.current?.setVolume(value / 100)
+                                setVolume(value)
+                            }
+                            else {
+                                setMuted(false)
+                                waveSurfer.current?.setMuted(false)
+                                waveSurfer.current?.setVolume(value / 100)
+                                setVolume(value)
+                            }
+                        }} className="ms-2" />
                 </div>
                 <div >
                     <FiMenu className="playlist" onClick={toggle} />

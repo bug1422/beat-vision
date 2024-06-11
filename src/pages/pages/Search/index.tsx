@@ -65,27 +65,28 @@ const Search = () => {
 
     const AddPlayCount = async (trackId: number) => {
         try {
-          const res: AxiosResponse<Blob> =
-            await HttpClient.get("/api/ManageTrack/plus-play-count", {
-              params: {
-                trackId: trackId
-              }
-            })
-            if(res){
-                
+            const res: AxiosResponse<Blob> =
+                await HttpClient.get("/api/ManageTrack/plus-play-count", {
+                    params: {
+                        trackId: trackId
+                    }
+                })
+            if (res) {
+
             }
         }
         catch (e: any) {
-          console.log(e)
+            console.log(e)
         }
-      }
+    }
 
     const fetchTracks = async (curr: number) => {
         setError1("")
         try {
             const res: AxiosResponse<PagingResponseDto<TrackDto[]>> =
                 await HttpClient.get("/api/ManageTrack/get-range?currentPage=" + (curr - 1) + "&amount=" + itemsPerPage)
-            if (res?.data) {
+            console.log(res)
+            if (res) {
                 if (res?.data.Value.length > 0) {
                     const tempt = res?.data.Value.filter(p => p.IsPublished)
                     setList([...list, ...tempt])
@@ -210,7 +211,7 @@ const Search = () => {
                             Tracks
                         </div>
                         <div className="search-result-title">
-                            Filtering:
+                            Filtering
                             <div className="mt-3 d-flex flex-wrap">
                                 {
                                     selectedTags.map((tag, idx) =>
@@ -225,50 +226,54 @@ const Search = () => {
                     <div className="my-2 search-section d-flex align-items-center">
                     </div>
                     <div className="search-container">
-                        {error1 != ""? <>
+                        {error1 != "" ? 
+                        <div>Can't get data</div> :
+                        <>
                             {(tracks && tracks?.length > 0) ?
-                            <div className="search-body pt-2 d-flex flex-column">
-                                {tracks.map((track, index) => (
-                                    <Row className="track align-items-center" key={index} onClick={() => { setSelected(track); AddPlayCount(track.Id)}} >
-                                        <Col xl={1} className="d-flex">
-                                            <div className="rank">{index + 1} </div>
-                                            <FiPlayCircle className="play" />
-                                        </Col>
-                                        <Col xl={1}>
-                                            <img className="img-fluid icon" src={track.ProfileBlobUrl ?? DefaultBeatThumbnail}></img>
-                                        </Col>
-                                        <Col className="d-flex justify-content-between">
-                                            <div className="desc1 d-flex flex-column">
-                                                <Link to={"/music-detail/detail/" + track.Id} className="name">{track.TrackName}</Link>
-                                                <div className="mt-1 producer"><FiPlay />{track.PlayCount}</div>
-                                            </div>
-                                            <div className="desc2 d-flex justify-content-end align-items-center">
-                                                {
-                                                    track.Tags.map((tag, idx) => <Tag className={`py-2 me-2 ${(selectedTags.length > 0 && selectedTags.find(p => p.Name == tag.Name)) ? "highlighted" : ""}`} name={tag.Name} key={idx} />)
-                                                }
-                                                <Button onClick={() => {
-                                                    if (user) {
-                                                        AddToCart(track.Id)
-                                                    } else {
-                                                        navigate("/auth/login")
+                                <div className="search-body pt-2 d-flex flex-column">
+                                    {tracks.map((track, index) => (
+                                        <Row className="track align-items-center border-bottom border-secondary" key={index} onClick={() => { setSelected(track); AddPlayCount(track.Id) }} >
+                                            <Col xl={1} className="d-flex">
+                                                <div className="rank">{index + 1} </div>
+                                                <FiPlayCircle className="play" />
+                                            </Col>
+                                            <Col xl={1}>
+                                                <img className="img-fluid icon" src={track.ProfileBlobUrl ?? DefaultBeatThumbnail}></img>
+                                            </Col>
+                                            <Col className="d-flex justify-content-between">
+                                                <div className="desc1 d-flex flex-column">
+                                                    {track.Id != undefined ? 
+                                                    <Link to={"/music-detail/detail/" + track.Id} className="name title">{track.TrackName}</Link> : 
+                                                    <div className="name title">{track.TrackName}</div>}
+                                                    <div className="mt-1 producer"><FiPlay />{track.PlayCount}</div>
+                                                </div>
+                                                <div className="desc2 d-flex justify-content-end align-items-center">
+                                                    {
+                                                        track.Tags.map((tag, idx) => <Tag className={`py-2 me-2 ${(selectedTags.length > 0 && selectedTags.find(p => p.Name == tag.Name)) ? "highlighted" : ""}`} name={tag.Name} key={idx} />)
                                                     }
-                                                }}><FiShoppingBag className="me-2" />{track.Price != null ? track.Price > 0 ? track.Price?.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' }) : "Free" : "Null"}</Button>
-                                            </div>
-                                        </Col>
-                                    </Row>
-                                ))}
-                                <div className="btn btn-primary" onClick={() => { HandleLoadMore() }}>Load more</div>
-                            </div> :
-                            <div className="search-empty text-center py-5">
-                                <div className="title">
-                                    No beats found :{'('}
+                                                    <Button variant="outline-warning" onClick={() => {
+                                                        if (user) {
+                                                            AddToCart(track.Id)
+                                                        } else {
+                                                            navigate("/auth/login")
+                                                        }
+                                                    }}><FiShoppingBag className="me-2" />{track.Price != null ? track.Price > 0 ? track.Price?.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' }) : "Free" : "Null"}</Button>
+                                                </div>
+                                            </Col>
+                                        </Row>
+                                    ))}
+                                    <div className="btn btn-warning" onClick={() => { HandleLoadMore() }}>Load more</div>
+                                </div> :
+                                <div className="search-empty text-center py-5">
+                                    <div className="title">
+                                        No beats found :{'('}
+                                    </div>
+                                    <div>
+                                        {/* set popular beat here */}
+                                    </div>
                                 </div>
-                                <div>
-                                    {/* set popular beat here */}
-                                </div>
-                            </div>
-                        }
-                        </> : <div>Can't get data</div>}
+                            }
+                        </> }
                     </div>
                 </Col>
             </Row>

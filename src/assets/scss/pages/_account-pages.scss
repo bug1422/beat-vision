@@ -2,29 +2,33 @@
 // Account Pages
 //
 
-.account-body{
+.account-body {
   width: 100%;
   height: 100vh;
+  background-image: url('/public/metal-bg.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: 100% 100%;
+
   &.accountbg {
-    background-image: url('../images/auth-bg.png');
     background-position: center center;
     background-size: cover;
     background-repeat: repeat;
     background-color: rgba(black, 0.04);
   }
-  .auth-header-box{
-    background-color: $sidebar-dark-bg;
-    h4{
-      color: $white;
+
+  .auth-header-box {
+    background-color: $primary-color;
   }
-}
 
 
   .account-social {
     text-align: center;
-    h6{
+
+    h6 {
       color: $gray-700;
     }
+
     h6:after {
       display: inline-block;
       margin: 0 6px 4px 6px;
@@ -32,18 +36,19 @@
       content: " ";
       text-shadow: none;
       border: 1px dashed $border;
-      width:120px;
+      width: 120px;
     }
+
     h6:before {
       display: inline-block;
       margin: 0 6px 4px 6px;
       content: " ";
       text-shadow: none;
       border: 1px dashed $border;
-      width:120px;
+      width: 120px;
     }
 
-    a{
+    a {
       i {
         width: 36px;
         height: 36px;
@@ -53,54 +58,62 @@
         border-radius: 50%;
         font-size: 14px;
         z-index: 5;
-        &.facebook{
+
+        &.facebook {
           background-color: $primary;
           color: $white;
         }
-        &.twitter{
+
+        &.twitter {
           background-color: $secondary;
           color: $white;
         }
-        &.google{
+
+        &.google {
           background-color: $pink;
-        color: $white;
+          color: $white;
         }
       }
-      &:hover .facebook{
+
+      &:hover .facebook {
         color: $white;
         background-color: lighten($primary, 5%);
       }
-      &:hover .twitter{
+
+      &:hover .twitter {
         color: $white;
         background-color: lighten($secondary, 5%);
       }
-      &:hover .google{
+
+      &:hover .google {
         color: $white;
         background-color: lighten($pink, 5%);
       }
     }
   }
 }
-.auth-bg {
-    background-image: url('../images/auth-bg.png');
-    background-position: center center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-color: rgba(black, 0.04);
-  }
 
-.footer-auth{
+.auth-bg {
+  background-image: url('../images/auth-bg.png');
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-color: rgba(black, 0.04);
+}
+
+.footer-auth {
   position: absolute;
   bottom: 0;
   right: 0;
   left: 0;
 }
 
-.auth-page{
-  .logo-lg.logo-light{
+.auth-page {
+  .logo-lg.logo-light {
     display: $logo-light;
   }
-  .logo-lg.logo-dark{
+
+  .logo-lg.logo-dark {
     display: $logo-dark;
   }
 }
@@ -110,16 +123,17 @@
     font-size: 98px;
     font-weight: 700;
     text-shadow: rgba($gray-500, 0.2) 1px 1px,
-                 rgba($gray-500, 0.2) 2px 2px,
-                 rgba($gray-500, 0.2) 3px 3px;
-  }
-}
-@media (max-width: 768px) {
-  .auth-card{
-    margin-top: 34px;
-  }
-  .footer-auth{
-    position: relative;
+      rgba($gray-500, 0.2) 2px 2px,
+      rgba($gray-500, 0.2) 3px 3px;
   }
 }
 
+@media (max-width: 768px) {
+  .auth-card {
+    margin-top: 34px;
+  }
+
+  .footer-auth {
+    position: relative;
+  }
+}

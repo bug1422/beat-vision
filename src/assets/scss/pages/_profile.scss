@@ -2,7 +2,7 @@
 // Profile
 //
 .social > *:hover{
-  border: 0.5px solid aqua;
+  border: 0.5px solid rgb(137, 248, 33);
   border-radius: 8px;
 }
 
@@ -19,7 +19,24 @@
   bottom: 0;
   left: 0;
 }
-
+.profile-task{
+  background-color: rgba(255, 255, 255, 0.39);
+  min-height: 70vh;
+}
+.profile-comments{
+  background: none;
+}
+.update-form{
+  background-color: none;
+}
+.update-component{
+  background-color: rgba(59, 59, 59, 0.767) !important;
+  border: none;
+}
+.comment-body 
+{
+  background-color: rgba(255, 255, 255, 0.39) !important;
+}
 .user-profile {
   .user-profile-main {
     display: flex;

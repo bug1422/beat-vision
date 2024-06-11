@@ -48,7 +48,7 @@ const Cart = (props: { userId: number | undefined }) => {
                 as="a"
                 className="nav-link arrow-none waves-light waves-effect"
             >
-                <FiShoppingCart className="align-self-center topbar-icon" onClick={() => {
+                <FiShoppingCart className="text-warning align-self-center topbar-icon" onClick={() => {
                     GetTracksInCart()
                 }} />
             </DropdownToggle>
@@ -73,8 +73,8 @@ const Cart = (props: { userId: number | undefined }) => {
                 </div> : <div>{error != "" ? error : "LOADING"}</div>
 
                 }
-                <Link to={"/cart/" + props.userId} className="dropdown-item text-center text-primary view-all border-top">
-                    View all <i className="fi-arrow-right"></i>
+                <Link to={"/cart/" + props.userId} className="dropdown-item text-center text-primary view-all border-top text-warning">
+                    View all <i className="fi-arrow-right text-warning"></i>
                 </Link>
             </DropdownMenu>
         </Dropdown>

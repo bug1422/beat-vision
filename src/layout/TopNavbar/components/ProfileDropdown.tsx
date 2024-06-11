@@ -3,7 +3,6 @@ import {
 	DropdownItem,
 	DropdownMenu,
 	DropdownToggle,
-	Image,
 } from 'react-bootstrap'
 
 import { FiArchive, FiBell, FiPower, FiShoppingCart, FiUser } from 'react-icons/fi'
@@ -11,7 +10,7 @@ import { useAuthContext } from '@/context'
 import { useNavigate } from 'react-router-dom'
 import { AxiosResponse } from 'axios'
 import { UserProfileDto } from '@/types/ApplicationTypes/UserProfileType'
-import { HttpClient } from '@/common'
+import { HttpClient, HttpClientAuth } from '@/common'
 import { useEffect, useState } from 'react'
 import defaultProfile from '/default-image/defaultprofile.png'
 
@@ -34,10 +33,16 @@ const ProfileDropdown = () => {
 	const FetchUserProfile = async () => {
 		try {
 			const res: AxiosResponse<UserProfileDto> =
-				await HttpClient.get('/api/ManageUser/' + user?.userid)
+				await HttpClientAuth.get('/api/ManageUser/' + user?.userid,{})
 			if (res?.data) {
-				if (res?.data.ProfileBlobUrl) setImgURL(res?.data.ProfileBlobUrl)
-
+				const imgurl = res?.data.ProfileBlobUrl 
+				if (imgurl) {
+					
+					var img = new Image()
+					img.src = imgurl
+					
+					if (img.height != 0) setImgURL(imgurl)
+				}
 			}
 		} catch (e: any) {
 			console.log(e)
@@ -50,7 +55,7 @@ const ProfileDropdown = () => {
 				as="a"
 				className="nav-link arrow-none waves-effect waves-light nav-user"
 			>
-				<Image
+				<img
 					src={imgURL}
 					alt="profile-user"
 					className="rounded-circle thumb-md"

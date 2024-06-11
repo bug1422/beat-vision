@@ -14,6 +14,7 @@ const Error404 = lazy(() => import("@/pages/authentication/Error404"));
 const Error500 = lazy(() => import("@/pages/authentication/Error500"));
 const EmailConfirm = lazy(() => import("@/pages/authentication/EmailConfirm"));
 const PasswordConfirm = lazy(() => import("@/pages/authentication/PasswordConfirm"));
+const ExternalLogin = lazy(()=> import("@/pages/authentication/ExternalLogin"));
 
 // Pages
 const HomePage = lazy(() => import("@/pages/pages/Home"));
@@ -181,6 +182,11 @@ const authRoutes: RoutesProps[] = [
     name: "Password Confirm",
     element: <PasswordConfirm />,
   },
+  {
+    path: "/auth/external-login/:jwtToken",
+    name: "External Login Confirm",
+    element: <ExternalLogin />,
+  }
 ];
 
 const allCustomerRoutes = [...appsRoutes];

@@ -22,6 +22,7 @@ File: App Css
 
 // Components
 @import "components/musicplayer";
+@import "components/shared";
 
 @import "components/reboot";
 @import "components/waves";
@@ -61,11 +62,14 @@ File: App Css
 
 
 // Pages
+@import "pages/authen";
+
 @import "pages/home";
 @import "pages/search";
 @import "pages/cart";
 @import "pages/payment-result";
 @import "pages/detail";
+@import "pages/profile";
 
 @import "pages/avatar";
 @import "pages/general";
@@ -75,7 +79,6 @@ File: App Css
 @import "pages/timeline";
 @import "pages/email";
 @import "pages/chat";
-@import "pages/profile";
 @import "pages/invoice";
 @import "pages/projects";
 @import "pages/files";

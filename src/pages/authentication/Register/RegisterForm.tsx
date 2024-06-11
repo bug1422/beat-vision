@@ -41,7 +41,6 @@ export default function useRegister() {
 
 		type RegisterFormFields = yup.InferType<typeof schemaResolver>
 
-
 		const register = handleSubmit(async function (values: RegisterFormFields) {
 			setLoading(true)
 			try {
@@ -51,7 +50,6 @@ export default function useRegister() {
 					"fullname": values.username
 				}
 				const res: AxiosResponse<AuthReturnType> = await HttpClient.post('/api/ManageIdentity/register', request)
-				console.log(res)
 				if (res.data) {
 					const decoded = jwtDecode<User>(res.data?.AccessToken)
 					console.log(decoded)
@@ -124,23 +122,6 @@ export default function useRegister() {
 				<Row className="form-group my-3">
 					<Col sm={12}>
 						<div className="custom-control custom-switch switch-success">
-							<FormCheck
-								required={true}
-								name='agreeCheck'
-								type="checkbox"
-								className="custom-control-input"
-								label={
-									<label
-										className="form-label text-muted"
-										htmlFor="customSwitchSuccess2"
-									>
-										You agree to the Beat Vision{' '}
-										<Link to="#" className="text-primary">
-											Terms of Use
-										</Link>
-									</label>
-								}
-							/>
 
 						</div>
 					</Col>
@@ -149,9 +130,9 @@ export default function useRegister() {
 				<Row className="form-group mb-0">
 					<Col xs={12}>
 						<Button
-							variant="primary"
+							variant="warning"
 							type="submit"
-							className="w-100 waves-effect waves-light"
+							className="w-100 waves-effect waves-light text-white"
 							disabled={loading}
 						>
 							Register <i className="fas fa-sign-in-alt ms-1"></i>
@@ -161,5 +142,8 @@ export default function useRegister() {
 			</form>
 		)
 	}
+
+
+
 	return { RegisterForm, isAuthenticated, redirectUrl }
 }

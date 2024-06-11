@@ -3,12 +3,14 @@ import { FormInputPassword } from "@/components"
 import { useAuthContext } from "@/context"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { AxiosResponse } from "axios"
-import { Card, CardBody, CardTitle, FormLabel } from "react-bootstrap"
+import { Col, FormLabel, Row } from "react-bootstrap"
 import { useForm } from "react-hook-form"
+import { useNavigate } from "react-router-dom"
 import { toast } from "sonner"
 import * as yup from 'yup'
 const PasswordForm = () => {
-    const { user } = useAuthContext()
+    const { user, removeSession } = useAuthContext()
+    const navigate = useNavigate()
     const schemaResolver = yup.object().shape({
         NewPassword: yup.string().required("Please enter new password"),
         OldPassword: yup.string().required("Please enter old password")
@@ -31,30 +33,34 @@ const PasswordForm = () => {
                     toast.info("Password changed", { position: "bottom-right", duration: 2000 })
                 }
                 console.log(res)
-            } catch (error) {
+            } catch (error: any) {
                 console.log(error)
+                if (error.response.status == 401 || error.response.status == 403) {
+                    removeSession()
+                    toast.error("Your session has passed", { position: "bottom-right", duration: 2000 })
+                    navigate("/auth/login")
+                    return
+                }
                 toast.error("Can't change password", { position: "bottom-right", duration: 2000 })
             }
         }
     })
 
     return (<>
-        <div className="d-flex justify-content-center">
-            <Card>
-                <CardTitle>
-                    Change password
-                </CardTitle>
-                <CardBody>
-                    <form onSubmit={change}>
-                        <FormLabel>Enter old password</FormLabel>
+        <Row className="d-flex justify-content-center mt-5">
+            <Col xs={7} >
+                <div className="d-flex flex-column w-100">
+                    <div className="fw-bold text-warning fs-1">Change password</div>
+                    <form onSubmit={change} >
+                        <FormLabel className="fw-light text-white fs-3">Enter old password</FormLabel>
                         <FormInputPassword control={control} name="OldPassword" className="my-2" />
-                        <FormLabel>Enter new password</FormLabel>
+                        <FormLabel className="fw-light text-white fs-3">Enter new password</FormLabel>
                         <FormInputPassword control={control} name="NewPassword" className="my-2" />
-                        <button type="submit" className="btn btn-primary">Update Password</button>
+                        <button type="submit" className="mt-4 btn btn-warning fw-bold fs-3">Update Password</button>
                     </form>
-                </CardBody>
-            </Card>
-        </div>
+                </div>
+            </Col>
+        </Row>
     </>)
 
 }

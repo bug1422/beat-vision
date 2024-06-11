@@ -10,3 +10,6 @@ export function CompareDate(date1: number, date2: number) {
     }
 }
 
+export function refreshToken(refreshToken: string){
+    
+}

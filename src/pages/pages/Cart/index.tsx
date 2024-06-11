@@ -111,59 +111,65 @@ const Cart = () => {
         <PageMetaData title="Cart" />
         {!isPurchased ?
             <>
-                <div className="fst-bold title my-3">
+                <div className="fst-bold title my-3 text-warning">
                     Shopping Cart
                 </div>
                 <Row className="d-flex justify-content-center">
-                    <Col xl={8} className="px-3">
-                        {isLoading ? <div className="title">Loading...</div> : <>{(tracks && tracks?.length > 0) ?
-                            <div className="cart-body pt-2 d-flex flex-column">
-                                {tracks.map((track, index) => (
-                                    <Row className="track align-items-center py-4 border-top" key={index} >
+                    <Col xl={8} className="px-3 bg-light" style={{ minHeight: "700px" }}>
+                        {isLoading ? <div className="title">Loading...</div> :
+                            <>{(tracks && tracks?.length > 0) ?
+                                <div className="cart-body h-100 pb-3 pt-2 d-flex flex-column align-items-end">
+                                    <div className="w-100">
+                                        {tracks.map((track, index) => (
+                                            <Row style={{borderBottom:"1px dotted grey"}} className="track align-items-center py-4 border-top" key={index} >
 
-                                        <Col xl={1} className="d-flex">
-                                            <div className="rank">{index + 1} </div>
-                                        </Col>
-                                        <Col xl={1}>
-                                            <img className="img-fluid icon" src={track.ProfileBlobUrl ?? DefaultBeatThumbnail}></img>
-                                        </Col>
-                                        <Col className="d-flex justify-content-between">
-                                            <div className="desc1 d-flex flex-column">
-                                                <Link to={"/music-detail/detail/" + track.Id} className="name">{track.TrackName}</Link>
-                                            </div>
-                                            <div className="d-flex flex-column">
-                                                <div className="d-flex align-items-center">
-                                                    <Tag className="py-2 me-2" name="Trap" />
-                                                    <Tag className="py-2 me-2" name="Hard Beat" />
-                                                    <div className="me-2 price">
-                                                        {track.Price != null ? track.Price > 0 ? track.Price?.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' }) : "Free" : "Null"}
+                                                <Col xl={1} className="d-flex">
+                                                    <div className="rank">{index + 1} </div>
+                                                </Col>
+                                                <Col xl={1}>
+                                                    <img className="img-fluid icon" src={track.ProfileBlobUrl ?? DefaultBeatThumbnail}></img>
+                                                </Col>
+                                                <Col className="d-flex justify-content-between">
+                                                    <div className="desc1 d-flex flex-column">
+                                                        <Link to={"/music-detail/detail/" + track.Id} className="name text-warning fw-bold">{track.TrackName}</Link>
                                                     </div>
+                                                    <div className="d-flex flex-column">
+                                                        <div className="d-flex align-items-center">
+                                                            <Tag className="py-2 me-2" name="Trap" />
+                                                            <Tag className="py-2 me-2" name="Hard Beat" />
+                                                            <div className="me-2 price fw-bold">
+                                                                {track.Price != null ? track.Price > 0 ? track.Price?.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' }) : "Free" : "Null"}
+                                                            </div>
+                                                        </div>
+                                                        <div className="me-2 d-flex justify-content-end"><u className="remove" onClick={() => { removeFromCart(track.Id) }}>remove</u></div>
+                                                    </div>
+                                                </Col>
+                                            </Row>
+                                        ))}
+                                    </div>
+                                    <div className="mt-auto w-100">
+                                        <div  style={{borderTop:"2px solid black"}} className="d-flex flex-column align-items-end total-section">
+                                            <div className="d-flex pt-3 pe-2">
+                                                <div className="total d-flex">
+                                                    <div className="me-2 fw-bold">Total: </div>
+                                                    <div>{
+                                                        (tracks.reduce((p, v) => p += v.Price ?? 0, 0)).toLocaleString('vn-VN', { style: 'currency', currency: 'VND' })
+                                                    }</div>
                                                 </div>
-                                                <div className="me-2 d-flex justify-content-end"><u className="remove" onClick={() => { removeFromCart(track.Id) }}>remove</u></div>
                                             </div>
-                                        </Col>
-                                    </Row>
-                                ))}
-                                <div className="border-top d-flex flex-column align-items-end">
-                                    <div className="d-flex pt-3 pe-2">
-                                        <div className="total d-flex">
-                                            <div className="me-2 fw-bold">Total: </div>
-                                            <div>{
-                                                (tracks.reduce((p, v) => p += v.Price ?? 0, 0)).toLocaleString('vn-VN', { style: 'currency', currency: 'VND' })
-                                            }</div>
+                                            <div className="mt-3">
+                                                <div className="btn btn-warning text-white purchase" onClick={checkOut}>Purchase</div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div className="mt-3">
-                                        <div className="btn btn-primary purchase" onClick={checkOut}>Purchase</div>
+
+                                </div> :
+                                <div className="cart-empty text-center py-5">
+                                    <div className="title">
+                                        Your cart is empty
                                     </div>
                                 </div>
-                            </div> :
-                            <div className="cart-empty text-center py-5">
-                                <div className="title">
-                                    Your cart is empty
-                                </div>
-                            </div>
-                        }</>}
+                            }</>}
                     </Col>
                 </Row>
             </> : <>

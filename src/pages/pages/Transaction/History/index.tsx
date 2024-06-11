@@ -116,12 +116,12 @@ const PaymentHistory = () => {
                             <div className="table-responsive">
                                 <table className="table table-bordered">
                                     <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Order At</th>
-                                            <th>Price</th>
-                                            <th>Track</th>
-                                            <th>Options</th>
+                                        <tr style={{backgroundColor: "rgba(96, 96, 96, 0.5)"}}>
+                                            <th className="text-warning">#</th>
+                                            <th className="text-warning">Order At</th>
+                                            <th className="text-warning">Price</th>
+                                            <th className="text-warning">Track</th>
+                                            <th className="text-warning">Options</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -131,23 +131,23 @@ const PaymentHistory = () => {
                                                     {
                                                         order.OrderItems.map((item, idx) => {
                                                             return (
-                                                                <tr key={idx}>
-                                                                    <td>{order.Id}</td>
+                                                                <tr key={idx} style={{backgroundColor: "rgba(93, 99, 86, 0.6)"}}>
+                                                                    <td  className="text-white">{idx}</td>
                                                                     <td>
-                                                                        <p className="d-inline-block align-middle mb-0 ms-1">
+                                                                        <p className="d-inline-block align-middle mb-0 ms-1 text-white">
                                                                             {new Date(order.CreateDate).toLocaleDateString("vn-VN")}
                                                                             <br />
-                                                                            <span className="text-muted font-13">
+                                                                            <span className="text-white fw-bold font-13">
                                                                                 {order.Status}
                                                                             </span>
                                                                         </p>
                                                                     </td>
-                                                                    <td> {order.Price != null ? order.Price > 0 ? order.Price?.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' }) : "Free" : "Null"}</td>
+                                                                    <td className="text-white"> {order.Price != null ? order.Price > 0 ? order.Price?.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' }) : "Free" : "Null"}</td>
                                                                     <td>
                                                                         <ul className="list-inline mb-0">
                                                                             <li
                                                                                 key={idx}
-                                                                                className="list-inline-item align-middle"
+                                                                                className="list-inline-item align-middle fw-bold text-white"
                                                                             >
                                                                                 {item.TrackName}
                                                                             </li>
@@ -155,7 +155,7 @@ const PaymentHistory = () => {
                                                                     </td>
                                                                     <td>
                                                                         {order.Status.toString() == "PAID" ? <>
-                                                                            <button type="button" className="btn btn-info" onClick={(e) => { e.currentTarget.textContent = "Pending";e.currentTarget.disabled = true; HandleDownload(parseInt(order.Id), item.Id, item.TrackName); e.currentTarget.textContent = "Download";e.currentTarget.disabled = false; }}>Download</button>
+                                                                            <button type="button" className="btn btn-warning fw-bold text-white" onClick={(e) => { e.currentTarget.textContent = "Pending";e.currentTarget.disabled = true; HandleDownload(parseInt(order.Id), item.Id, item.TrackName); e.currentTarget.textContent = "Download";e.currentTarget.disabled = false; }}>Download</button>
                                                                         </> : <></>}
                                                                     </td>
                                                                 </tr>

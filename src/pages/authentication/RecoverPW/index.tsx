@@ -48,8 +48,8 @@ const RecoverPW = () => {
 	return (
 		<AuthLayout>
 			<PageMetaData title="Recover PW" />
-			{success ? <div className='text-center'>
-				<div className='fs-1 fw-bold '>Please check your email</div>
+			{success ? <div className='bg-white p-4 text-center' style={{margin:"50px",borderRadius:"20px"}}>
+				<div className='fs-1 fw-bold text-warning'>Please check your email</div>
 				<div className='my-3'>We have sent a password reset to your mail </div>
 				<Link to="/auth/login" className='border-bottom fw-lighter'>Click here to go back to Login</Link>
 			</div> :
@@ -67,7 +67,7 @@ const RecoverPW = () => {
 							<h4 className="mt-3 mb-1 fw-semibold text-white font-18">
 								Reset Password For Dastone
 							</h4>
-							<p className="text-muted  mb-0">
+							<p className="text-white  mb-0">
 								Enter your Email and instructions will be sent to you!
 							</p>
 						</div>
@@ -89,8 +89,8 @@ const RecoverPW = () => {
 							<Row className="form-group mb-0">
 								<Col xs={12} className="mt-2">
 									<Button
-										variant="primary"
-										className="w-100 waves-effect waves-light"
+										variant="warning"
+										className="w-100 text-white waves-effect waves-light"
 										type="submit"
 										disabled={loading}
 									>

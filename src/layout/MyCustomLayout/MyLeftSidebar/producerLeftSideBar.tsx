@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import SimpleBar from "simplebar-react";
-import logoImg from "@/assets/images/logo-sm.png";
+import logoImg from "/logo-sm.png";
 import AppMenu from "@/layout/LeftSidebar/Menu";
 import { MenuItemType } from "@/common/menu";
 import { useAuthContext } from '@/context'

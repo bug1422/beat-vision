@@ -60,6 +60,7 @@ export default function useLogin() {
 			if (res.data) {
 				const decoded = jwtDecode<User>(res.data?.AccessToken)
 				console.log(decoded)
+				decoded.refreshToken = res.data.RefreshToken
 				saveSession({
 					...(decoded ?? {}),
 				})
