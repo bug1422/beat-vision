@@ -10,7 +10,9 @@ import { AxiosResponse } from "axios";
 import { HttpClient } from "@/common";
 import { FiPlayCircle, FiStopCircle, FiVolumeX, FiVolume, FiVolume1, FiVolume2 } from "react-icons/fi";
 import FormRange from "react-bootstrap/esm/FormRange";
+import { toast } from "sonner";
 import { useAuthContext } from "@/context";
+import { useNavigate } from "react-router-dom";
 
 export default function TrackPlay(props: { trackId: number, price: number }) {
   const [trackId, _setTrackId] = useState(props.trackId)
@@ -23,7 +25,8 @@ export default function TrackPlay(props: { trackId: number, price: number }) {
 
   const [isMuted, setMuted] = useState<boolean>(false)
   const [volumne, setVolume] = useState<number>(0)
-
+  const navigate = useNavigate()
+  const { user } = useAuthContext()
   const FetchFile = async () => {
     try {
       const res: AxiosResponse<Blob> =
@@ -117,6 +120,37 @@ export default function TrackPlay(props: { trackId: number, price: number }) {
     }
   }
 
+  const AddToCart = async () => {
+    try {
+      const userId = user?.userid
+        if(userId == undefined){
+          toast.error("Please log in", { position: "bottom-right", duration: 2000 })
+          navigate("/auth/login")
+          return
+        }
+        const res = await HttpClient.post("/api/ManageOrder/add-cart-item", {
+            UserId: userId,
+            ItemId: trackId,
+        }, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            }
+        })
+        if (res?.status == 200) {
+            toast.success("Added to cart!", { position: "bottom-right", duration: 2000 })
+        }
+    } catch (e: any) {
+        if (e?.response.data.ErrorMessage == " not user profile found") {
+          toast.info("Please update your profile info", { position: "bottom-right", duration: 2000 })
+          navigate("/profile?tab=3")
+        }
+        else{
+          toast.error("Something went wrong", { position: "bottom-right", duration: 2000 })
+        }
+        console.log(e)
+    }
+}
+
   return (
     <>
       {error != "" ? <div className="text-danger text-center fs-1 bg-light">{error}</div> :
@@ -170,7 +204,7 @@ export default function TrackPlay(props: { trackId: number, price: number }) {
                     <strong>{props.price != null ? props.price > 0 ? props.price?.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' }) : "Free" : "Null"}</strong>
                   </p>
                 </span>
-                <Button>Add To Card</Button>
+                <Button variant="warning" className="text-dark fw-bold" onClick={()=>{AddToCart()}} >Add To Card</Button>
               </div>
             </Col>
           </Row>

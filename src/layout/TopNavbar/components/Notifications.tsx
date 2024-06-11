@@ -125,7 +125,7 @@ const Notifications = ({
 					Carts <span className="badge bg-primary rounded-pill"></span>
 				</h6>
 				{!isLoading ? <div className="list">
-					<ul className="navbar-nav ps-2">
+					<ul className="navbar-nav ps-2 d-flex flex-column">
 						{notis?.map((noti, index) => (
 							<li style={{ cursor: "pointer" }} key={index} className="nav-item my-2 w-100" onClick={() => { setRead(noti) }} >
 								<small className="float-end text-muted ps-2">

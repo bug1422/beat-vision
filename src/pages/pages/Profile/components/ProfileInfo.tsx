@@ -20,13 +20,12 @@ const ProfileInfo = (props: { userId: number, roles: CustomIdentityRoleDto[], ve
 
 	useEffect(() => {
 		FetchUserProfile()
-
 	}, [])
 
 	const FetchUserProfile = async () => {
 		try {
 			const res: AxiosResponse<UserProfileDto> =
-				await HttpClient.get('/api/ManageUser/' + props.userId)
+				await HttpClientAuth.get('/api/ManageUser/identity/' + props.userId)
 			if (res?.data) {
 				setUser(res?.data)
 				if (res?.data.ProfileBlobUrl) {
@@ -151,7 +150,8 @@ const ProfileInfo = (props: { userId: number, roles: CustomIdentityRoleDto[], ve
 													<img
 														src={imgUrl}
 														alt=""
-														height="110"
+														width={110}
+														height={110}
 														className="rounded-circle"
 													/>
 													<span className="user-profile_main-pic-change" onClick={handleShow}>
@@ -159,7 +159,7 @@ const ProfileInfo = (props: { userId: number, roles: CustomIdentityRoleDto[], ve
 													</span>
 												</div>
 												<div className="user-profile_user-detail">
-													<h5 className="user-user-name text-capitalize text-warning">{user?.Fullname}{props.verified ? <FiCheck /> : <Link to="/auth/confirm-email" className='mx-3 verify'>verify email now</Link>}</h5>
+													<h5 className="user-user-name text-capitalize text-warning">{user?.Fullname ?? "User#"+user?.Id}{props.verified ? <FiCheck /> : <Link to="/auth/confirm-email" className='mx-3 verify'>verify email now</Link>}</h5>
 													<p className="mb-0 user-user-name-post text-white">
 														{props.roles.map(p => p.Name).join("-")}
 													</p>

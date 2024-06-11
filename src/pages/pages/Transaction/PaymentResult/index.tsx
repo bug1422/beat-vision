@@ -8,7 +8,7 @@ const PaymentResult = (props: { isSuccess: boolean }) => {
     const { isSuccess } = props
     const res = isSuccess ? success : fail
     return (
-        <div className="pt-5 payment-result d-flex align-items-center">
+        <div className="pt-5 payment-result metal-bg d-flex align-items-center">
             <Row className="w-100 d-flex justify-content-center">
                 <Col xs={4} className="result-container d-flex flex-column text-center justify-content-center p-4">
 

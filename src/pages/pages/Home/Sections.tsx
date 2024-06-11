@@ -5,7 +5,7 @@ import img2 from '/images/homepage/img2.jpg'
 import img3 from '/images/homepage/img3.jpg'
 import fpt_logo from '/images/brand-logo/fpt.png'
 import { useEffect, useRef, useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { AxiosResponse } from "axios"
 import { TrackDto } from "@/types/ApplicationTypes/TrackType"
 import { HttpClient } from "@/common"
@@ -81,7 +81,8 @@ const Section2 = () => {
     const endIndex = startIndex + itemsPerPage;
     const currentItems = list.slice(startIndex, endIndex);
     const [error, setError] = useState("")
-
+    const navigate = useNavigate()
+    
     const handlePageChange = (pageNumber: number) => {
         if (pageNumber > 0 && pageNumber < lastPage + 1) {
             setCurrentPage(pageNumber);
@@ -114,14 +115,14 @@ const Section2 = () => {
             </div>
             <div className="content">
                 <Row className="justify-content-center">
-                    {error != "" ? <div className="text-danger text-center mt-5" style={{fontSize:"52px"}}>{error}</div> :
+                    {error != "" ? <div className="text-danger text-center mt-5" style={{ fontSize: "52px" }}>{error}</div> :
                         <>
                             {currentItems && currentItems.map((beat, idx) => (
-                                <Col xs={4} sm={2} key={idx}>
+                                <Col xs={4} sm={2} key={idx} onClick={()=> {if (beat.Id != undefined) { navigate("/music-detail/detail/"+beat.Id)}}}>
                                     <Card >
-                                        <img src={beat.ProfileBlobUrl ?? demoBeat} className="card-img-top img-fluid bg-light-alt" style={{height: "250px"}} />
-                                        <CardHeader style={{height: "80px"}}>
-                                            <div>{beat.TrackName}</div>
+                                        <img src={beat.ProfileBlobUrl ?? demoBeat} className="card-img-top img-fluid bg-light-alt" style={{ height: "250px" }} />
+                                        <CardHeader style={{ height: "80px" }}>
+                                                <div className="name fw-bold">{beat.TrackName.slice(0,25)+"..."}</div>
                                             <div>
                                                 {beat.Tags.slice(0, 3).map((tag, ix) => (
                                                     <Badge bg="secondary" key={ix} className="mx-1">{tag.Name}</Badge>
@@ -183,8 +184,8 @@ const Section4 = () => {
             <Row>
                 <Col xl={4} className="left-col pt-3 mt-3">
                     <div className="home-text">
-                        <div>Why choose</div> 
-                        <div className="ms-5  brand">Beat Vision</div> 
+                        <div>Why choose</div>
+                        <div className="ms-5  brand">Beat Vision</div>
                     </div>
                 </Col>
                 <Col />

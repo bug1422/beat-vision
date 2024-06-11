@@ -13,13 +13,20 @@ import Comments from './Comments'
 import { CustomIdentityUserDto } from '@/types/ApplicationTypes/IdentityType'
 import UpdateForm from './UpdateForm'
 import PasswordForm from './PasswordForm'
+import { useEffect, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 
 const ProfileTask = (props: { user: CustomIdentityUserDto | undefined }) => {
 	const { user } = props;
-
+	const [tab, setTab] = useState(1)
+	const [searchParams] = useSearchParams();
+	useEffect(() => {
+		let i = searchParams.get("tab")
+		if(i) setTab(parseInt(i))
+	},[])
 	return (
 		<div className='profile-task'>
-			<TabContainer defaultActiveKey="1">
+			<TabContainer defaultActiveKey="1" activeKey={tab}>
 				<div className="">
 					<Nav
 						className="nav-border nav-pills"
@@ -27,16 +34,16 @@ const ProfileTask = (props: { user: CustomIdentityUserDto | undefined }) => {
 						role="tablist"
 					>
 						<NavItem>
-							<NavLink eventKey="1" className='text-white'>About Me</NavLink>
+							<NavLink eventKey="1" onClick={() => { setTab(1)}} className='text-white'>About Me</NavLink>
 						</NavItem>
 						<NavItem>
-							<NavLink eventKey="2" className='text-white'>Comments</NavLink>
+							<NavLink eventKey="2" onClick={() => { setTab(2)}} className='text-white'>Comments</NavLink>
 						</NavItem>
 						<NavItem>
-							<NavLink eventKey="3" className='text-white'>Update Profile</NavLink>
+							<NavLink eventKey="3" onClick={() => { setTab(3)}} className='text-white'>Update Profile</NavLink>
 						</NavItem>
 						<NavItem>
-							<NavLink eventKey="4" className='text-white'>Password</NavLink>
+							<NavLink eventKey="4" onClick={() => { setTab(4)}} className='text-white'>Password</NavLink>
 						</NavItem>
 					</Nav>
 				</div>

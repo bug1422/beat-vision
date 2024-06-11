@@ -58,25 +58,21 @@ export default function useLogin() {
 			const res: AxiosResponse<AuthReturnType> = await HttpClient.post('/api/ManageIdentity/login', values)
 			console.log(res)
 			if (res.data) {
-				const decoded = jwtDecode<User>(res.data?.AccessToken)
-				console.log(decoded)
-				decoded.refreshToken = res.data.RefreshToken
-				saveSession({
-					...(decoded ?? {}),
-				})
+				var data = res.data
+				saveSession(data.AccessToken, data.RefreshToken)
 				toast.success('Successfully logged in. Redirecting....', {
 					position: 'bottom-right',
 					duration: 2000,
 				})
-				localStorage.setItem("BeatVision", res.data.AccessToken)
 				navigate(redirectUrl)
 			}
 		} catch (e: any) {
-
 			console.log(e)
 			let mess = "Unknown error"
 			if (e.response?.status == 400) {
-				await tryAdmin(values)
+				if (e.response.data.ErrorMessage == "user not found") {
+					await tryAdmin(values)
+				}
 			}
 			if (e.response?.status == 500) {
 				mess = "Internal error!"
@@ -96,11 +92,8 @@ export default function useLogin() {
 			const res: AxiosResponse<AuthReturnType> = await HttpClient.post('/api/ManageIdentity/login-admin', values)
 			console.log(res)
 			if (res.data) {
-				const decoded = jwtDecode<User>(res.data?.AccessToken)
-				console.log(decoded)
-				saveSession({
-					...(decoded ?? {}),
-				})
+				var data = res.data
+				saveSession(data.AccessToken, data.RefreshToken)
 				toast.success('Successfully logged in. Redirecting....', {
 					position: 'bottom-right',
 					duration: 2000,

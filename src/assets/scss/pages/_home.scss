@@ -73,6 +73,10 @@ $artist-thumb-size: 200px;
     .content {
         height: $section2-height;
         padding: 0px 40px;
+        .name{
+            color:#ff9d00;
+            text-decoration: none;
+        }
     }
 
     .pagi-bar {

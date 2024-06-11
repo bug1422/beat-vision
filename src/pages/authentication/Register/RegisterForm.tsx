@@ -51,12 +51,8 @@ export default function useRegister() {
 				}
 				const res: AxiosResponse<AuthReturnType> = await HttpClient.post('/api/ManageIdentity/register', request)
 				if (res.data) {
-					const decoded = jwtDecode<User>(res.data?.AccessToken)
-					console.log(decoded)
-
-					saveSession({
-						...(decoded ?? {}),
-					})
+					var data = res.data
+					saveSession(data.AccessToken, data.RefreshToken)
 					toast.success('Successfully registered in. Redirecting....', {
 						position: 'bottom-right',
 						duration: 2000,

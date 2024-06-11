@@ -2,7 +2,7 @@ export type User = {
     userid: string
     email?: string
     username?: string
-    role: string
+    MyRole: string
     exp: number
     iss?: string
     aud?: string
@@ -14,6 +14,6 @@ export type User = {
 export type AuthContextType = {
     user: User | undefined,
     isAuthenticated: boolean
-    saveSession: (session: User) => void
+    saveSession: (access:string, refresh:string) => void
     removeSession: () => void
 }

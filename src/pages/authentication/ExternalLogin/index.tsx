@@ -12,11 +12,7 @@ const ExternalLogin = () => {
     useEffect(() => {
         if (jwtToken && jwtToken != "") {
             try {
-                const decoded = jwtDecode<User>(jwtToken)
-                console.log(decoded)
-                saveSession({
-                    ...(decoded ?? {}),
-                })
+                saveSession(jwtToken, "")
                 toast.success('Successfully logged in. Redirecting....', {
                     position: 'bottom-right',
                     duration: 2000,

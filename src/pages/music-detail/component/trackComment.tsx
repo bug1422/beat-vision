@@ -71,13 +71,13 @@ export const Message = (props: { value: TrackCommentDto }) => {
   const FetchUser = async () => {
     try {
       const res: AxiosResponse<UserProfileDto> =
-        await HttpClient.get('/api/ManageUser/' + props.value.AuthorId)
+        await HttpClient.get('/api/ManageUser/identity/' + props.value.AuthorId)
       if (res?.data) {
         setUser(res?.data)
-        if(res?.data.ProfileBlobUrl){
+        if (res?.data.ProfileBlobUrl) {
           var img = new Image()
           img.src = res?.data.ProfileBlobUrl;
-          if(img.height != 0) setImg(res?.data.ProfileBlobUrl)
+          if (img.height != 0) setImg(res?.data.ProfileBlobUrl)
         }
       }
     } catch (e: any) {
@@ -156,8 +156,11 @@ const TrackComment = (props: { trackId: number }) => {
 
   const AddComment = async (message: string) => {
     try {
+      const get: AxiosResponse<UserProfileDto> =
+        await HttpClient.get('/api/ManageUser/identity/' + user?.userid)
+      const userId = get.data.Id
       const data = new FormData()
-      if (user?.userid) data.append("userProfileId", user?.userid)
+      if (userId) data.append("userProfileId", userId.toString())
       data.append("TrackId", trackId.toString())
       data.append("Content", message)
 

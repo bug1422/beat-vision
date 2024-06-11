@@ -32,7 +32,7 @@ const AllRoutes = (props: RouteProps) => {
             key={index}
             path={route.path}
             element={
-              !user || user.role?.toLowerCase() !== "admin" ? (
+              user == undefined || user.MyRole?.toLowerCase() !== "admin" ? (
                 <Navigate
                   to={{
                     pathname: "/auth/auth-500",

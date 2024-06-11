@@ -1,13 +1,16 @@
 import { HttpClient } from "@/common"
+import HttpClientAuth from "@/common/helpers/httpClientAuth"
 import { useAuthContext } from "@/context"
 import { UserProfileDto } from "@/types/ApplicationTypes/UserProfileType"
 import { AxiosResponse } from "axios"
 import { useEffect, useState } from "react"
 import { Col, Row } from "react-bootstrap"
+import { useNavigate } from "react-router-dom"
 import { toast } from "sonner"
 
 const UpdateForm = () => {
-    const { user } = useAuthContext()
+    const { user,removeSession } = useAuthContext()
+    const navigate = useNavigate()
     const [loading, setLoading] = useState(false);
     const [fullname, setFullname] = useState("");
     const [description, setDescription] = useState("");
@@ -55,7 +58,7 @@ const UpdateForm = () => {
         if (!flag) {
             try {
                 const res: AxiosResponse<UserProfileDto> =
-                    await HttpClient.put('/api/ManageUser/' + user?.userid,{
+                    await HttpClientAuth.put('/api/ManageUser/' + user?.userid,{
                         description: description,
                         fullname: fullname,
                         birthday: birth,
@@ -71,6 +74,12 @@ const UpdateForm = () => {
                 }
             } catch (e: any) {
                 console.log(e)
+                if (e.response.status == 401 || e.response.status == 403) {
+                    removeSession()
+                    toast.error("Your session has ran out, please log in again", { position: "bottom-right", duration: 2000 })
+                    navigate("/auth/login")
+                    return
+                }
                 toast.error("Failed to update", { position: "bottom-right", duration: 2000 })
             }
         }

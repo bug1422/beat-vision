@@ -73,7 +73,7 @@ const Cart = (props: { userId: number | undefined }) => {
                 </div> : <div>{error != "" ? error : "LOADING"}</div>
 
                 }
-                <Link to={"/cart/" + props.userId} className="dropdown-item text-center text-primary view-all border-top text-warning">
+                <Link to={"/cart"} className="dropdown-item text-center text-primary view-all border-top text-warning">
                     View all <i className="fi-arrow-right text-warning"></i>
                 </Link>
             </DropdownMenu>

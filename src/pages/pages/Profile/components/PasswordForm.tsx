@@ -24,7 +24,7 @@ const PasswordForm = () => {
         if (value) {
             try {
                 const res: AxiosResponse =
-                    await HttpClientAuth?.post(`/api/ManageIdentity/change-password?userId=${user?.userid}`, value, {
+                    await HttpClientAuth.post(`/api/ManageIdentity/change-password?userId=${user?.userid}`, value, {
                         headers: {
                             "Content-Type": "multipart/form-data",
                         }
@@ -37,7 +37,7 @@ const PasswordForm = () => {
                 console.log(error)
                 if (error.response.status == 401 || error.response.status == 403) {
                     removeSession()
-                    toast.error("Your session has passed", { position: "bottom-right", duration: 2000 })
+                    toast.error("Your session has ran out, please log in again", { position: "bottom-right", duration: 2000 })
                     navigate("/auth/login")
                     return
                 }

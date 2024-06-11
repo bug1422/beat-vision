@@ -12,10 +12,12 @@ import { PageMetaData } from "@/components";
 import { CartItemDto } from "@/types/ApplicationTypes/CartItemType";
 import { toast } from "sonner";
 import { CheckoutDto } from "@/types/ApplicationTypes/CheckoutType";
+import httpClientAuth from "@/common/helpers/httpClientAuth";
 
 const Cart = () => {
-    const { isAuthenticated, user } = useAuthContext()
+    const { isAuthenticated, user,removeSession } = useAuthContext()
     const [tracks, SetTracks] = useState<TrackDto[]>([])
+    const [sum, setSum] = useState("")
     const [isLoading, SetIsLoading] = useState(false)
     const [isPaid, setPaid] = useState(false)
     const [isPurchased, setPurchased] = useState(false)
@@ -50,7 +52,11 @@ const Cart = () => {
         }
         SetIsLoading(false)
     }
-
+    useEffect(() => {
+        let i = (tracks.reduce((p, v) => p += v.Price ?? 0, 0))
+        if (i > 0) setSum(i.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' }))
+        else setSum("Free")
+    }, [tracks])
     const removeFromCart = async (trackId: number) => {
         if (!isAuthenticated || user == undefined) navigate("/auth/login")
         else {
@@ -77,7 +83,7 @@ const Cart = () => {
 
             try {
                 const userId = user?.userid
-                const res: AxiosResponse<CheckoutDto> = await HttpClient.post(`/api/ManageOrder/checkout`, {
+                const res: AxiosResponse<CheckoutDto> = await httpClientAuth.post(`/api/ManageOrder/checkout`, {
                     userProfileId: userId,
                 }, {
                     headers: {
@@ -99,7 +105,12 @@ const Cart = () => {
                     }
                 }
             } catch (e: any) {
-                if (e?.response.data.ErrorMessage) {
+                if (e.response.status == 401 || e.response.status == 403) {
+                    removeSession()
+                    toast.error("Your session has ran out, please log in again", { position: "bottom-right", duration: 2000 })
+                    navigate("/auth/login")
+                }
+                else if (e?.response.data.ErrorMessage) {
                     toast.info(e?.response.data.ErrorMessage, { position: "bottom-right", duration: 2000 })
                 }
                 console.log(e)
@@ -121,7 +132,7 @@ const Cart = () => {
                                 <div className="cart-body h-100 pb-3 pt-2 d-flex flex-column align-items-end">
                                     <div className="w-100">
                                         {tracks.map((track, index) => (
-                                            <Row style={{borderBottom:"1px dotted grey"}} className="track align-items-center py-4 border-top" key={index} >
+                                            <Row style={{ borderBottom: "1px dotted grey" }} className="track align-items-center py-4 border-top" key={index} >
 
                                                 <Col xl={1} className="d-flex">
                                                     <div className="rank">{index + 1} </div>
@@ -148,13 +159,11 @@ const Cart = () => {
                                         ))}
                                     </div>
                                     <div className="mt-auto w-100">
-                                        <div  style={{borderTop:"2px solid black"}} className="d-flex flex-column align-items-end total-section">
+                                        <div style={{ borderTop: "2px solid black" }} className="d-flex flex-column align-items-end total-section">
                                             <div className="d-flex pt-3 pe-2">
                                                 <div className="total d-flex">
-                                                    <div className="me-2 fw-bold">Total: </div>
-                                                    <div>{
-                                                        (tracks.reduce((p, v) => p += v.Price ?? 0, 0)).toLocaleString('vn-VN', { style: 'currency', currency: 'VND' })
-                                                    }</div>
+                                                    <div className="me-2 fw-light fs-4">Total: </div>
+                                                    <div className="fw-bolder text-dark fs-4">{sum}</div>
                                                 </div>
                                             </div>
                                             <div className="mt-3">
@@ -173,7 +182,7 @@ const Cart = () => {
                     </Col>
                 </Row>
             </> : <>
-                <div className="text-center" style={{ fontSize: "32px", paddingTop: "35vh" }}>
+                <div className="text-center text-warning" style={{ fontSize: "32px", paddingTop: "35vh" }}>
                     <div className="fw-bold">Redirecting to checkout page...</div>
                 </div>
             </>
