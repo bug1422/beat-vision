@@ -1,6 +1,4 @@
 import {
-	Card,
-	CardBody,
 	Col,
 	Row,
 } from 'react-bootstrap'

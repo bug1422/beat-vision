@@ -9,7 +9,3 @@ export function CompareDate(date1: number, date2: number) {
         return `${Math.floor(diffInMinutes / (24 * 60))} days`;
     }
 }
-
-export function refreshToken(refreshToken: string){
-    
-}

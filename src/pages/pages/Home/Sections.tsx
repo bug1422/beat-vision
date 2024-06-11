@@ -5,7 +5,7 @@ import img2 from '/images/homepage/img2.jpg'
 import img3 from '/images/homepage/img3.jpg'
 import fpt_logo from '/images/brand-logo/fpt.png'
 import { useEffect, useRef, useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { AxiosResponse } from "axios"
 import { TrackDto } from "@/types/ApplicationTypes/TrackType"
 import { HttpClient } from "@/common"

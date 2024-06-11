@@ -27,7 +27,6 @@ const UpdateForm = (props: { user: CustomIdentityUserDto }) => {
 
   const FetchUserProfile = async () => {
     try {
-      const profile = userData.UserProfile
       if (userData.UserProfile && userData.UserProfile != undefined) {
         setFullname(userData.UserProfile.Fullname);
         setDescription(userData.UserProfile.Description ?? "");

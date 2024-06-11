@@ -150,7 +150,6 @@ const Search = () => {
         "/api/ManageUser/identity/" + user?.userid
       );
       const userProfileId = get.data.Id;
-      const userId = user?.userid;
       const res = await HttpClient.post(
         "/api/ManageOrder/add-cart-item",
         {

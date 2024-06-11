@@ -1,7 +1,5 @@
 import { AuthContextType, User } from "@/types"
-import { UserProfileDto } from "@/types/ApplicationTypes/UserProfileType"
 import { deleteCookie, getCookies, hasCookie, setCookie } from 'cookies-next'
-import { jwtDecode } from "jwt-decode"
 import { ReactNode, createContext, useContext, useState } from "react"
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)

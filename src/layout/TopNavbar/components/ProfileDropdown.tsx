@@ -10,7 +10,7 @@ import { useAuthContext } from '@/context'
 import { useNavigate } from 'react-router-dom'
 import { AxiosResponse } from 'axios'
 import { UserProfileDto } from '@/types/ApplicationTypes/UserProfileType'
-import { HttpClient, HttpClientAuth } from '@/common'
+import { HttpClientAuth } from '@/common'
 import { useEffect, useState } from 'react'
 import defaultProfile from '/default-image/defaultprofile.png'
 

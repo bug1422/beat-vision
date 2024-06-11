@@ -1,5 +1,4 @@
 import {
-	Button,
 	Card,
 	CardBody,
 	Image,
@@ -11,7 +10,7 @@ import { Link, Navigate } from 'react-router-dom'
 import logo from '/logo-sm-2.png'
 import { PageMetaData } from '@/components'
 import useRegister from './RegisterForm'
-import { FiChrome, FiFacebook } from 'react-icons/fi'
+import { FiChrome } from 'react-icons/fi'
 import { Preloader } from '@/components'
 import { Suspense } from 'react'
 import { Col, Container, Row } from 'react-bootstrap'

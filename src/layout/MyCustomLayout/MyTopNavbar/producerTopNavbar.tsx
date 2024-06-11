@@ -16,7 +16,7 @@ export default function ProducerTopNavBar() {
             <div>
               <ul className="navbar-nav mb-2 mb-lg-0">
                 <li className="mx-2 my-2 nav-item">
-                  Welcome {user?.username}
+                  Welcome {user?.MyUsername}
                 </li>
                 <li className="mx-2 my-2 nav-item">
                   {new Date().toLocaleDateString("vn-VN")}
