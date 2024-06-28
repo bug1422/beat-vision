@@ -89,8 +89,8 @@ const TopNavBar = () => {
 					{
 						isAuthenticated ?
 							<>
-								<Cart userId={user != undefined ? parseInt(user.userid) : undefined} />
-								<Notifications userId={user != undefined ? parseInt(user.userid) : undefined}/>
+								<Cart userId={user != undefined ? user.profileId : undefined} />
+								<Notifications userId={user != undefined ? user.profileId : undefined}/>
 								<ProfileDropdown />
 							</> :
 							null

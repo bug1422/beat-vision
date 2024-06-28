@@ -135,7 +135,7 @@ export default function ProducerAppUser() {
                             <td>{user.Roles.map((role, idx) =>
                               (role.Name ? <Tag name={role.Name} key={idx} /> : <></>)
                             )}</td>
-                            <td><NavItem className="btn btn-outline-primary" ><NavLink eventKey="2" onClick={() => { GetUser(user.Id); switchTab(2) }}>See Profile</NavLink></NavItem></td>
+                            <td><NavItem className="btn btn-outline-primary" ><NavLink eventKey="2" onClick={() => { GetUser(user.UserProfile?.Id); switchTab(2) }}>See Profile</NavLink></NavItem></td>
                           </tr>)
                         }
                       </tbody>

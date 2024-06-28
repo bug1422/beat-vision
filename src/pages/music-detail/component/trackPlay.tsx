@@ -122,7 +122,7 @@ export default function TrackPlay(props: { trackId: number, price: number }) {
 
   const AddToCart = async () => {
     try {
-      const userId = user?.userid
+      const userId = user?.profileId
         if(userId == undefined){
           toast.error("Please log in", { position: "bottom-right", duration: 2000 })
           navigate("/auth/login")
