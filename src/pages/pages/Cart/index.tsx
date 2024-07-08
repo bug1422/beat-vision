@@ -14,6 +14,8 @@ import { toast } from "sonner";
 import { CheckoutDto } from "@/types/ApplicationTypes/CheckoutType";
 import httpClientAuth from "@/common/helpers/httpClientAuth";
 import { UserProfileDto } from "@/types/ApplicationTypes/UserProfileType";
+import httpClient from "@/common/helpers/httpClient";
+import { getCookie } from "cookies-next";
 
 const Cart = () => {
   const { isAuthenticated, user, removeSession } = useAuthContext();
@@ -97,7 +99,8 @@ const Cart = () => {
         );
         const userProfileId = get.data.Id;
         const userId = userProfileId; //user?.userid;
-        const res: AxiosResponse<CheckoutDto> = await httpClientAuth.post(
+	      const token = getCookie("BEATVISION");
+        const res: AxiosResponse<CheckoutDto> = await httpClient.post(
           `/api/ManageOrder/checkout`,
           {
             userProfileId: userId,
@@ -105,6 +108,7 @@ const Cart = () => {
           {
             headers: {
               "Content-Type": "multipart/form-data",
+              Authorization: `Bearer ${token}`
             },
           }
         );
