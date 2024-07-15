@@ -61,7 +61,7 @@ const Register = () => {
 														<h6 className="mb-3">Or Login With</h6>
 													</div>
 													<div className="btn-group w-100">
-														<a href='https://localhost:5234/api/ManageIdentity/external-login?providerSchemeName=Google' className="btn btn-outline-secondary">
+														<a href='https://api.beatvision.store/api/ManageIdentity/external-login?providerSchemeName=Google' className="btn btn-outline-secondary">
 															<FiChrome /> Google
 														</a>
 													</div>
