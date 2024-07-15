@@ -12,7 +12,6 @@ import { PageMetaData } from "@/components";
 import { CartItemDto } from "@/types/ApplicationTypes/CartItemType";
 import { toast } from "sonner";
 import { CheckoutDto } from "@/types/ApplicationTypes/CheckoutType";
-import httpClientAuth from "@/common/helpers/httpClientAuth";
 import { UserProfileDto } from "@/types/ApplicationTypes/UserProfileType";
 import httpClient from "@/common/helpers/httpClient";
 import { getCookie } from "cookies-next";
