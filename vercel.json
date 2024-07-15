@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/:path",
-      "destination": "https://localhost:5234/api/:path"
+      "destination": "https://api.beatvision.store/api/:path"
     },
     {
       "source": "/(.*)",

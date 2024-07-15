@@ -17,7 +17,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "https://localhost:5234",
+        target: "https://api.beatvision.store",
         changeOrigin: true,
         secure: false,
       },
